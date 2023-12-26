@@ -11,6 +11,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func renderFormPage(c *gin.Context) {
+
+	c.HTML(http.StatusOK, "index.html", nil)
+}
+
 func placeOrder(c *gin.Context) {
 
 	var o orders.Order
@@ -48,11 +53,11 @@ func main() {
 	router.Static("/static", "./static")
 	router.StaticFile("/favicon.ico", "./static/favicon.ico")
 
-	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", nil)
-	})
-
+	router.GET("/", renderFormPage)
 	router.POST("/api/order", placeOrder)
+	router.NoRoute(func(c *gin.Context) {
+		c.Redirect(http.StatusFound, "/")
+	})
 
 	router.Run(":8080")
 }

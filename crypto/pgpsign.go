@@ -36,7 +36,7 @@ func GetNewOrderName() string {
 
 func WritePGPOrder(json []byte) bool {
 
-	armor, err_ := helper.EncryptMessageArmored(string(assets.PublicKeyBytes), "plain text")
+	armor, err_ := helper.EncryptBinaryMessageArmored(string(assets.PublicKeyBytes), json)
 
 	if err_ != nil {
 		fmt.Println("Could not encrypt message with armor")
