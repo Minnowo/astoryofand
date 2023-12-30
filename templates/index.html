@@ -52,7 +52,7 @@
               <td class="note">
                 <input type="number" id="stickercount" name="stickercount" value="1" min="0" max="100" required>
 
-                <code class="language-plaintext highlighter-rouge"> {{ .StickerPrice }}$ per box set</code>
+                <code class="language-plaintext highlighter-rouge"> {{ .StickerPrice }}$ per sticker</code>
               </td>
             </tr>
 
@@ -78,6 +78,15 @@
                 </select>
               </td>
             </tr>
+            <tr id="other_pay_row" style="display:none;">
+              <td>
+                <label for="otherPay">Please specify:</label>
+              </td>
+              <td>
+                <textarea  type="text" id="otherPay" name="otherpay">
+                  </textarea>
+              </td>
+            </tr>
             <tr>
               <td><label for="deliverymethod">How would you like to get your package?</label>
               </td>
@@ -101,15 +110,25 @@
               <td><label for="deliverymethod">Enter the delivery address</label>
               </td>
             </tr>
-            <tr id="delivery_address" style="display: none;">
-              <td>
-                <label for="deliveryAddress">Address:</label>
-              </td>
-              <td>
-                <input type="text" id="deliveryAddress" name="deliveryaddress">
+            <tr id="pickup_address" style="display: none;">
+              <td><label for="deliverymethod">Enter the pickup address</label>
               </td>
             </tr>
-            <tr id="delivery_address" style="display: none;">
+            <tr id="shipping_address" style="display: none;">
+              <td><label >Enter the shipping information</label>
+              </td>
+            </tr>
+
+            <tr id="address_row" style="display: none;">
+              <td>
+                <label for="Address">Address:</label>
+              </td>
+              <td>
+                <input type="text" id="Address" name="address">
+              </td>
+            </tr>
+
+            <tr id="city_row" style="display: none;">
               <td>
                 <label for="city">City:</label>
               </td>
@@ -118,32 +137,22 @@
               </td>
             </tr>
 
-            <tr id="shipping_address" style="display: none;">
-              <td><label >Enter the shipping information</label>
-              </td>
-            </tr>
-            <tr id="shipping_address" style="display: none;">
-              <td>
-                <label for="shippingAddress">Shipping Address:</label>
-              </td>
-              <td>
-                <input type="text" id="shippingAddress" name="shippingaddress">
-              </td>
-            </tr>
-            <tr id="shipping_address" style="display: none;">
-              <td>
-                <label for="city">City:</label>
-              </td>
-              <td>
-                <input type="text" id="city" name="city">
-              </td>
-            </tr>
-            <tr id="shipping_address" style="display: none;">
+            <tr id="zipcode_row" style="display: none;">
               <td>
                 <label for="zipCode">Zip Code:</label>
               </td>
               <td>
                 <input type="text" id="zipCode" name="zipcode">
+              </td>
+            </tr>
+
+            <tr id="other_row" style="display:none;">
+              <td>
+                <label for="other">Please specify:</label>
+              </td>
+              <td>
+                <textarea  type="text" id="other" name="otherdelivery">
+                  </textarea>
               </td>
             </tr>
 
@@ -165,32 +174,71 @@
     function handleDeliveryMethodChange() {
       const selectedValue = document.getElementById('deliverymethod').value;
 
-      for (var i of document.querySelectorAll('#delivery_address')) {
-        for (var j of i.querySelectorAll('input')) {
-          j.required = selectedValue === 'delivery';
-        }
+      const addressInput = document.getElementById("address_row");
+      const cityInput    = document.getElementById("city_row");
+      const zipcodeInput = document.getElementById("zipcode_row");
+      const otherInput   = document.getElementById("other_row");
 
-        if (selectedValue === 'delivery') {
-          i.style.display = 'inherit';
-        } else {
-          i.style.display = 'none';
-        }
+      for (var j of addressInput.querySelectorAll('input')) {
+        j.required = selectedValue !== 'other';
       }
-      for (var i of document.querySelectorAll('#shipping_address')) {
+      for (var j of cityInput.querySelectorAll('input')) {
+        j.required = selectedValue !== 'other';
+      }
+      for (var j of zipcodeInput.querySelectorAll('input')) {
+        j.required = selectedValue === 'ship';
+      }
+      for (var j of otherInput.querySelectorAll('textarea')) {
+        j.required = selectedValue === 'other';
+      }
 
-        for (var j of i.querySelectorAll('input')) {
-          j.required = selectedValue === 'delivery';
-        }
-        if (selectedValue === 'ship') {
-          i.style.display = 'inherit';
-        } else {
-          i.style.display = 'none';
-        }
+      if (selectedValue === 'delivery') {
+        addressInput.style.display = 'inherit';
+        cityInput.style.display = 'inherit';
+        zipcodeInput.style.display = 'none';
+        otherInput.style.display = 'none';
+      } 
+      else if (selectedValue === 'ship'){
+        addressInput.style.display = 'inherit';
+        cityInput.style.display = 'inherit';
+        zipcodeInput.style.display = 'inherit';
+        otherInput.style.display = 'none';
+      }
+      else if (selectedValue === 'pickup'){
+        addressInput.style.display = 'inherit';
+        cityInput.style.display = 'inherit';
+        zipcodeInput.style.display = 'none';
+        otherInput.style.display = 'none';
+      }
+      else if (selectedValue === 'other'){
+        addressInput.style.display = 'none';
+        cityInput.style.display = 'none';
+        zipcodeInput.style.display = 'none';
+        otherInput.style.display = 'inherit';
+      }
+    }
+
+    function handlePayMethodChange(){
+
+      const selectedValue = document.getElementById('paymethod').value;
+
+      const otherPay = document.getElementById("other_pay_row");
+
+      for (var j of otherPay.querySelectorAll('textarea')) {
+        j.required = selectedValue === 'other';
+      }
+
+      if (selectedValue === 'other') {
+        otherPay.style.display = 'inherit';
+      } else {
+        otherPay.style.display = 'none';
       }
     }
 
     document.getElementById('deliverymethod').addEventListener('change', handleDeliveryMethodChange);
+      document.getElementById('paymethod').addEventListener('change', handlePayMethodChange);
     handleDeliveryMethodChange();
+    handlePayMethodChange();
 
 
   </script>
