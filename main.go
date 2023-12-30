@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"minno/astoryofand/assets"
 	"minno/astoryofand/crypto"
 	"minno/astoryofand/orders"
 
@@ -13,7 +14,10 @@ import (
 
 func renderFormPage(c *gin.Context) {
 
-	c.HTML(http.StatusOK, "index.html", nil)
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"BoxPrice":     assets.BoxSetPrice,
+		"StickerPrice": assets.StickerCost,
+	})
 }
 
 func placeOrder(c *gin.Context) {
@@ -24,6 +28,8 @@ func placeOrder(c *gin.Context) {
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
+
+	o.TotalCost = float32(o.BoxSetCount)*assets.BoxSetPrice + float32(o.StickerCount)*assets.StickerCost
 
 	jsonData, err := json.MarshalIndent(&o, "", "  ")
 
@@ -39,7 +45,11 @@ func placeOrder(c *gin.Context) {
 		return
 	}
 
-	c.Redirect(http.StatusFound, "/")
+	c.Redirect(http.StatusFound, "/thanks")
+}
+
+func thanksFormPage(c *gin.Context) {
+	c.HTML(http.StatusOK, "thanks.html", nil)
 }
 
 func main() {
@@ -54,10 +64,11 @@ func main() {
 	router.StaticFile("/favicon.ico", "./static/favicon.ico")
 
 	router.GET("/", renderFormPage)
+	router.GET("/thanks", thanksFormPage)
 	router.POST("/api/order", placeOrder)
 	router.NoRoute(func(c *gin.Context) {
 		c.Redirect(http.StatusFound, "/")
 	})
 
-	router.Run(":8080")
+	router.Run("0.0.0.0:8080")
 }

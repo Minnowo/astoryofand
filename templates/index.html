@@ -5,116 +5,195 @@
 
 <body>
 
-    <div class="wrapper">
-        <div class="content container container-center">
-            <div class="container-content container-transition auto-margin" style="padding: 0;">
-                <div class="article">
-                    <div class="card">
-                        <div class="post-content">
+  <div class="content container container-center">
+    <div class="container-content container-transition auto-margin" style="padding: 0;">
+      <div class="card">
 
-                            <form action="/api/order" method="post" class="auto-margin">
-                                <table>
+        <form action="/api/order" method="post" class="auto-margin">
+          <table>
 
-                                    <tr>
-                                        <td><label for="email">What is your Email?</label></td>
-                                    </tr>
+            <tr>
+              <td><label for="email">What is your Email?</label></td>
+            </tr>
 
-                                    <tr>
-                                        <td><input type="email" id="email" name="email" placeholder="Email Address"
-                                                required>
-                                        </td>
-                                    </tr>
+            <tr>
+              <td><input type="email" id="email" name="email" placeholder="Email Address" required>
+              </td>
+            </tr>
 
-                                    <tr>
-                                        <td><label for="paymethod">How would you like to pay?</label></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <select id="paymethod" name="paymethod">
-                                                <option value="cash">Cash</option>
-                                                <option value="emt">EMT</option>
-                                                <option value="other">Other</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <label for="boxsetcount" class="note">
-                                                How many box sets with cards would you like to order?
+            <tr>
+              <td>
+                <label for="boxsetcount" class="note">
+                  How many box sets with cards would you like to order?
 
 
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="note">
-                                            <input type="number" id="boxsetcount" name="boxsetcount" value="1" min="1"
-                                                max="100" required>
-                                            <code class="language-plaintext highlighter-rouge">$35.00 per box set</code>
-                                        </td>
-                                    </tr>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td class="note">
+                <input type="number" id="boxsetcount" name="boxsetcount" value="1" min="1" max="100" required>
+                <code class="language-plaintext highlighter-rouge"> {{ .BoxPrice }}$ per box set</code>
+              </td>
+            </tr>
 
-                                    <tr>
-                                        <td>
-                                            <label for="stickercount" class="note">
-                                                How many
-                                                <code class="language-plaintext highlighter-rouge">#veryAsian</code>
-                                                waterproof vinyl stickers would you like to
-                                                order?
-                                            </label>
-                                        </td>
-                                    </tr>
+            <tr>
+              <td>
+                <label for="stickercount" class="note">
+                  How many
+                  <code class="language-plaintext highlighter-rouge">#veryAsian</code>
+                  waterproof vinyl stickers would you like to
+                  order?
+                </label>
+              </td>
+            </tr>
 
-                                    <tr>
-                                        <td><input type="number" id="stickercount" name="stickercount" value="1" min="0"
-                                                max="100" required></td>
-                                    </tr>
+            <tr>
+              <td class="note">
+                <input type="number" id="stickercount" name="stickercount" value="1" min="0" max="100" required>
 
-                                    <tr>
-                                        <td><label for="fullName">What is your First & Last name?</label></td>
-                                    </tr>
+                <code class="language-plaintext highlighter-rouge"> {{ .StickerPrice }}$ per box set</code>
+              </td>
+            </tr>
 
-                                    <tr>
-                                        <td><input type="text" id="fullName" name="fullname" required></td>
-                                    </tr>
+            <tr>
+              <td><label for="fullName">What is your First & Last name?</label></td>
+            </tr>
 
-                                    <tr>
-                                        <td><label for="deliverymethod">How would you like to get your package?</label>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <select id="deliverymethod" name="deliverymethod">
-                                                <option value="delivery">Delivery</option>
-                                                <option value="pickup">Pick up</option>
-                                                <option value="ship">Ship to me (may incur additional costs depending on
-                                                    shipping
-                                                    method)</option>
-                                                <option value="other">Other</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="2">
-                                            <button type="submit">Submit Order</button>
-                                        </td>
-                                    </tr>
-
-                                </table>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <tr>
+              <td><input type="text" id="fullName" name="fullname" required></td>
+            </tr>
 
 
-        </div>
+            <tr>
+              <td><label for="paymethod">How would you like to pay?</label></td>
+            </tr>
+
+            <tr>
+              <td>
+                <select id="paymethod" name="paymethod">
+                  <option value="cash">Cash</option>
+                  <option value="emt">EMT</option>
+                  <option value="other">Other</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label for="deliverymethod">How would you like to get your package?</label>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <select id="deliverymethod" name="deliverymethod">
+                  <option value="delivery">Delivery</option>
+                  <option value="pickup">Pick up</option>
+                  <option value="ship">Ship to me (may incur additional costs depending on
+                    shipping
+                    method)</option>
+                  <option value="other">Other</option>
+                </select>
+
+              </td>
+            </tr>
+
+            <tr id="delivery_address" style="display: none;">
+              <td><label for="deliverymethod">Enter the delivery address</label>
+              </td>
+            </tr>
+            <tr id="delivery_address" style="display: none;">
+              <td>
+                <label for="deliveryAddress">Address:</label>
+              </td>
+              <td>
+                <input type="text" id="deliveryAddress" name="deliveryaddress">
+              </td>
+            </tr>
+            <tr id="delivery_address" style="display: none;">
+              <td>
+                <label for="city">City:</label>
+              </td>
+              <td>
+                <input type="text" id="city" name="city">
+              </td>
+            </tr>
+
+            <tr id="shipping_address" style="display: none;">
+              <td><label >Enter the shipping information</label>
+              </td>
+            </tr>
+            <tr id="shipping_address" style="display: none;">
+              <td>
+                <label for="shippingAddress">Shipping Address:</label>
+              </td>
+              <td>
+                <input type="text" id="shippingAddress" name="shippingaddress">
+              </td>
+            </tr>
+            <tr id="shipping_address" style="display: none;">
+              <td>
+                <label for="city">City:</label>
+              </td>
+              <td>
+                <input type="text" id="city" name="city">
+              </td>
+            </tr>
+            <tr id="shipping_address" style="display: none;">
+              <td>
+                <label for="zipCode">Zip Code:</label>
+              </td>
+              <td>
+                <input type="text" id="zipCode" name="zipcode">
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="2">
+                <button type="submit">Submit Order</button>
+              </td>
+            </tr>
+
+          </table>
+        </form>
+      </div>
     </div>
+  </div>
 
+
+  <script>
+
+    function handleDeliveryMethodChange() {
+      const selectedValue = document.getElementById('deliverymethod').value;
+
+      for (var i of document.querySelectorAll('#delivery_address')) {
+        for (var j of i.querySelectorAll('input')) {
+          j.required = selectedValue === 'delivery';
+        }
+
+        if (selectedValue === 'delivery') {
+          i.style.display = 'inherit';
+        } else {
+          i.style.display = 'none';
+        }
+      }
+      for (var i of document.querySelectorAll('#shipping_address')) {
+
+        for (var j of i.querySelectorAll('input')) {
+          j.required = selectedValue === 'delivery';
+        }
+        if (selectedValue === 'ship') {
+          i.style.display = 'inherit';
+        } else {
+          i.style.display = 'none';
+        }
+      }
+    }
+
+    document.getElementById('deliverymethod').addEventListener('change', handleDeliveryMethodChange);
+    handleDeliveryMethodChange();
+
+
+  </script>
 </body>
 
 </html>
