@@ -1,7 +1,9 @@
 
 /pgp_out
 /assets/go_pub.gpg
+image.tar
 main
+
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/go
