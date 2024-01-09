@@ -13,4 +13,4 @@ run:  | build_template
 	@DEBUG=false LOG_LEVEL=1 go run cmd/main.go
 
 debug: | build_template
-	@DEBUG=true go run cmd/main.go
+	@DEBUG=true LOG_LEVEL=0 go run cmd/main.go

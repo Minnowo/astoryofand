@@ -510,6 +510,12 @@ more info: http://pavelmakhov.com/2015/12/images-in-jekyll */
         margin-top: 2vh;
         margin-left: 2vw;
     }
+
+
+    .hpad30p {
+        padding-left: 15%;
+        padding-right: 15%;
+    }
 }
 
 

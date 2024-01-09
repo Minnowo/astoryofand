@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
 
 	"github.com/minnowo/astoryofand/handler"
@@ -51,13 +52,21 @@ func main() {
 
 	initLogging(app)
 
+	// app.Use(middleware.HTTPSRedirect())
+	app.Use(middleware.Recover())
+
 	app.Static("/static", "static")
 
 	orderHandler := handler.OrderHandler{}
 	app.Any("/order", orderHandler.HandleOrderShow)
 	app.Any("/order/thanks", orderHandler.HandleOrderThankYou)
 	app.POST("/order/place", orderHandler.HandleOrderPlaced)
-	app.RouteNotFound("/", orderHandler.HandleOrderShow)
 
-	app.Start(":3000")
+	commonHandler := handler.CommonHandler{}
+	app.Any("/license", commonHandler.HandleLicenseShow)
+	app.Any("/about", commonHandler.HandleAboutShow)
+
+	app.RouteNotFound("/*", orderHandler.HandleOrderShow)
+
+	app.Logger.Fatal(app.Start(":3000"))
 }

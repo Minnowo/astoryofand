@@ -25,31 +25,31 @@ func FailIfPGPDirNotExists() {
 	}
 }
 
-func GetNewOrderName() string {
+func GetNewOrderName(uid string) string {
 
 	formattedDateTime := time.Now().Format("2006-01-02_15-04-05")
-
-	uid := uuid.NewString()
 
 	return fmt.Sprintf("%s%s.asc", formattedDateTime, uid)
 
 }
 
-func WritePGPOrder(json []byte) error {
+func WritePGPOrder(json []byte) (string, error) {
 
 	armor, err_ := helper.EncryptBinaryMessageArmored(string(assets.PublicKeyBytes), json)
 
 	if err_ != nil {
-		return err_
+		return "", err_
 	}
 
-	outfile := filepath.Join(assets.PGPOutputDir, GetNewOrderName())
+	orderId := uuid.NewString()
+
+	outfile := filepath.Join(assets.PGPOutputDir, GetNewOrderName(orderId))
 
 	err := os.WriteFile(outfile, []byte(armor), 0644)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	return orderId, nil
 }

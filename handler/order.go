@@ -3,24 +3,26 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
+	"net/url"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 	"github.com/minnowo/astoryofand/assets"
 	"github.com/minnowo/astoryofand/handler/crypto"
 	"github.com/minnowo/astoryofand/model"
-	"github.com/minnowo/astoryofand/view/order"
+	"github.com/minnowo/astoryofand/view/pages"
 )
 
 type OrderHandler struct {
 }
 
 func (h *OrderHandler) HandleOrderShow(c echo.Context) error {
-	return render(c, order.ShowOrderPage(assets.BoxSetPrice, assets.StickerCost))
+	return render(c, pages.ShowOrderPage(assets.BoxSetPrice, assets.StickerCost))
 }
 
 func (h *OrderHandler) HandleOrderThankYou(c echo.Context) error {
-	return render(c, order.ShowOrderPage(assets.BoxSetPrice, assets.StickerCost))
+
+	return render(c, pages.ShowOrderThanks(c.QueryParam("oid")))
 }
 
 func (h *OrderHandler) HandleOrderPlaced(c echo.Context) error {
@@ -46,10 +48,17 @@ func (h *OrderHandler) HandleOrderPlaced(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Server Error!")
 	}
 
-	if err := crypto.WritePGPOrder(jsonData); err != nil {
+	if oid, err := crypto.WritePGPOrder(jsonData); err != nil {
+
 		log.Debug(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, "Server Error!")
+	} else {
+
+		params := url.Values{}
+
+		params.Add("oid", oid)
+
+		return c.Redirect(http.StatusPermanentRedirect, "/order/thanks?"+params.Encode())
 	}
 
-	return c.Redirect(http.StatusPermanentRedirect, "/order/thanks")
 }
