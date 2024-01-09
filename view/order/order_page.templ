@@ -3,18 +3,11 @@ package order
 import (
 	"github.com/minnowo/astoryofand/view"
     "github.com/minnowo/astoryofand/view/layout"
-    "strconv"
+	"github.com/minnowo/astoryofand/view/components"
 )
 
 
-templ CodeHighlightFloat(value float32) {
-    <code>
-        { strconv.FormatFloat(float64(value), 'f', 2, 32) }
-    </code>
-}
-
-
-templ Show(boxPrice, stickerPrice float32) {
+templ ShowOrderPage(boxPrice, stickerPrice float32) {
 
     @layout.Page(view.PAGE_TITLE) {
 
@@ -55,7 +48,7 @@ templ Show(boxPrice, stickerPrice float32) {
                 <h3 class="no-margin"> How many box sets do you want? </h3>
                 <p class="no-margin"> 
                     The price is 
-                    @CodeHighlightFloat(boxPrice){}
+                    @components.CodeHighlightFloat(boxPrice){}
                     &nbsp;per. 
                 </p>
                 <input type="number" name="boxsetcount" value="1" min="0" max="999" required/>
@@ -67,7 +60,7 @@ templ Show(boxPrice, stickerPrice float32) {
                 <h3 class="no-margin"> How many card sets do you want? </h3>
                 <p class="no-margin"> 
                     The price is 
-                    @CodeHighlightFloat(stickerPrice){}
+                    @components.CodeHighlightFloat(stickerPrice){}
                     &nbsp;per. 
                 </p>
                 <input type="number" name="cardsetcount" value="1" min="0" max="999" required/>

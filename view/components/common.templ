@@ -1,0 +1,9 @@
+package components
+
+import "strconv"
+
+templ CodeHighlightFloat(value float32) {
+    <code>
+        { strconv.FormatFloat(float64(value), 'f', 2, 32) }
+    </code>
+}

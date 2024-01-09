@@ -16,11 +16,11 @@ type OrderHandler struct {
 }
 
 func (h *OrderHandler) HandleOrderShow(c echo.Context) error {
-	return render(c, order.Show(assets.BoxSetPrice, assets.StickerCost))
+	return render(c, order.ShowOrderPage(assets.BoxSetPrice, assets.StickerCost))
 }
 
 func (h *OrderHandler) HandleOrderThankYou(c echo.Context) error {
-	return render(c, order.Show(assets.BoxSetPrice, assets.StickerCost))
+	return render(c, order.ShowOrderPage(assets.BoxSetPrice, assets.StickerCost))
 }
 
 func (h *OrderHandler) HandleOrderPlaced(c echo.Context) error {
