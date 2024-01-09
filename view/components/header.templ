@@ -1,0 +1,22 @@
+package components
+
+templ Navbar(title, brandName string){
+
+    <nav class="navbar">
+        <div class="navbar-collapse nav_pad">
+            <a class="navbar-brand container-transition" href="/">
+                <img src="/static/favicon.png"/>
+                { brandName }
+            </a>
+
+            <div class="navbar-nav container-transition">
+                <a class="nav-item nav-link link-fade" href="/">/home</a>
+                <a class="nav-item nav-link link-fade" href="/">/notes</a>
+                <a class="nav-item nav-link link-fade" href="/">/archive</a>
+                <a class="nav-item nav-link link-fade" href="/">/tags</a>
+                <a class="nav-item nav-link link-fade" href="/">/links</a>
+                <a class="nav-item nav-link link-fade" href="/">/about</a>
+            </div>
+        </div>
+    </nav>
+}

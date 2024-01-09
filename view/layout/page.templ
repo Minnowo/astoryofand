@@ -1,0 +1,32 @@
+package layout
+
+import "github.com/minnowo/astoryofand/view/components"
+
+templ Page(title string){
+
+    @Base(title) {
+
+        @components.Navbar(title, title)
+
+        <div class="wrapper">
+
+            <div class="content container container-center">
+          
+                    <div class="container-content-left container-transition dynamic-margin" style="padding: 0;">
+
+                        <div class="card">
+
+                        { children... }
+
+                        </div>
+
+                    </div>
+            
+            </div>
+
+            @components.Footer()
+
+        </div>
+
+    }
+}

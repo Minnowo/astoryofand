@@ -2,13 +2,14 @@ package crypto
 
 import (
 	"fmt"
-	"minno/astoryofand/assets"
 	"os"
 	"path/filepath"
 	"time"
 
 	"github.com/ProtonMail/gopenpgp/v2/helper"
 	"github.com/google/uuid"
+	"github.com/labstack/gommon/log"
+	"github.com/minnowo/astoryofand/assets"
 )
 
 func FailIfPGPDirNotExists() {
@@ -18,7 +19,7 @@ func FailIfPGPDirNotExists() {
 		err := os.Mkdir(assets.PGPOutputDir, os.ModePerm)
 
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "error: Cannot create %s, and it does not exist!\n", assets.PGPOutputDir)
+			log.Error("error: Cannot create ", assets.PGPOutputDir, ", and it does not exist!\n")
 			os.Exit(1)
 		}
 	}
@@ -34,13 +35,12 @@ func GetNewOrderName() string {
 
 }
 
-func WritePGPOrder(json []byte) bool {
+func WritePGPOrder(json []byte) error {
 
 	armor, err_ := helper.EncryptBinaryMessageArmored(string(assets.PublicKeyBytes), json)
 
 	if err_ != nil {
-		fmt.Println("Could not encrypt message with armor")
-		return false
+		return err_
 	}
 
 	outfile := filepath.Join(assets.PGPOutputDir, GetNewOrderName())
@@ -48,11 +48,8 @@ func WritePGPOrder(json []byte) bool {
 	err := os.WriteFile(outfile, []byte(armor), 0644)
 
 	if err != nil {
-		fmt.Println("Could not encrypt message with armor")
-		return false
+		return err
 	}
 
-	fmt.Println(armor)
-
-	return true
+	return nil
 }

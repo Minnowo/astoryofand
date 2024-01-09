@@ -1,6 +1,4 @@
-package orders
-
-import "minno/astoryofand/assets"
+package model
 
 type Order struct {
 	Email          string  `json:"email" form:"email"`
@@ -17,12 +15,12 @@ type Order struct {
 	OtherPay       string  `json:"otherpay" form:"otherpay"`
 }
 
-func CheckValidOrder(o Order) bool {
+func (o *Order) CheckValidOrder() bool {
 
-	if assets.IsEmptyOrWhitespace(o.Email) ||
-		assets.IsEmptyOrWhitespace(o.PayMethod) ||
-		assets.IsEmptyOrWhitespace(o.FullName) ||
-		assets.IsEmptyOrWhitespace(o.DeliveryMethod) {
+	if IsEmptyOrWhitespace(o.Email) ||
+		IsEmptyOrWhitespace(o.PayMethod) ||
+		IsEmptyOrWhitespace(o.FullName) ||
+		IsEmptyOrWhitespace(o.DeliveryMethod) {
 		return false
 	}
 
