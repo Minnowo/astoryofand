@@ -1,5 +1,7 @@
 package model
 
+import "github.com/minnowo/astoryofand/util"
+
 type Order struct {
 	Email          string  `json:"email" form:"email"`
 	PayMethod      string  `json:"paymethod" form:"paymethod"`
@@ -17,10 +19,10 @@ type Order struct {
 
 func (o *Order) CheckValidOrder() bool {
 
-	if IsEmptyOrWhitespace(o.Email) ||
-		IsEmptyOrWhitespace(o.PayMethod) ||
-		IsEmptyOrWhitespace(o.FullName) ||
-		IsEmptyOrWhitespace(o.DeliveryMethod) {
+	if util.IsEmptyOrWhitespace(o.Email) ||
+		util.IsEmptyOrWhitespace(o.PayMethod) ||
+		util.IsEmptyOrWhitespace(o.FullName) ||
+		util.IsEmptyOrWhitespace(o.DeliveryMethod) {
 		return false
 	}
 

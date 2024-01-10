@@ -1,51 +1,56 @@
 package crypto
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
-	"time"
 
 	"github.com/ProtonMail/gopenpgp/v2/helper"
-	"github.com/google/uuid"
 	"github.com/labstack/gommon/log"
-	"github.com/minnowo/astoryofand/assets"
+	"github.com/minnowo/astoryofand/util"
 )
 
-func FailIfPGPDirNotExists() {
+type PGPEncryptionWriter struct {
+	PublicKey       string
+	OutputDirectory string
+}
 
-	if _, err := os.Stat(assets.PGPOutputDir); os.IsNotExist(err) {
+func (p *PGPEncryptionWriter) EnsureCanWriteDiskOrExit() {
 
-		err := os.Mkdir(assets.PGPOutputDir, os.ModePerm)
+	var fileInfo os.FileInfo
+	var err error
 
-		if err != nil {
-			log.Error("error: Cannot create ", assets.PGPOutputDir, ", and it does not exist!\n")
-			os.Exit(1)
+	if fileInfo, err = os.Stat(p.OutputDirectory); os.IsNotExist(err) {
+
+		if err = os.Mkdir(p.OutputDirectory, os.ModePerm); err != nil {
+			log.Fatal("error: Cannot create ", p.OutputDirectory, ", and it does not exist!\n")
 		}
+
+	}
+
+	if !fileInfo.IsDir() {
+		log.Fatal(p.OutputDirectory, " is not a directory")
+	}
+
+	if mode := fileInfo.Mode(); mode.Perm()&0200 == 0 {
+		log.Fatal(p.OutputDirectory, " does not have write permissions")
+	} else {
+		log.Debug(p.OutputDirectory, " has file permissions ", mode)
 	}
 }
 
-func GetNewOrderName(uid string) string {
+func (p *PGPEncryptionWriter) SaveAndEncryptData(json []byte) (string, error) {
 
-	formattedDateTime := time.Now().Format("2006-01-02_15-04-05")
+	armor, err := helper.EncryptBinaryMessageArmored(p.PublicKey, json)
 
-	return fmt.Sprintf("%s%s.asc", formattedDateTime, uid)
-
-}
-
-func WritePGPOrder(json []byte) (string, error) {
-
-	armor, err_ := helper.EncryptBinaryMessageArmored(string(assets.PublicKeyBytes), json)
-
-	if err_ != nil {
-		return "", err_
+	if err != nil {
+		return "", err
 	}
 
-	orderId := uuid.NewString()
+	orderId := util.GetOrderID()
 
-	outfile := filepath.Join(assets.PGPOutputDir, GetNewOrderName(orderId))
+	outfile := filepath.Join(p.OutputDirectory, util.GetNewOrderName(orderId))
 
-	err := os.WriteFile(outfile, []byte(armor), 0644)
+	err = os.WriteFile(outfile, []byte(armor), 0644)
 
 	if err != nil {
 		return "", err

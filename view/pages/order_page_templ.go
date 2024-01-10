@@ -277,7 +277,7 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</label><br><textarea type=\"text\" id=\"otherdelivery\" name=\"otherdelivery\"></textarea></div></div><div style=\"justify-content:end; display:flex;\"><input style=\"width:33%;\" type=\"submit\" value=\"Submit Order\" required></div></form><script>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</label><br><textarea type=\"text\" id=\"otherdelivery\" name=\"otherdelivery\"></textarea></div></div><div style=\"justify-content: end; display: flex;\"><input style=\"width:33%;\" type=\"submit\" value=\"Submit Order\" required></div></form><script>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

@@ -10,19 +10,21 @@ import (
 	"github.com/minnowo/astoryofand/assets"
 	"github.com/minnowo/astoryofand/handler/crypto"
 	"github.com/minnowo/astoryofand/model"
+	"github.com/minnowo/astoryofand/util"
 	"github.com/minnowo/astoryofand/view/pages"
 )
 
 type OrderHandler struct {
+	EncryptionWriter crypto.EncryptionWriter
 }
 
 func (h *OrderHandler) HandleOrderShow(c echo.Context) error {
-	return render(c, pages.ShowOrderPage(assets.BoxSetPrice, assets.StickerCost))
+	return util.EchoRenderTempl(c, pages.ShowOrderPage(assets.BoxSetPrice, assets.StickerCost))
 }
 
 func (h *OrderHandler) HandleOrderThankYou(c echo.Context) error {
 
-	return render(c, pages.ShowOrderThanks(c.QueryParam("oid")))
+	return util.EchoRenderTempl(c, pages.ShowOrderThanks(c.QueryParam("oid")))
 }
 
 func (h *OrderHandler) HandleOrderPlaced(c echo.Context) error {
@@ -48,7 +50,7 @@ func (h *OrderHandler) HandleOrderPlaced(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Server Error!")
 	}
 
-	if oid, err := crypto.WritePGPOrder(jsonData); err != nil {
+	if oid, err := h.EncryptionWriter.SaveAndEncryptData(jsonData); err != nil {
 
 		log.Debug(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, "Server Error!")

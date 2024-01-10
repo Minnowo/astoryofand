@@ -11,7 +11,7 @@ import "io"
 import "bytes"
 
 import (
-	"github.com/minnowo/astoryofand/model"
+	"github.com/minnowo/astoryofand/util"
 	"github.com/minnowo/astoryofand/view"
 	"github.com/minnowo/astoryofand/view/layout"
 )
@@ -48,7 +48,7 @@ func ShowOrderThanks(orderId string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			if !model.IsEmptyOrWhitespace(orderId) {
+			if !util.IsEmptyOrWhitespace(orderId) {
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<p>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err

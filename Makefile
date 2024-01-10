@@ -10,7 +10,7 @@ build: cmd/main.go | build_template
 	go build -o main cmd/main.go
 
 run:  | build_template
-	@DEBUG=false LOG_LEVEL=1 go run cmd/main.go
+	@DEBUG=false LOG_LEVEL=2 go run cmd/main.go
 
 debug: | build_template
-	@DEBUG=true LOG_LEVEL=0 go run cmd/main.go
+	@DEBUG=true go run cmd/main.go
