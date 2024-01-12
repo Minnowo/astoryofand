@@ -15,7 +15,8 @@
     --post-panel-color: #1f1f1f;
     --note-color: #87cefa;
     --warning-color: #ffff00;
-    --top-line-strip-color: #e37fcd;
+    /* --top-line-strip-color: #e37fcd; */
+    --top-line-strip-color: #e18103;
 
     --footer-background-color: #00000000;
     --footer-link-color: #777;
@@ -83,7 +84,10 @@ body {
 
     font-family: var(--font-family-sans-serif-b);
     color: var(--font-color);
-    background: var(--background-color)
+    /* background:  */
+    background: var(--background-color) url(/static/background2.png);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 h1 { font-size: 2em; }
