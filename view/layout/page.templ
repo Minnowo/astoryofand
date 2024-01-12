@@ -8,25 +8,32 @@ templ Page(title string){
 
         @components.Navbar(title, title)
 
-        <div class="wrapper">
+        <body>
 
-            <div class="content container container-center">
+            <main>
+
+                <div class="wrapper">
+
+                    <div class="content container container-center">
           
-                    <div class="container-content-left container-transition dynamic-margin" style="padding: 0;">
+                            <div class="container-content-left container-transition dynamic-margin" style="padding: 0;">
 
-                        <div class="card">
+                                <div class="card">
 
-                        { children... }
+                                { children... }
 
-                        </div>
+                                </div>
 
-                    </div>
+                            </div>
             
-            </div>
+                    </div>
+
+                </div>
+
+            </main>
 
             @components.Footer()
 
-        </div>
-
+        </body>
     }
 }

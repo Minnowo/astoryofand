@@ -18,7 +18,8 @@
     /* --top-line-strip-color: #e37fcd; */
     --top-line-strip-color: #e18103;
 
-    --footer-background-color: #00000000;
+    /* --footer-background-color: #00000000; */
+    --footer-background-color: #222222;
     --footer-link-color: #777;
     
     --scrollbar-track-color: #171717;
@@ -73,7 +74,14 @@ html {
     tap-highlight-color: var(--tap-highlight-color);
 }
 
+main {
+  flex: 1;
+}
+
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     margin: 0;
     font-size: 1rem;
     font-weight: 400;
@@ -269,9 +277,9 @@ a:hover {
   position: relative;
 }
 
-.content{
+/* .content{
   padding-bottom: 250px;
-}
+} */
 
 .card {
   background-color: var(--post-panel-color);
@@ -307,7 +315,6 @@ blockquote {
   bottom: 0;
   left: 0;
   width: 100%;
-  position: absolute;
 
   font: normal 16px var(--font-family-sans-serif);
   background-color: var(--footer-background-color);
@@ -443,6 +450,7 @@ more info: http://pavelmakhov.com/2015/12/images-in-jekyll */
   margin-left: 1vw;
   margin-right: 1vw;
   margin-top: 1vw;
+  margin-bottom: 1vw;
 }
 
 .container-hidden {
