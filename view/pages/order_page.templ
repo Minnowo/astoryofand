@@ -24,7 +24,7 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
 	    <form id="place_order_form" class="hpad30p" action="/order/place" method="POST">
 
             <center>
-                <h2>Order ~A Story Of And~</h2>
+                <h2>Order ~{ view.TITLE }~</h2>
             </center>
 
             <br/>
@@ -44,7 +44,7 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
             <br/>
 
             <div>
-                <h3 class="no-margin"> How many box sets do you want? </h3>
+                <h3 class="no-margin"> How many A Story Of And Box Sets do you want? </h3>
                 <p class="no-margin"> 
                     The price is 
                     @components.CodeHighlightFloat(boxPrice){}
@@ -56,7 +56,7 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
             <br/>
 
             <div>
-                <h3 class="no-margin"> How many card sets do you want? </h3>
+                <h3 class="no-margin"> How many #VeryAsian Waterproof Vinyl Stickers do you want? </h3>
                 <p class="no-margin"> 
                     The price is 
                     @components.CodeHighlightFloat(stickerPrice){}

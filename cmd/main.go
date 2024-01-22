@@ -80,10 +80,12 @@ func main() {
 	app.POST("/order/place", orderHandler.HandleOrderPlaced)
 
 	commonHandler := handler.CommonHandler{}
+	app.Any("/home", commonHandler.HandleHome)
+	app.Any("/uses", commonHandler.HandleUses)
 	app.Any("/license", commonHandler.HandleLicenseShow)
 	app.Any("/about", commonHandler.HandleAboutShow)
 
-	app.RouteNotFound("/*", orderHandler.HandleOrderShow)
+	app.RouteNotFound("/*", commonHandler.HandleHome)
 
 	app.Logger.Fatal(app.Start(":3000"))
 }

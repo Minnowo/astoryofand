@@ -15,7 +15,7 @@ import (
 	"github.com/minnowo/astoryofand/view/layout"
 )
 
-func ShowAboutPage() templ.Component {
+func ShowHomePage() templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -44,56 +44,18 @@ func ShowAboutPage() templ.Component {
                 background: rgba(255,255,255,0.5);
             }
 
-            .special_form {
-                height: 100%;
-            }
-
-            .title {
-                max-width: 100%;
-                height: auto;
-            }
-
-            .image1, .image2, .image3 {
-                display: inline-block;
-                height:fit-content!important;
-                max-width: none !important;
-                max-height: none !important;
-            }
-
-            .image1 {
-                width: 15%  !important;
-            }
-
-            .image2 {
-                width: 55%  !important;
-            }
-
-            .image3 {
-                width: 50px  !important;
-                margin-left: 0;
-            }
-
-            .image4 {
-                width: 80%  !important;
-            }
-
-            .quote_container {
-                display: flex;
-            }
-
-            .bubble_bg {
-                background: url(/static/images/bubble.png);
-                background-size: 100% 100%;
+            main_im {
+                background-size: cover;
                 background-repeat: no-repeat;
+                margin: auto;
             }
-
 
         `
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</style> <form class=\"special_form\"><div class=\"quote_container\"><img class=\"title nobg noborder\" src=\"/static/images/title.png\" style=\"margin-bottom: -50px;\"></div><div class=\"quote_container bubble_bg\"><img class=\"image4 title nobg noborder\" src=\"/static/images/text1.png\" style=\"padding-top: 100px; padding-bottom: 100px;\"></div><div class=\"quote_container\"><img class=\"image3 flipim nobg noborder\" src=\"/static/images/megaphone_man.png\"><div style=\"max-width: 850px;\"><img class=\"image1 nobg noborder\" src=\"/static/images/mich.png\"> <img class=\"image2 nobg noborder\" src=\"/static/images/text.png\"> <img class=\"image1 nobg noborder\" src=\"/static/images/jo.png\" style=\"margin-top: 10%;\"></div></div><div class=\"quote_container\"></div></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</style> <center><img class=\"center main_im nobg noborder\" src=\"/static/images/nest.png\"></center>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

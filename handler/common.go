@@ -16,3 +16,10 @@ func (h *CommonHandler) HandleLicenseShow(c echo.Context) error {
 func (h *CommonHandler) HandleAboutShow(c echo.Context) error {
 	return util.EchoRenderTempl(c, pages.ShowAboutPage())
 }
+
+func (h *CommonHandler) HandleUses(c echo.Context) error {
+	return util.EchoRenderTempl(c, pages.ShowUsesPage())
+}
+func (h *CommonHandler) HandleHome(c echo.Context) error {
+	return util.EchoRenderTempl(c, pages.ShowHomePage())
+}

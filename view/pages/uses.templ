@@ -1,0 +1,63 @@
+package pages
+
+import (
+	"github.com/minnowo/astoryofand/view"
+    "github.com/minnowo/astoryofand/view/layout"
+)
+
+
+templ ShowUsesPage() {
+
+    @layout.Page(view.PAGE_TITLE) {
+
+        <form class="auto-margin hpad30p">
+
+            <center>
+                <h2>How might you use { view.TITLE }?</h2>
+            </center>
+
+            <h3>
+                See how others are using { view.TITLE } in your life?
+
+                To Share Your Ideas
+            </h3>
+
+	    <form id="place_order_form" class="hpad30p" action="/order/place" method="POST">
+
+            <br/>
+
+            <div>
+                <h3 class="no-margin"> What is your Email? </h3>
+                <input type="email" name="email" placeholder="Semple@Email.com" required/>
+            </div>
+
+            <br/>
+
+            <div>
+                <h3 class="no-margin"> What is your Name? </h3>
+                <input type="text" name="fullname" placeholder="FirstName LastName" required/>
+            </div>
+
+            <br/>
+
+            <div>
+                <h3 class="no-margin"> Enter your comment here </h3>
+                <textarea  type="text" id="otherdelivery" name="otherdelivery"> </textarea>
+            </div>
+
+            <br/>
+
+
+            <div style="justify-content: end; display: flex;">
+                <input style="width:33%;" type="submit" value="Submit" required/>
+            </div>
+
+	    </form>
+
+
+        </form>
+
+
+
+    }
+}

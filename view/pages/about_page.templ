@@ -8,11 +8,92 @@ import (
 
 templ ShowAboutPage() {
 
-    @layout.Page(view.PAGE_TITLE) {
+    @layout.Page2(view.PAGE_TITLE) {
 
-	    <form class="hpad30p">
+        <style>
+
+            main {
+                background: rgba(255,255,255,0.5);
+            }
+
+            .special_form {
+                height: 100%;
+            }
+
+            .title {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .image1, .image2, .image3 {
+                display: inline-block;
+                height:fit-content!important;
+                max-width: none !important;
+                max-height: none !important;
+            }
+
+            .image1 {
+                width: 15%  !important;
+            }
+
+            .image2 {
+                width: 55%  !important;
+            }
+
+            .image3 {
+                width: 50px  !important;
+                margin-left: 0;
+            }
+
+            .image4 {
+                width: 80%  !important;
+            }
+
+            .quote_container {
+                display: flex;
+            }
+
+            .bubble_bg {
+                background: url(/static/images/bubble.png);
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+            }
 
 
+        </style>
+
+	    <form class="special_form">
+
+            <div class="quote_container">
+                <img class="title nobg noborder" src="/static/images/title.png"
+                    style="margin-bottom: -50px;"
+                />
+            </div>
+
+
+            <div class="quote_container bubble_bg">
+                <img class="image4 title nobg noborder" src="/static/images/text1.png"
+                    style="padding-top: 100px; padding-bottom: 100px;"
+                />
+            </div>
+
+            <div class="quote_container">
+
+                <img class="image3 flipim nobg noborder" src="/static/images/megaphone_man.png"/>
+
+                <div style="max-width: 850px;">
+                    <img class="image1 nobg noborder" src="/static/images/mich.png" />
+                    <img class="image2 nobg noborder" src="/static/images/text.png"/>
+                    <img class="image1 nobg noborder" src="/static/images/jo.png" 
+                        style="margin-top: 10%;" />
+                </div>
+            </div>
+
+            <div class="quote_container">
+            </div>
+
+        // <div style="height: 50vw;">
+        // </div>
 
         </form>
 
