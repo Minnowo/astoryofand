@@ -18,6 +18,9 @@ ENV DEBUG=false
 COPY --from=builder /app/main .
 COPY --from=builder /app/static ./static
 
+# where the app writes encrypted data
+VOLUME /app/enc
+
 EXPOSE 3000
 
 CMD ["./main"]
