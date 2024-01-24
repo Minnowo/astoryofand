@@ -23,7 +23,7 @@ func (p *PGPEncryptionWriter) EnsureCanWriteDiskOrExit() {
 
 	if os.IsNotExist(err) {
 
-		if err = os.Mkdir(p.OutputDirectory, os.ModePerm); err != nil {
+		if err = os.MkdirAll(p.OutputDirectory, os.ModePerm); err != nil {
 			log.Fatal("error: Cannot create ", p.OutputDirectory, ", and it does not exist!\n")
 		}
 

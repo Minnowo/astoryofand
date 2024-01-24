@@ -1,8 +1,11 @@
 
+/bin
 /pgp_out
+/enc
 /assets/go_pub.gpg
 image.tar
 main
+./deploy.sh
 
 
 

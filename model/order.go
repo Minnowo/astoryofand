@@ -17,7 +17,7 @@ type Order struct {
 	OtherPay       string  `json:"otherpay" form:"otherpay"`
 }
 
-func (o *Order) CheckValidOrder() bool {
+func (o *Order) CheckValid() bool {
 
 	if util.IsEmptyOrWhitespace(o.Email) ||
 		util.IsEmptyOrWhitespace(o.PayMethod) ||

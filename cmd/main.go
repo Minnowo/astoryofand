@@ -50,22 +50,25 @@ func initLogging(app *echo.Echo) {
 func main() {
 
 	var app *echo.Echo
-	var encryption crypto.EncryptionWriter
+	var orderEncryption crypto.EncryptionWriter
+	var usesEncryption crypto.EncryptionWriter
 
 	app = echo.New()
 
 	initLogging(app)
 
-	encryption = &crypto.PGPEncryptionWriter{
+	orderEncryption = &crypto.PGPEncryptionWriter{
 		PublicKey:       string(assets.PublicKeyBytes),
 		OutputDirectory: assets.PGPOutputDir,
 	}
-	// encryption = &crypto.FakeEncryptionWriter{
-	// 	AlwaysFailWrite: true,
-	// 	OutputDirectory: assets.PGPOutputDir,
-	// }
 
-	encryption.EnsureCanWriteDiskOrExit()
+	usesEncryption = &crypto.PGPEncryptionWriter{
+		PublicKey:       string(assets.PublicKeyBytes),
+		OutputDirectory: assets.UsesOutputDir,
+	}
+
+	orderEncryption.EnsureCanWriteDiskOrExit()
+	usesEncryption.EnsureCanWriteDiskOrExit()
 
 	// app.Use(middleware.HTTPSRedirect())
 	app.Use(middleware.Recover())
@@ -73,15 +76,23 @@ func main() {
 	app.Static("/static", "static")
 
 	orderHandler := handler.OrderHandler{
-		EncryptionWriter: encryption,
+		EncryptionWriter: orderEncryption,
 	}
-	app.Any("/order", orderHandler.HandleOrderShow)
-	app.Any("/order/thanks", orderHandler.HandleOrderThankYou)
-	app.POST("/order/place", orderHandler.HandleOrderPlaced)
+	order := app.Group("/order")
+	order.Any("", orderHandler.HandleOrderShow)
+	order.Any("/thanks", orderHandler.HandleOrderThankYou)
+	order.POST("/place", orderHandler.HandleOrderPlaced)
+
+	usesHandler := handler.UsesHandler{
+		EncryptionWriter: usesEncryption,
+	}
+	uses := app.Group("/uses")
+	uses.Any("", usesHandler.HandleUsesGET)
+	uses.Any("/thanks", usesHandler.HandleUsesThankYouGET)
+	uses.POST("/place", usesHandler.HandleUsesPOST)
 
 	commonHandler := handler.CommonHandler{}
 	app.Any("/home", commonHandler.HandleHome)
-	app.Any("/uses", commonHandler.HandleUses)
 	app.Any("/license", commonHandler.HandleLicenseShow)
 	app.Any("/about", commonHandler.HandleAboutShow)
 
