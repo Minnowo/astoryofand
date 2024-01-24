@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"os"
 	"path"
 	"path/filepath"
@@ -50,7 +49,6 @@ func decryptFilesIn(srcDir, dstDir, passwordStr string) {
 		password = nil
 	}
 
-	// Print the names of all files
 	log.Infof("Searching files in %s", srcDir)
 
 	for _, file := range files {
@@ -86,10 +84,6 @@ func main() {
 
 	log.SetHeader("${level}")
 	log.SetLevel(log.INFO)
-
-	// var bytes [1]byte
-	// helper.DecryptBinaryMessageArmored(assets.PrivateKeyBytes, bytes[:], "")
-	fmt.Println("Private key: ", assets.PrivateKeyBytes)
 
 	var inputDir string
 	var outputDir string

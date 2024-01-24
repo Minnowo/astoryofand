@@ -49,6 +49,11 @@ func initLogging(app *echo.Echo) {
 
 func main() {
 
+	// sanity check, I don't want to accidentally include the private key in here
+	if len(assets.PrivateKeyBytes) != 0 {
+		panic("assets.PrivateKeyBytes has non-zero length! The Private Key may be embeded!")
+	}
+
 	var app *echo.Echo
 	var orderEncryption crypto.EncryptionWriter
 	var usesEncryption crypto.EncryptionWriter
