@@ -5,7 +5,7 @@
 /assets/go_pub.gpg
 image.tar
 main
-./deploy.sh
+deploy.sh
 
 
 
