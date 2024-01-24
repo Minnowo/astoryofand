@@ -58,12 +58,12 @@ func main() {
 	initLogging(app)
 
 	orderEncryption = &crypto.PGPEncryptionWriter{
-		PublicKey:       string(assets.PublicKeyBytes),
+		PublicKey:       assets.PublicKeyBytes,
 		OutputDirectory: assets.PGPOutputDir,
 	}
 
 	usesEncryption = &crypto.PGPEncryptionWriter{
-		PublicKey:       string(assets.PublicKeyBytes),
+		PublicKey:       assets.PublicKeyBytes,
 		OutputDirectory: assets.UsesOutputDir,
 	}
 

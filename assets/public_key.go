@@ -5,4 +5,4 @@ import (
 )
 
 //go:embed go_pub.gpg
-var PublicKeyBytes []byte
+var PublicKeyBytes string

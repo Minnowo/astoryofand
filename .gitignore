@@ -1,12 +1,13 @@
 
 /bin
-/pgp_out
 /enc
-/assets/go_pub.gpg
-image.tar
-main
+/encd
+
 deploy.sh
 
+*.tar
+*.gpg
+*.asc
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/go
