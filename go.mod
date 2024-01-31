@@ -30,6 +30,7 @@ require (
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
+	github.com/gtuk/discordwebhook v1.2.0 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/pty v1.1.8 // indirect
 	github.com/kr/text v0.2.0 // indirect

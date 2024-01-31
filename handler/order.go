@@ -56,6 +56,8 @@ func (h *OrderHandler) HandleOrderPlaced(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Server Error!")
 	} else {
 
+		go util.SendDiscordOrderWebhook("New order with id: `" + oid + "`")
+
 		params := url.Values{}
 
 		params.Add("oid", oid)

@@ -52,6 +52,8 @@ func (u *UsesHandler) HandleUsesPOST(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Server Error!")
 	} else {
 
+		go util.SendDiscordOrderWebhook("Someone has given a Use Case!")
+
 		return c.Redirect(http.StatusPermanentRedirect, "/uses/thanks?")
 	}
 
