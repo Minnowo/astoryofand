@@ -1,5 +1,11 @@
 package assets
 
+const ENV_LOGLEVEL_KEY string = "LOG_LEVEL"
+const ENV_DEBUG_KEY string = "DEBUG"
+const ENV_FORCE_HTTPS_KEY string = "FORCE_HTTPS"
+const ENV_ADMIN_USERNAME_KEY string = "ADMIN_USERNAME"
+const ENV_ADMIN_PASSWORD_KEY string = "ADMIN_PASSWORD"
+
 const PGPOutputDir string = "./enc/pgp_out"
 const UsesOutputDir string = "./enc/uses"
 

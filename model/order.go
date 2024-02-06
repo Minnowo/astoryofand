@@ -1,10 +1,17 @@
 package model
 
-import "github.com/minnowo/astoryofand/util"
+import (
+	"fmt"
+
+	"github.com/minnowo/astoryofand/database/memorydb"
+	"github.com/minnowo/astoryofand/util"
+)
 
 type Order struct {
 	Email          string  `json:"email" form:"email"`
 	PayMethod      string  `json:"paymethod" form:"paymethod"`
+	BoxSetValue    float32 `json:"boxpricetimeofbuy" form:"boxpricevalue"`
+	StickerValue   float32 `json:"stickerpricetimeofbuy" form:"stickerpricevalue"`
 	BoxSetCount    uint32  `json:"boxsetcount" form:"boxsetcount"`
 	StickerCount   uint32  `json:"stickercount" form:"stickercount"`
 	TotalCost      float32 `json:"totalcost"`
@@ -17,18 +24,26 @@ type Order struct {
 	OtherPay       string  `json:"otherpay" form:"otherpay"`
 }
 
-func (o *Order) CheckValid() bool {
+func (o *Order) CheckValid() error {
 
 	if util.IsEmptyOrWhitespace(o.Email) ||
 		util.IsEmptyOrWhitespace(o.PayMethod) ||
 		util.IsEmptyOrWhitespace(o.FullName) ||
 		util.IsEmptyOrWhitespace(o.DeliveryMethod) {
-		return false
+		return fmt.Errorf("Missing required string values! (Email, Paymethod, Fullname, Delivery, etc)")
 	}
 
-	if o.BoxSetCount < 1 || o.StickerCount < 0 {
-		return false
+	if o.BoxSetCount < 0 || o.StickerCount < 0 {
+		return fmt.Errorf("Box set or sticker count must be > 0!")
 	}
 
-	return true
+	if !util.AlmostEqual32(o.BoxSetValue, memorydb.GetDB().GetBoxPrice()) {
+		return fmt.Errorf("The value of the box set has changed!")
+	}
+
+	if !util.AlmostEqual32(o.StickerValue, memorydb.GetDB().GetStickerPrice()) {
+		return fmt.Errorf("The value of the sticker has changed!")
+	}
+
+	return nil
 }

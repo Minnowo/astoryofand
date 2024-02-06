@@ -7,7 +7,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
-	"github.com/minnowo/astoryofand/assets"
+	"github.com/minnowo/astoryofand/database/memorydb"
 	"github.com/minnowo/astoryofand/handler/crypto"
 	"github.com/minnowo/astoryofand/model"
 	"github.com/minnowo/astoryofand/util"
@@ -19,11 +19,10 @@ type OrderHandler struct {
 }
 
 func (h *OrderHandler) HandleOrderShow(c echo.Context) error {
-	return util.EchoRenderTempl(c, order.ShowOrderPage(assets.BoxSetPrice, assets.StickerCost))
+	return util.EchoRenderTempl(c, order.ShowOrderPage(memorydb.GetDB().GetBoxPrice(), memorydb.GetDB().GetStickerPrice()))
 }
 
 func (h *OrderHandler) HandleOrderThankYou(c echo.Context) error {
-
 	return util.EchoRenderTempl(c, order.ShowOrderThanks(c.QueryParam("oid")))
 }
 
@@ -35,11 +34,13 @@ func (h *OrderHandler) HandleOrderPlaced(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "This is an invalid order!")
 	}
 
-	if !o.CheckValid() {
-		return echo.NewHTTPError(http.StatusBadRequest, "This is an invalid order!")
+	if err := o.CheckValid(); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	o.TotalCost = float32(o.BoxSetCount)*assets.BoxSetPrice + float32(o.StickerCount)*assets.StickerCost
+	// we are safe to use the o.StickerValue and o.BoxSetValue here because the above
+	// valid check ensures they are equal to the value stored in the database
+	o.TotalCost = float32(o.BoxSetCount)*o.BoxSetValue + float32(o.StickerCount)*o.StickerValue
 
 	log.Debug("Got order: ", o)
 

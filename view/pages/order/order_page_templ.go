@@ -5,12 +5,13 @@ package order
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
-import "github.com/a-h/templ"
-import "context"
-import "io"
-import "bytes"
-
 import (
+	"bytes"
+	"context"
+	"io"
+
+	"github.com/a-h/templ"
+	"github.com/minnowo/astoryofand/util"
 	"github.com/minnowo/astoryofand/view"
 	"github.com/minnowo/astoryofand/view/components"
 	"github.com/minnowo/astoryofand/view/layout"
@@ -52,7 +53,23 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</style> <form id=\"place_order_form\" class=\"hpad30p\" action=\"/order/place\" method=\"POST\"><center><h2>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</style> <form id=\"place_order_form\" class=\"hpad30p\" action=\"/order/place\" method=\"POST\"><input type=\"hidden\" name=\"boxpricevalue\" value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(util.F32TS(boxPrice)))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"> <input type=\"hidden\" name=\"stickerpricevalue\" value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(util.F32TS(stickerPrice)))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"> <center><h2>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -64,7 +81,7 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(view.TITLE)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `view/pages/order/order_page.templ`, Line: 26, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `view/pages/order/order_page.templ`, Line: 30, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {

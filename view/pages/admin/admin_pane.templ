@@ -1,0 +1,39 @@
+package admin
+
+import (
+	"github.com/minnowo/astoryofand/view"
+    "github.com/minnowo/astoryofand/view/layout"
+	"github.com/minnowo/astoryofand/util"
+	"github.com/minnowo/astoryofand/model"
+	"github.com/minnowo/astoryofand/view/components"
+)
+
+
+templ ShowAdminPane(adminView *model.AdminView) {
+
+    @layout.Page(view.PAGE_TITLE) {
+
+	    <form action="/admin/update/boxprice" method="POST">
+
+            <div>
+                <h3 class="no-margin"> Change Box Set price:  </h3>
+                <input type="number" name="boxpricevalue" value={ util.F32TS(adminView.BoxSetPrice) } min="0" max="999" required/>
+            </div>
+
+            @components.SubmitButtonRight30()
+
+        </form>
+
+	    <form action="/admin/update/stickerprice" method="POST">
+
+            <div>
+                <h3 class="no-margin"> Change Sticker price:  </h3>
+                <input type="number" name="stickerpricevalue" value={ util.F32TS(adminView.StickerCost) } min="0" max="999" required/>
+            </div>
+
+            @components.SubmitButtonRight30()
+
+        </form>
+
+    }
+}

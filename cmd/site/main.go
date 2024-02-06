@@ -9,8 +9,10 @@ import (
 	"github.com/labstack/gommon/log"
 
 	"github.com/minnowo/astoryofand/assets"
+	"github.com/minnowo/astoryofand/database/memorydb"
 	"github.com/minnowo/astoryofand/handler"
 	"github.com/minnowo/astoryofand/handler/crypto"
+	"github.com/minnowo/astoryofand/util"
 )
 
 func initLogging(app *echo.Echo) {
@@ -62,6 +64,8 @@ func main() {
 
 	initLogging(app)
 
+	memorydb.InitDB()
+
 	orderEncryption = &crypto.PGPEncryptionWriter{
 		PublicKey:       assets.PublicKeyBytes,
 		OutputDirectory: assets.PGPOutputDir,
@@ -75,17 +79,33 @@ func main() {
 	orderEncryption.EnsureCanWriteDiskOrExit()
 	usesEncryption.EnsureCanWriteDiskOrExit()
 
-	// app.Use(middleware.HTTPSRedirect())
+	if !util.IsEmptyOrWhitespace(os.Getenv(assets.ENV_FORCE_HTTPS_KEY)) {
+		app.Use(middleware.HTTPSRedirect())
+	}
 	app.Use(middleware.Recover())
 
 	app.Static("/static", "static")
 	app.File("/robots.txt", "static/robots.txt")
+
+	adminHandler := handler.AdminHandler{
+		Username: []byte(os.Getenv(assets.ENV_ADMIN_USERNAME_KEY)),
+		Password: []byte(os.Getenv(assets.ENV_ADMIN_PASSWORD_KEY)),
+	}
+	admin := app.Group("/admin")
+	admin.Use(middleware.BasicAuth(adminHandler.HandleUserPasswordAdminAuth))
+	admin.Use(middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(3)))
+	admin.Use(middleware.Logger())
+	admin.Any("", adminHandler.GetAdminPanel)
+	admin.Any("/", adminHandler.GetAdminPanel)
+	admin.POST("/update/boxprice", adminHandler.UpdateBoxPrice)
+	admin.POST("/update/stickerprice", adminHandler.UpdateStickerPrice)
 
 	orderHandler := handler.OrderHandler{
 		EncryptionWriter: orderEncryption,
 	}
 	order := app.Group("/order")
 	order.Any("", orderHandler.HandleOrderShow)
+	order.Any("/", orderHandler.HandleOrderShow)
 	order.Any("/thanks", orderHandler.HandleOrderThankYou)
 	order.POST("/place", orderHandler.HandleOrderPlaced)
 
@@ -94,15 +114,16 @@ func main() {
 	}
 	uses := app.Group("/uses")
 	uses.Any("", usesHandler.HandleUsesGET)
+	uses.Any("/", usesHandler.HandleUsesGET)
 	uses.Any("/thanks", usesHandler.HandleUsesThankYouGET)
 	uses.POST("/place", usesHandler.HandleUsesPOST)
 
 	commonHandler := handler.CommonHandler{}
+	app.Any("", commonHandler.HandleHome)
+	app.Any("/", commonHandler.HandleHome)
 	app.Any("/home", commonHandler.HandleHome)
 	app.Any("/license", commonHandler.HandleLicenseShow)
 	app.Any("/about", commonHandler.HandleAboutShow)
-
-	app.RouteNotFound("/*", commonHandler.HandleHome)
 
 	app.Logger.Fatal(app.Start(":3000"))
 }
