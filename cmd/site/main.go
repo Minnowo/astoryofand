@@ -79,6 +79,7 @@ func main() {
 	app.Use(middleware.Recover())
 
 	app.Static("/static", "static")
+	app.File("/robots.txt", "static/robots.txt")
 
 	orderHandler := handler.OrderHandler{
 		EncryptionWriter: orderEncryption,
