@@ -5,12 +5,12 @@ package pages
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
-import "github.com/a-h/templ"
-import "context"
-import "io"
-import "bytes"
-
 import (
+	"bytes"
+	"context"
+	"io"
+
+	"github.com/a-h/templ"
 	"github.com/minnowo/astoryofand/view"
 	"github.com/minnowo/astoryofand/view/layout"
 )
@@ -34,7 +34,7 @@ func ShowAboutPage() templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n\n            main {\n                background: rgba(255,255,255,0.5);\n            }\n\n            .special_form {\n                height: 100%;\n            }\n\n            .title {\n                max-width: 100%;\n                height: auto;\n            }\n\n            .image1, .image2, .image3 {\n                display: inline-block;\n                height:fit-content!important;\n                max-width: none !important;\n                max-height: none !important;\n            }\n\n            .image1 {\n                width: 15%  !important;\n            }\n\n            .image2 {\n                width: 55%  !important;\n            }\n\n            .image3 {\n                width: 50px  !important;\n                margin-left: 0;\n            }\n\n            .image4 {\n                width: 80%  !important;\n            }\n\n            .quote_container {\n                display: flex;\n            }\n\n            .bubble_bg {\n                background: url(/static/images/bubble.png);\n                background-size: 100% 100%;\n                background-repeat: no-repeat;\n            }\n\n\n        </style> <form class=\"special_form\"><div class=\"quote_container\"><img class=\"title nobg noborder\" src=\"/static/images/title.png\" style=\"margin-bottom: -50px;\"></div><div class=\"quote_container bubble_bg\"><img class=\"image4 title nobg noborder\" src=\"/static/images/text1.png\" style=\"padding-top: 100px; padding-bottom: 100px;\"></div><div class=\"quote_container\"><img class=\"image3 flipim nobg noborder\" src=\"/static/images/megaphone_man.png\"><div style=\"max-width: 850px;\"><img class=\"image1 nobg noborder\" src=\"/static/images/mich.png\"> <img class=\"image2 nobg noborder\" src=\"/static/images/text.png\"> <img class=\"image1 nobg noborder\" src=\"/static/images/jo.png\" style=\"margin-top: 10%;\"></div></div><div class=\"quote_container\"></div></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n\n            main {\n                background: rgba(255,255,255,0.5);\n            }\n\n            .special_form {\n                height: 100%;\n            }\n\n            .title {\n                max-width: 100%;\n                height: auto;\n            }\n\n            .image1, .image2, .image3 {\n                display: inline-block;\n                height:fit-content!important;\n                max-width: none !important;\n                max-height: none !important;\n            }\n\n            .image1 {\n                width: 15%  !important;\n            }\n\n            .image2 {\n                width: 55%  !important;\n            }\n\n            .image3 {\n                width: 50px  !important;\n                margin-left: 0;\n            }\n\n            .image4 {\n                width: 80%  !important;\n            }\n\n            .quote_container {\n                display: flex;\n            }\n\n            .bubble_bg {\n                background: url(/static/images/bubble.png);\n                background-size: 100% 100%;\n                background-repeat: no-repeat;\n            }\n\n\n        </style> <form class=\"special_form\"><div class=\"quote_container\"><img class=\"title nobg noborder\" src=\"/static/images/title.png\" style=\"margin-bottom: -50px;\" alt=\"Have You Ever Been &#39;Butted&#39;?\"></div><div class=\"quote_container bubble_bg\"><img class=\"image4 title nobg noborder\" src=\"/static/images/text1.png\" style=\"padding-top: 100px; padding-bottom: 100px;\" alt=\"A Story of And asks you to consider replacing the word &#39;But&#39; with the word &#39;And&#39; as a way to connect, reflect and have meaningful conversations. Using &#39;east Asian&#39; racism as an entry point, this handhelf poster series brings together symbols, visuals, analogies and prompting questions to introduce concepts related to First Nations and  east Asian worldviews and beyond. Suitable for all ages.\"></div><div class=\"quote_container\"><img class=\"image3 flipim nobg noborder\" src=\"/static/images/megaphone_man.png\"><div style=\"max-width: 850px;\"><img class=\"image1 nobg noborder\" src=\"/static/images/mich.png\" alt=\"Picture of author A\"> <img class=\"image2 nobg noborder\" src=\"/static/images/text.png\" alt=\"We hope that &#39;A Story of And&#39; helps you to see how everything is connected, including the impact racism has on individuals, communities, and non-humans.\"> <img class=\"image1 nobg noborder\" src=\"/static/images/jo.png\" style=\"margin-top: 10%;\" alt=\"Picture of author B\"></div></div><div class=\"quote_container\"></div></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

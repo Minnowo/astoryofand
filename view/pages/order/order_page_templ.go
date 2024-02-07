@@ -5,12 +5,12 @@ package order
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
-import "github.com/a-h/templ"
-import "context"
-import "io"
-import "bytes"
-
 import (
+	"bytes"
+	"context"
+	"io"
+
+	"github.com/a-h/templ"
 	"github.com/minnowo/astoryofand/util"
 	"github.com/minnowo/astoryofand/view"
 	"github.com/minnowo/astoryofand/view/components"
@@ -52,20 +52,20 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"> <center><h2>Order ~")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"> <center><h1>Order ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(view.TITLE)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `view/pages/order/order_page.templ`, Line: 30, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `view/pages/order/order_page.templ`, Line: 30, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("~</h2></center><br><div><h3 class=\"no-margin\">What is your Email? </h3><input type=\"email\" name=\"email\" placeholder=\"Semple@Email.com\" required></div><br><div><h3 class=\"no-margin\">What is your Name? </h3><input type=\"text\" name=\"fullname\" placeholder=\"FirstName LastName\" required></div><br><div><h3 class=\"no-margin\">How many A Story Of And Box Sets do you want? </h3><p class=\"no-margin\">The price is ")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h1></center><br><div><h3 class=\"no-margin\">What is your Email? </h3><input type=\"email\" name=\"email\" placeholder=\"Semple@Email.com\" required></div><br><div><h3 class=\"no-margin\">What is your Name? </h3><input type=\"text\" name=\"fullname\" placeholder=\"FirstName LastName\" required></div><br><div><h3 class=\"no-margin\">How many A Story Of And Box Sets do you want? </h3><p class=\"no-margin\">The price is ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

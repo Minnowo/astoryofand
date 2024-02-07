@@ -5,12 +5,12 @@ package uses
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
-import "github.com/a-h/templ"
-import "context"
-import "io"
-import "bytes"
-
 import (
+	"bytes"
+	"context"
+	"io"
+
+	"github.com/a-h/templ"
 	"github.com/minnowo/astoryofand/view"
 	"github.com/minnowo/astoryofand/view/layout"
 )
@@ -34,7 +34,7 @@ func ShowUsesPage() templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n\n            #place_order_form > div ,\n            #place_order_form select,\n            #place_order_form input, \n            #place_order_form textarea{\n                width: 100%;\n            }\n\n        </style> <form id=\"place_order_form\" class=\"auto-margin hpad30p\" action=\"/uses/place\" method=\"post\"><center><h2>How might you use ")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n\n            #place_order_form > div ,\n            #place_order_form select,\n            #place_order_form input, \n            #place_order_form textarea{\n                width: 100%;\n            }\n\n        </style> <form id=\"place_order_form\" class=\"auto-margin hpad30p\" action=\"/uses/place\" method=\"post\"><center><h1>How might you use ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -47,7 +47,7 @@ func ShowUsesPage() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("?</h2></center><br><h3>We would love to hear how you are using ")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("?</h1></center><br><h2>We would love to hear how you are using ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -60,7 +60,7 @@ func ShowUsesPage() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" in your life. Please let us know!</h3><br><div><h3 class=\"no-margin\">What is your Email? </h3><input type=\"email\" name=\"email\" placeholder=\"Semple@Email.com\" required></div><br><div><h3 class=\"no-margin\">What is your Name? </h3><input type=\"text\" name=\"fullname\" placeholder=\"FirstName LastName\" required></div><br><div><h3 class=\"no-margin\">Enter your comment here </h3><textarea type=\"text\" name=\"comment\" required></textarea></div><br><div style=\"justify-content: end; display: flex;\"><input style=\"width:33%;\" type=\"submit\" value=\"Submit\" required></div></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" in your life. Please let us know!</h2><br><div><h3 class=\"no-margin\">What is your Email? </h3><input type=\"email\" name=\"email\" placeholder=\"Semple@Email.com\" required></div><br><div><h3 class=\"no-margin\">What is your Name? </h3><input type=\"text\" name=\"fullname\" placeholder=\"FirstName LastName\" required></div><br><div><h3 class=\"no-margin\">Enter your comment here </h3><textarea type=\"text\" name=\"comment\" required></textarea></div><br><div style=\"justify-content: end; display: flex;\"><input style=\"width:33%;\" type=\"submit\" value=\"Submit\" required></div></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
