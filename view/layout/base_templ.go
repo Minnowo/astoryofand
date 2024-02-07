@@ -5,13 +5,10 @@ package layout
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
-import (
-	"bytes"
-	"context"
-	"io"
-
-	"github.com/a-h/templ"
-)
+import "github.com/a-h/templ"
+import "context"
+import "io"
+import "bytes"
 
 func Base(title string) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
@@ -26,7 +23,7 @@ func Base(title string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><meta name=\"robots\" content=\"index, follow\"><meta name=\"keywords\" content=\"a story of and, astoryofand, book, east asian, first nations\"><meta name=\"description\" content=\"A Story of And is a book which asks you to consider replacing the word &#39;but&#39; with the word &#39;and&#39; as a way to connect, reflect and have meaningful conversations.\"><title>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><meta name=\"robots\" content=\"index, follow\"><meta name=\"keywords\" content=\"a story of and, astoryofand, book, east asian, first nations, race, racism, model minority, racial literacy, ants, land, doctrine of discovery, forever foreigner, everything is connected\"><meta name=\"description\" content=\"A Story of And is a book which asks you to consider replacing the word &#39;but&#39; with the word &#39;and&#39; as a way to connect, reflect and have meaningful conversations.\"><title>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
