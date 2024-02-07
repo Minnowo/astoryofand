@@ -1,12 +1,13 @@
 package layout
 
 import "github.com/minnowo/astoryofand/view/components"
+import "github.com/minnowo/astoryofand/view"
 
 templ Page2(title string){
 
     @Base(title) {
 
-        @components.Navbar(title, title)
+        @components.Navbar(title, view.PAGE_TITLE)
 
         <body>
 

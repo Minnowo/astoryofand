@@ -11,6 +11,7 @@ import (
 	"io"
 
 	"github.com/a-h/templ"
+	"github.com/minnowo/astoryofand/view"
 	"github.com/minnowo/astoryofand/view/components"
 )
 
@@ -33,7 +34,7 @@ func Page2(title string) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			templ_7745c5c3_Err = components.Navbar(title, title).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = components.Navbar(title, view.PAGE_TITLE).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
