@@ -23,8 +23,15 @@ templ ShowAboutPage() {
             .title {
                 max-width: 100%;
                 height: auto;
+                color: black;
             }
 
+            .body {
+                width: 80% !important;
+                padding-top: 100px;
+                padding-bottom: 100px;
+                font-weight: bold;
+            }
             .image1, .image2, .image3 {
                 display: inline-block;
                 height:fit-content!important;
@@ -45,9 +52,6 @@ templ ShowAboutPage() {
                 margin-left: 0;
             }
 
-            .image4 {
-                width: 80%  !important;
-            }
 
             .quote_container {
                 display: flex;
@@ -72,10 +76,13 @@ templ ShowAboutPage() {
             </div>
 
             <div class="quote_container bubble_bg">
-                <img class="image4 title nobg noborder" src="/static/images/text1.png"
-                    style="padding-top: 100px; padding-bottom: 100px;"
-                    alt="A Story of And asks you to consider replacing the word 'But' with the word 'And' as a way to connect, reflect and have meaningful conversations. Using 'east Asian' racism as an entry point, this handhelf poster series brings together symbols, visuals, analogies and prompting questions to introduce concepts related to First Nations and  east Asian worldviews and beyond. Suitable for all ages."
-                />
+                <center>
+                    <h1 class="body title nobg noborder">
+                        A Story of And asks you to consider replacing the word 'But' with the word 'And' as a way to connect, reflect and have meaningful conversations. 
+                        Using 'east Asian' racism as an entry point, this handhelf poster series brings together symbols, visuals, analogies and prompting questions to introduce concepts related to First Nations and  east Asian worldviews and beyond. 
+                        Suitable for all ages.
+                    </h1>
+                </center>
             </div>
 
             <div class="quote_container">
