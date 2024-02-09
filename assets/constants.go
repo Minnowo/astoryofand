@@ -11,3 +11,8 @@ const UsesOutputDir string = "./enc/uses"
 
 const BoxSetPrice float32 = 35.0
 const StickerCost float32 = 2.0
+
+var AllowOriginDomains []string = []string{
+	"https://astoryofand.com",
+	"https://*.astoryofand.com",
+}

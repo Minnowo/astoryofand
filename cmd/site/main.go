@@ -82,10 +82,15 @@ func main() {
 	if !util.IsEmptyOrWhitespace(os.Getenv(assets.ENV_FORCE_HTTPS_KEY)) {
 		app.Use(middleware.HTTPSRedirect())
 	}
+	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: assets.AllowOriginDomains,
+	}))
 	app.Use(middleware.Recover())
 
 	app.Static("/static", "static")
 	app.File("/robots.txt", "static/robots.txt")
+	app.File("/favicon.ico", "static/favicon.ico")
+	app.File("/favicon.png", "static/favicon.png")
 
 	adminHandler := handler.AdminHandler{
 		Username: []byte(os.Getenv(assets.ENV_ADMIN_USERNAME_KEY)),
