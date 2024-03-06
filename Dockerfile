@@ -1,4 +1,4 @@
-FROM golang:latest AS builder
+FROM golang:1.22.1 AS builder
 
 WORKDIR /app
 
@@ -17,7 +17,6 @@ WORKDIR /app
 ENV DEBUG=false
 
 COPY --from=builder /app/main .
-COPY --from=builder /app/static ./static
 
 # where the app writes encrypted data
 VOLUME /app/enc

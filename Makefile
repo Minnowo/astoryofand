@@ -1,4 +1,6 @@
 
+VERSION := ${shell cat ./internal/assets/version.txt}
+
 BIN_DIR  := bin
 
 SITE_SRC := cmd/site/main.go
@@ -43,10 +45,10 @@ build_apline_static_for_docker:
 	CGO_ENABLED=0 GOOS=linux go build -ldflags "$(LDFLAGS)" -o main -ldflags "-s" $(SITE_SRC)
 
 build_docker: $(SITE_SRC) | build_template bin_dir
-	docker build -t astoryofand .
+	docker build -t "astoryofand:${VERSION}" .
 
 build_save_docker: $(SITE_SRC) | build_docker
-	docker save -o bin/astoryofand.tar astoryofand:latest
+	docker save -o bin/astoryofand.tar "astoryofand:${VERSION}"
 
 run:  | build_template
 	@DEBUG=false LOG_LEVEL=2 go run $(SITE_SRC)
