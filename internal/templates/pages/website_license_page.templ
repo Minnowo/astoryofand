@@ -1,0 +1,34 @@
+package pages
+
+import (
+	"github.com/minnowo/astoryofand/internal/templates"
+    "github.com/minnowo/astoryofand/internal/templates/layout"
+)
+
+templ ShowLicensePage() {
+
+    @layout.Page("License | " + templates.PAGE_TITLE) {
+
+        <form class="auto-margin hpad30p">
+
+            <div>
+                <h2 >Website License</h2>
+                <p>
+                    This website is licensed under 
+                    <code>AGPL-3.0</code>
+                    <br/>
+                    You can find the a copy of the license 
+                    <a href={ templates.LICENSE_LINK }>Here.</a>
+                    <br/>
+                    As per the license, you can find the source code
+                    <a href={ templates.SOURCE_CODE_LINK }>Here.</a>
+                </p>
+            </div>
+
+            <div>
+            </div>
+
+
+        </form>
+    }
+}

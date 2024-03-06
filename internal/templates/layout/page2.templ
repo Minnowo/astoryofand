@@ -1,0 +1,26 @@
+package layout
+
+import (
+        "github.com/minnowo/astoryofand/internal/templates"
+        "github.com/minnowo/astoryofand/internal/templates/components"
+       )
+
+templ Page2(title string){
+
+    @Base(title) {
+
+        @components.Navbar(title, templates.PAGE_TITLE)
+
+        <body>
+
+            <main>
+
+                { children... }
+
+            </main>
+
+            @components.Footer()
+
+        </body>
+    }
+}

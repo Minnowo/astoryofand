@@ -1,0 +1,32 @@
+package pages
+
+import (
+	"github.com/minnowo/astoryofand/internal/templates"
+    "github.com/minnowo/astoryofand/internal/templates/layout"
+)
+
+
+templ ShowHomePage() {
+
+    @layout.Page2("Home | " + templates.PAGE_TITLE) {
+
+        <style>
+
+            main {
+                background: rgba(255,255,255,0.5);
+            }
+
+            main_im {
+                background-size: cover;
+                background-repeat: no-repeat;
+                margin: auto;
+            }
+
+        </style>
+
+        <center>
+            <img class="center main_im nobg noborder" src="/static/images/nest.png"/>
+        </center>
+
+    }
+}

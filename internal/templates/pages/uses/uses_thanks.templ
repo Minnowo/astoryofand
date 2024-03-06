@@ -1,0 +1,22 @@
+package uses
+
+import (
+	"github.com/minnowo/astoryofand/internal/templates"
+    "github.com/minnowo/astoryofand/internal/templates/layout"
+)
+
+
+templ ShowUsesThanks() {
+
+    @layout.Page("Thank You! |" + templates.PAGE_TITLE) {
+
+        <form class="auto-margin hpad30p">
+
+            <center>
+                <h2>Thank you for your comment!</h2>
+            </center>
+
+        </form>
+
+    }
+}

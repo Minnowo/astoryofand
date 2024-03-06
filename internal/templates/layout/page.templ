@@ -1,0 +1,42 @@
+package layout
+
+import (
+        "github.com/minnowo/astoryofand/internal/templates"
+        "github.com/minnowo/astoryofand/internal/templates/components"
+       )
+
+templ Page(title string){
+
+    @Base(title) {
+
+        @components.Navbar(title, templates.PAGE_TITLE)
+
+        <body>
+
+            <main>
+
+                <div class="wrapper">
+
+                    <div class="content container container-center">
+          
+                            <div class="container-content-left container-transition dynamic-margin" style="padding: 0;">
+
+                                <div class="card">
+
+                                { children... }
+
+                                </div>
+
+                            </div>
+            
+                    </div>
+
+                </div>
+
+            </main>
+
+            @components.Footer()
+
+        </body>
+    }
+}

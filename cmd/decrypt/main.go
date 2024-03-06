@@ -8,7 +8,7 @@ import (
 
 	"github.com/ProtonMail/gopenpgp/v2/helper"
 	"github.com/labstack/gommon/log"
-	"github.com/minnowo/astoryofand/assets"
+	"github.com/minnowo/astoryofand/internal/assets"
 )
 
 func dirExists(path string, mkiffail bool) (bool, error) {

@@ -1,19 +1,30 @@
 package main
 
 import (
+	"net/http"
 	"os"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
-
-	"github.com/minnowo/astoryofand/assets"
-	"github.com/minnowo/astoryofand/database/memorydb"
-	"github.com/minnowo/astoryofand/handler"
-	"github.com/minnowo/astoryofand/handler/crypto"
-	"github.com/minnowo/astoryofand/util"
+	"github.com/minnowo/astoryofand/internal/assets"
+	"github.com/minnowo/astoryofand/internal/crypto"
+	"github.com/minnowo/astoryofand/internal/database/memorydb"
+	"github.com/minnowo/astoryofand/internal/features/admin"
+	"github.com/minnowo/astoryofand/internal/features/home"
+	"github.com/minnowo/astoryofand/internal/features/order"
+	"github.com/minnowo/astoryofand/internal/features/uses"
+	"github.com/minnowo/astoryofand/internal/util"
 )
+
+func sanityCheck() {
+
+	// sanity check, I don't want to accidentally include the private key in here
+	if len(assets.PrivateKeyBytes) != 0 {
+		panic("assets.PrivateKeyBytes has non-zero length! The Private Key may be embeded!")
+	}
+}
 
 func initLogging(app *echo.Echo) {
 
@@ -49,12 +60,33 @@ func initLogging(app *echo.Echo) {
 	log.SetLevel(app.Logger.Level())
 }
 
+func initDB() {
+	memorydb.InitDB()
+}
+
+func initEncryption(orderEncryption, usesEncryption *crypto.EncryptionWriter) {
+
+	oenc := crypto.PGPEncryptionWriter{
+		PublicKey:       assets.PublicKeyBytes,
+		OutputDirectory: assets.PGPOutputDir,
+	}
+
+	uenc := crypto.PGPEncryptionWriter{
+		PublicKey:       assets.PublicKeyBytes,
+		OutputDirectory: assets.UsesOutputDir,
+	}
+
+	oenc.EnsureCanWriteDiskOrExit()
+	uenc.EnsureCanWriteDiskOrExit()
+
+	*orderEncryption = &oenc
+	*usesEncryption = &oenc
+
+}
+
 func main() {
 
-	// sanity check, I don't want to accidentally include the private key in here
-	if len(assets.PrivateKeyBytes) != 0 {
-		panic("assets.PrivateKeyBytes has non-zero length! The Private Key may be embeded!")
-	}
+	sanityCheck()
 
 	var app *echo.Echo
 	var orderEncryption crypto.EncryptionWriter
@@ -64,7 +96,7 @@ func main() {
 
 	initLogging(app)
 
-	memorydb.InitDB()
+	initDB()
 
 	orderEncryption = &crypto.PGPEncryptionWriter{
 		PublicKey:       assets.PublicKeyBytes,
@@ -79,56 +111,69 @@ func main() {
 	orderEncryption.EnsureCanWriteDiskOrExit()
 	usesEncryption.EnsureCanWriteDiskOrExit()
 
+	//
+	// middleware
+	//
+
 	if !util.IsEmptyOrWhitespace(os.Getenv(assets.ENV_FORCE_HTTPS_KEY)) {
+
 		app.Use(middleware.HTTPSRedirect())
 	}
+
 	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: assets.AllowOriginDomains,
 	}))
+
 	app.Use(middleware.Recover())
+	app.Use(middleware.RemoveTrailingSlash())
 
-	app.Static("/static", "static")
-	app.File("/robots.txt", "static/robots.txt")
-	app.File("/favicon.ico", "static/favicon.ico")
-	app.File("/favicon.png", "static/favicon.png")
+	//
+	// static assets
+	//
 
-	adminHandler := handler.AdminHandler{
+	staticAssetHandler := http.FileServer(assets.GetFileSystem(false))
+
+	app.GET("/static/*", echo.WrapHandler(http.StripPrefix("/static/", staticAssetHandler)))
+	app.GET("/robots.txt", echo.WrapHandler(staticAssetHandler))
+	app.GET("/favicon.ico", echo.WrapHandler(staticAssetHandler))
+	app.GET("/favicon.png", echo.WrapHandler(staticAssetHandler))
+
+	//
+	// admin routes
+	//
+
+	adminHandler := admin.AdminHandler{
 		Username: []byte(os.Getenv(assets.ENV_ADMIN_USERNAME_KEY)),
 		Password: []byte(os.Getenv(assets.ENV_ADMIN_PASSWORD_KEY)),
 	}
-	admin := app.Group("/admin")
-	admin.Use(middleware.BasicAuth(adminHandler.HandleUserPasswordAdminAuth))
-	admin.Use(middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(3)))
-	admin.Use(middleware.Logger())
-	admin.Any("", adminHandler.GetAdminPanel)
-	admin.Any("/", adminHandler.GetAdminPanel)
-	admin.POST("/update/boxprice", adminHandler.UpdateBoxPrice)
-	admin.POST("/update/stickerprice", adminHandler.UpdateStickerPrice)
+	adminHandler.Mount(app)
 
-	orderHandler := handler.OrderHandler{
+	//
+	// order routes
+	//
+
+	orderHandler := order.OrderHandler{
 		EncryptionWriter: orderEncryption,
 	}
-	order := app.Group("/order")
-	order.Any("", orderHandler.HandleOrderShow)
-	order.Any("/", orderHandler.HandleOrderShow)
-	order.Any("/thanks", orderHandler.HandleOrderThankYou)
-	order.POST("/place", orderHandler.HandleOrderPlaced)
+	orderHandler.Mount(app)
 
-	usesHandler := handler.UsesHandler{
+	//
+	// usecases routes
+	//
+
+	usesHandler := uses.UsesHandler{
 		EncryptionWriter: usesEncryption,
 	}
-	uses := app.Group("/uses")
-	uses.Any("", usesHandler.HandleUsesGET)
-	uses.Any("/", usesHandler.HandleUsesGET)
-	uses.Any("/thanks", usesHandler.HandleUsesThankYouGET)
-	uses.POST("/place", usesHandler.HandleUsesPOST)
+	usesHandler.Mount(app)
 
-	commonHandler := handler.CommonHandler{}
-	app.Any("", commonHandler.HandleHome)
-	app.Any("/", commonHandler.HandleHome)
-	app.Any("/home", commonHandler.HandleHome)
-	app.Any("/license", commonHandler.HandleLicenseShow)
-	app.Any("/about", commonHandler.HandleAboutShow)
+	//
+	// home routes
+	//
+
+	commonHandler := home.HomeHandler{}
+	commonHandler.Mount(app)
+
+	// main loop
 
 	app.Logger.Fatal(app.Start(":3000"))
 }
