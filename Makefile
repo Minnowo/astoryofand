@@ -2,6 +2,7 @@
 VERSION := ${shell cat ./internal/assets/version.txt}
 
 BIN_DIR  := bin
+CONF_DIR := conf
 
 SITE_SRC := cmd/site/main.go
 SITE_DST := $(BIN_DIR)/main
@@ -42,7 +43,7 @@ build: | $(SITE_DST) $(DECRYPT_DST) build_template bin_dir
 	echo "Done"
 
 build_apline_static_for_docker:
-	CGO_ENABLED=0 GOOS=linux go build -ldflags "$(LDFLAGS)" -o main -ldflags "-s" $(SITE_SRC)
+	CGO_ENABLED=1 GOOS=linux go build -ldflags "$(LDFLAGS)" -o main -ldflags "-s" $(SITE_SRC)
 
 build_docker: $(SITE_SRC) | build_template bin_dir
 	docker build -t "astoryofand:${VERSION}" .
