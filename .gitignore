@@ -2,6 +2,7 @@
 /bin
 /enc
 /encd
+/conf
 
 deploy.sh
 

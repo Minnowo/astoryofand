@@ -7,14 +7,14 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
-	"github.com/minnowo/astoryofand/internal/database/memorydb"
+	"github.com/minnowo/astoryofand/internal/database"
 	"github.com/minnowo/astoryofand/internal/model"
 	"github.com/minnowo/astoryofand/internal/templates/pages/order"
 	"github.com/minnowo/astoryofand/internal/util"
 )
 
 func (h *OrderHandler) HandleOrderShow(c echo.Context) error {
-	return util.EchoRenderTempl(c, order.ShowOrderPage(memorydb.GetDB().GetBoxPrice(), memorydb.GetDB().GetStickerPrice()))
+	return util.EchoRenderTempl(c, order.ShowOrderPage(database.GetBoxPrice(), database.GetStickerPrice()))
 }
 
 func (h *OrderHandler) HandleOrderThankYou(c echo.Context) error {

@@ -10,7 +10,7 @@ import (
 	"github.com/labstack/gommon/log"
 	"github.com/minnowo/astoryofand/internal/assets"
 	"github.com/minnowo/astoryofand/internal/crypto"
-	"github.com/minnowo/astoryofand/internal/database/memorydb"
+	"github.com/minnowo/astoryofand/internal/database"
 	"github.com/minnowo/astoryofand/internal/features/admin"
 	"github.com/minnowo/astoryofand/internal/features/home"
 	"github.com/minnowo/astoryofand/internal/features/order"
@@ -61,7 +61,8 @@ func initLogging(app *echo.Echo) {
 }
 
 func initDB() {
-	memorydb.InitDB()
+	database.DBInit(&database.DBConfig{
+		DatabasePath: assets.SQLitePath})
 }
 
 func initEncryption(orderEncryption, usesEncryption *crypto.EncryptionWriter) {
@@ -97,6 +98,8 @@ func main() {
 	initLogging(app)
 
 	initDB()
+
+	database.LoadSettings("main")
 
 	orderEncryption = &crypto.PGPEncryptionWriter{
 		PublicKey:       assets.PublicKeyBytes,

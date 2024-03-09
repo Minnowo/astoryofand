@@ -3,7 +3,7 @@ package model
 import (
 	"fmt"
 
-	"github.com/minnowo/astoryofand/internal/database/memorydb"
+	"github.com/minnowo/astoryofand/internal/database"
 	"github.com/minnowo/astoryofand/internal/util"
 )
 
@@ -37,11 +37,11 @@ func (o *Order) CheckValid() error {
 		return fmt.Errorf("Box set or sticker count must be > 0!")
 	}
 
-	if !util.AlmostEqual32(o.BoxSetValue, memorydb.GetDB().GetBoxPrice()) {
+	if !util.AlmostEqual32(o.BoxSetValue, database.GetBoxPrice()) {
 		return fmt.Errorf("The value of the box set has changed!")
 	}
 
-	if !util.AlmostEqual32(o.StickerValue, memorydb.GetDB().GetStickerPrice()) {
+	if !util.AlmostEqual32(o.StickerValue, database.GetStickerPrice()) {
 		return fmt.Errorf("The value of the sticker has changed!")
 	}
 
