@@ -17,7 +17,7 @@ DECRYPT_DST := $(BIN_DIR)/decrypt
 
 LDFLAGS ?= 
 
-@PHONY: run debug build build_template build_save_docker bin_dir clean build_apline_static_for_docker setup_tailwind
+@PHONY: run debug build build_template build_save_docker bin_dir clean build_site_alpine_static_for_docker build_home_alpine_static_for_docker setup_tailwind
 
 all: build
 
@@ -50,11 +50,15 @@ $(HOME_DST): $(HOME_SRC) $(GO_FILES) | build_template bin_dir
 build: | $(HOME_DST) $(SITE_DST) $(DECRYPT_DST) build_template bin_dir
 	echo "Done"
 
-build_apline_static_for_docker:
+build_site_alpine_static_for_docker:
 	CGO_ENABLED=1 GOOS=linux go build -ldflags "$(LDFLAGS)" -o main -ldflags "-s" $(SITE_SRC)
 
+build_home_alpine_static_for_docker:
+	CGO_ENABLED=1 GOOS=linux go build -ldflags "$(LDFLAGS)" -o main -ldflags "-s" $(HOME_SRC)
+
 build_docker: $(SITE_SRC) | build_template bin_dir
-	docker build -t "astoryofand:${VERSION}" .
+	docker build -t "astoryofand:${VERSION}" -f site.Dockerfile .
+	docker build -t "astoryofand-home:${VERSION}" -f home.Dockerfile .
 
 build_save_docker: $(SITE_SRC) | build_docker
 	docker save -o bin/astoryofand.tar "astoryofand:${VERSION}"

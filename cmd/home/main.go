@@ -2,9 +2,9 @@ package main
 
 import (
 	"encoding/json"
-	"errors"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/ProtonMail/gopenpgp/v2/helper"
 	"github.com/fsnotify/fsnotify"
@@ -17,22 +17,116 @@ import (
 	"github.com/minnowo/astoryofand/internal/util"
 )
 
+type DecrypFailRead int32
+
+const (
+	SUCESS DecrypFailRead = 1 << iota
+	NOT_THE_TYPE_OF_FILE
+	COULD_NOT_READ_FILE
+	SOME_ERROR_WHILE_DECRYPTING
+	JSON_MARSHAL
+)
+
+type FileToDecrypt struct {
+	Path       string
+	Tried      int32
+	AbortAfter int32
+}
+
 type PGPDecryptor struct {
 	PrivateKey string
 	Password   []byte
+	FileQ      chan (string)
+	Files      map[string]*FileToDecrypt
 }
 
 var (
 	Decryptor PGPDecryptor
 )
 
-func (pgp PGPDecryptor) processFile(path string) error {
+func (pgp *PGPDecryptor) run() {
+
+	log.Info("Decryptor is running...")
+
+	ticker := time.NewTicker(30 * time.Second)
+	defer ticker.Stop()
+
+	for {
+
+		select {
+
+		case file, ok := <-pgp.FileQ:
+
+			if !ok {
+
+				return
+			}
+
+			pgp.Files[file] = &FileToDecrypt{
+				Path:       file,
+				Tried:      0,
+				AbortAfter: 5,
+			}
+
+			break
+
+		case <-ticker.C:
+
+			log.Info("Decryptor Tick")
+
+			keys := make([]string, len(pgp.Files))
+
+			i := 0
+			for k := range pgp.Files {
+				keys[i] = k
+				i++
+			}
+
+			for _, path := range keys {
+
+				file := pgp.Files[path]
+
+				switch pgp.processFile(path) {
+
+				case NOT_THE_TYPE_OF_FILE:
+					delete(pgp.Files, path)
+					break
+
+				case SUCESS:
+					log.Infof("File %s was added to the database", path)
+					delete(pgp.Files, path)
+					break
+
+				case JSON_MARSHAL:
+					log.Errorf("File %s has a JSON Marhsal problem", path)
+					delete(pgp.Files, path)
+					break
+
+				case SOME_ERROR_WHILE_DECRYPTING:
+				case COULD_NOT_READ_FILE:
+
+					file.Tried++
+
+					if file.Tried > file.AbortAfter {
+						log.Infof("Removing %s because it failed %d times", path, file.Tried)
+						delete(pgp.Files, path)
+					}
+				}
+			}
+
+			break
+
+		}
+	}
+}
+
+func (pgp *PGPDecryptor) processFile(path string) DecrypFailRead {
 
 	if filepath.Ext(path) != ".asc" {
 
 		log.Warnf("Will not process %s because it does not end with .asc", path)
 
-		return errors.New("Will not process")
+		return NOT_THE_TYPE_OF_FILE
 	}
 
 	log.Debug("Opening file...")
@@ -43,7 +137,7 @@ func (pgp PGPDecryptor) processFile(path string) error {
 
 		log.Error(err)
 
-		return err
+		return COULD_NOT_READ_FILE
 	}
 
 	log.Debug("Decrypting file...")
@@ -54,7 +148,7 @@ func (pgp PGPDecryptor) processFile(path string) error {
 
 		log.Errorf("Could not decrpt file: %v", err)
 
-		return err
+		return SOME_ERROR_WHILE_DECRYPTING
 	}
 
 	log.Debug(data)
@@ -67,7 +161,7 @@ func (pgp PGPDecryptor) processFile(path string) error {
 
 		log.Error(err)
 
-		return err
+		return JSON_MARSHAL
 	}
 
 	log.Debug(e)
@@ -84,12 +178,12 @@ func (pgp PGPDecryptor) processFile(path string) error {
 
 			log.Error(err)
 
-			return err
+			return JSON_MARSHAL
 		}
 
 		log.Debug(o)
 
-        database.InsertOrder(&o)
+		database.InsertOrder(&o)
 
 		break
 
@@ -103,16 +197,16 @@ func (pgp PGPDecryptor) processFile(path string) error {
 
 			log.Error(err)
 
-			return err
+			return JSON_MARSHAL
 		}
 
 		log.Debug(o)
-        database.InsertUseCase(&o)
+		database.InsertUseCase(&o)
 
 		break
 	}
 
-	return nil
+	return SUCESS
 }
 
 func watch(watcher *fsnotify.Watcher) {
@@ -130,11 +224,10 @@ func watch(watcher *fsnotify.Watcher) {
 			switch event.Op {
 
 			case fsnotify.Create:
+
 				log.Infof("File created: %s", event.Name)
 
-				if err := Decryptor.processFile(event.Name); err == nil {
-					log.Info("Success")
-				}
+				Decryptor.FileQ <- event.Name
 
 				break
 
@@ -182,7 +275,10 @@ func inject() {
 	Decryptor = PGPDecryptor{
 		Password:   pass,
 		PrivateKey: assets.PrivateKeyBytes,
+		FileQ:      make(chan (string), 32),
+		Files:      make(map[string]*FileToDecrypt),
 	}
+	go Decryptor.run()
 }
 
 func initDB() {
@@ -200,7 +296,7 @@ func main() {
 
 	util.InitLogging(app)
 
-    initDB()
+	initDB()
 
 	database.LoadSettings("home")
 

@@ -5,17 +5,16 @@ import (
 	"github.com/minnowo/astoryofand/internal/database/models"
 )
 
-
 func InsertOrder(o *models.Order) bool {
 
-    if len(o.UUID) == 0 {
+	if len(o.UUID) == 0 {
 
-        log.Error("Tried to insert Order with no uuid. This should not be possible.")
+		log.Error("Tried to insert Order with no uuid. This should not be possible.")
 
-        return false
-    }
+		return false
+	}
 
-    err := GetDB().Create(&o).Error
+	err := GetDB().Create(&o).Error
 
 	if err != nil {
 
@@ -26,5 +25,3 @@ func InsertOrder(o *models.Order) bool {
 
 	return true
 }
-
-

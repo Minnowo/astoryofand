@@ -43,8 +43,8 @@ func (o *Order) DelayedInit() *Order {
 		o.UUID = util.GetOrderID()
 	}
 
-    o.CreatedAt = time.Now()
-    o.UpdatedAt = o.CreatedAt
+	o.CreatedAt = time.Now()
+	o.UpdatedAt = o.CreatedAt
 
 	return o
 }

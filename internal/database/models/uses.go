@@ -31,8 +31,8 @@ func (o *UseCase) DelayedInit() *UseCase {
 		o.UUID = util.GetOrderID()
 	}
 
-    o.CreatedAt = time.Now()
-    o.UpdatedAt = o.CreatedAt
+	o.CreatedAt = time.Now()
+	o.UpdatedAt = o.CreatedAt
 
 	return o
 }

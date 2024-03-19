@@ -20,7 +20,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN make build_apline_static_for_docker
+RUN make build_home_alpine_static_for_docker
 
 
 
