@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"net/http"
 	"os"
 	"path/filepath"
 	"time"
@@ -14,6 +15,7 @@ import (
 	"github.com/minnowo/astoryofand/internal/assets"
 	"github.com/minnowo/astoryofand/internal/database"
 	"github.com/minnowo/astoryofand/internal/database/models"
+	"github.com/minnowo/astoryofand/internal/templates/pages"
 	"github.com/minnowo/astoryofand/internal/util"
 )
 
@@ -315,6 +317,21 @@ func main() {
 
 	app.Use(middleware.Recover())
 	app.Use(middleware.RemoveTrailingSlash())
+
+	//
+	// static assets
+	//
+
+	staticAssetHandler := http.FileServer(assets.GetFileSystem(false))
+
+	app.GET("/static/*", echo.WrapHandler(http.StripPrefix("/static/", staticAssetHandler)))
+	app.GET("/robots.txt", echo.WrapHandler(staticAssetHandler))
+	app.GET("/favicon.ico", echo.WrapHandler(staticAssetHandler))
+	app.GET("/favicon.png", echo.WrapHandler(staticAssetHandler))
+
+    app.GET("", func(c echo.Context) error {
+    	return util.EchoRenderTempl(c, pages.ShowInvoice(models.NewOrder()))
+    })
 
 	watcher, err := fsnotify.NewWatcher()
 

@@ -1,0 +1,29 @@
+package pages
+
+import (
+    "github.com/minnowo/astoryofand/internal/database/models"
+    "github.com/minnowo/astoryofand/internal/templates/layout"
+	"github.com/minnowo/astoryofand/internal/templates"
+)
+
+templ ShowInvoice(o *models.Order) {
+
+    @layout.Page("License | " + templates.PAGE_TITLE) {
+
+        <h1>
+            A Story of And
+        </h1>
+
+        <p>
+            Website:
+            <a href="/">astoryofand.com</a>
+        </p>
+
+        <p>
+            (647)-519-3571
+        </p>
+
+        <h1 class="text-2xl">Invoice</h1>
+    }
+}
+

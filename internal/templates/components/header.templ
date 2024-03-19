@@ -1,19 +1,39 @@
 package components
 
+templ navLinkItem(link templ.SafeURL, display string) {
+
+    <a class="block px-2 mx-auto sm:ml-2 text-gray-400 link-fade" href={ link }>{ display } </a>
+}
+
 templ Navbar(title, brandName string){
 
-    <nav class="navbar">
-        <div class="navbar-collapse nav_pad">
-            <a class="navbar-brand container-transition" href="/">
-                <img src="/static/favicon.png" height="64" alt="A Story of And Logo"/>
-                { brandName }
+    <nav class="flex relative text-xl border-red-950 border-t-2 border-b border-b-black border-t-amber-600 bg-neutral-900 sm:flex-row">
+
+        <div class="sm:flex sm:flex-1 w-full relative items-center sm:basis-auto sm:mr-2 lg:pr-8 xl:pr-16 container-transition">
+
+            <a class="flex flex-row items-center text-3xl py-1.5 mr-4 whitespace-nowrap no-underline sm:p-px lg:pl-8 xl:pl-16 container-transition" href="/">
+
+                <div>
+
+                    <img class="inline-block h-16" height="64" src="/static/favicon.png" alt="A Story of And Logo"/>
+
+                    { brandName }
+
+                </div>
+
             </a>
 
-            <div class="navbar-nav container-transition">
-                <a class="nav-item nav-link link-fade" href="/order">Order</a>
-                <a class="nav-item nav-link link-fade" href="/uses">Uses</a>
-                <a class="nav-item nav-link link-fade" href="/about">About</a>
+            <div class="flex flex-row ml-auto container-transition">
+
+                @navLinkItem("/order", "Order")
+
+                @navLinkItem("/uses", "Uses")
+
+                @navLinkItem("/about", "About")
+
             </div>
+
         </div>
+
     </nav>
 }
