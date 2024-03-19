@@ -31,7 +31,7 @@ build_template:
 	templ generate
 
 build_css:
-	./bin/tailwindcss-linux-x64 -i ./internal/assets/tailwind.css -o ./internal/assets/dist/css/tailwind.css --minify
+	./bin/tailwindcss-linux-x64 -i ./internal/assets/tailwind.css -o ./internal/assets/dist/css/tailwind.css --watch
 
 setup_tailwind: | bin_dir
 	curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v3.4.1/tailwindcss-linux-x64
@@ -64,8 +64,8 @@ build_save_docker: $(SITE_SRC) | build_docker
 	docker save -o bin/astoryofand.tar "astoryofand:${VERSION}"
 
 run:  | build_template
-	# @DEBUG=false LOG_LEVEL=2 go run $(SITE_SRC)
-	@DEBUG=false LOG_LEVEL=2 go run $(HOME_SRC)
+	@DEBUG=false LOG_LEVEL=2 go run $(SITE_SRC)
+	# @DEBUG=false LOG_LEVEL=2 go run $(HOME_SRC)
 
 debug: | build_template
 	gofmt -w -s .

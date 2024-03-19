@@ -3,6 +3,7 @@ package uses
 import (
 	"github.com/minnowo/astoryofand/internal/templates"
     "github.com/minnowo/astoryofand/internal/templates/layout"
+	"github.com/minnowo/astoryofand/internal/templates/components"
 )
 
 
@@ -24,44 +25,56 @@ templ ShowUsesPage() {
         <form id="place_order_form"  class="auto-margin hpad30p" action="/uses/place" method="post">
 
             <center>
-                <h1>How might you use { templates.TITLE }?</h1>
+                @components.H1() {
+                    How might you use { templates.TITLE } 
+                }
             </center>
 
             <br/>
 
-            <h2>
+            @components.H2() {
                 We would love to hear how you are using { templates.TITLE } in your life.
 
                 Please let us know!
-            </h2>
-
+            }
 
             <br/>
 
             <div>
-                <h3 class="no-margin"> What is your Email? </h3>
-                <input type="email" name="email" placeholder="Semple@Email.com" required/>
+                
+                @components.H3() {
+                    What is your Email?
+                }
+                <input class={ components.INPUT_CLASS } type="email" name="email" placeholder="Sample@Email.com" required/>
             </div>
 
             <br/>
 
             <div>
-                <h3 class="no-margin"> What is your Name? </h3>
-                <input type="text" name="fullname" placeholder="FirstName LastName" required/>
+
+                @components.H3() {
+                    What is your Name?
+                }
+                <input class={ components.INPUT_CLASS } type="text" name="fullname" placeholder="FirstName LastName" required/>
             </div>
 
             <br/>
 
             <div>
-                <h3 class="no-margin"> Enter your comment here </h3>
-                <textarea type="text" name="comment" required> </textarea>
+
+                @components.H3() {
+                    Enter your comment here
+                }
+                <textarea class={ components.INPUT_CLASS, "w-full" } type="text" name="comment" required> </textarea>
             </div>
 
             <br/>
 
 
             <div style="justify-content: end; display: flex;">
-                <input style="width:33%;" type="submit" value="Submit" required/>
+                @components.SubmitButton() {
+                    Submit
+                }
             </div>
 
 

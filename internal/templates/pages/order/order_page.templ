@@ -28,52 +28,70 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
             <input type="hidden" name="stickerpricevalue" value={ util.F32TS(stickerPrice) }/>
 
             <center>
-                <h1>Order { templates.TITLE }</h1>
+
+            @components.H1() {
+                Order { templates.TITLE }
+            }
+
             </center>
 
             <br/>
 
             <div>
-                <h3 class="no-margin"> What is your Email? </h3>
-                <input type="email" name="email" placeholder="Semple@Email.com" required/>
+                @components.H3(){
+                    What is your Email? 
+                }
+                <input class={ components.INPUT_CLASS } type="email" name="email" placeholder="Sample@Email.com" required/>
             </div>
 
             <br/>
 
             <div>
-                <h3 class="no-margin"> What is your Name? </h3>
-                <input type="text" name="fullname" placeholder="FirstName LastName" required/>
+                
+                @components.H3(){
+                    What is your Name? 
+                }
+                <input class={ components.INPUT_CLASS } type="text" name="fullname" placeholder="FirstName LastName" required/>
             </div>
 
             <br/>
 
             <div>
-                <h3 class="no-margin"> How many A Story Of And Box Sets do you want? </h3>
+                
+                @components.H3(){
+                    How many A Story Of And Box Sets do you want? 
+                }
+
                 <p class="no-margin"> 
                     The price is 
-                    @components.CodeHighlightFloat(boxPrice){}
+                    @components.CodeHighlightFloat(boxPrice)
                     &nbsp;per. 
                 </p>
-                <input type="number" name="boxsetcount" value="1" min="0" max="999" required/>
+                <input class={ components.INPUT_CLASS } type="number" name="boxsetcount" value="1" min="0" max="999" required/>
             </div>
 
             <br/>
 
             <div>
-                <h3 class="no-margin"> How many #VeryAsian Waterproof Vinyl Stickers do you want? </h3>
+                
+                @components.H3(){
+                     How many #VeryAsian Waterproof Vinyl Stickers do you want? 
+                }
                 <p class="no-margin"> 
                     The price is 
-                    @components.CodeHighlightFloat(stickerPrice){}
+                    @components.CodeHighlightFloat(stickerPrice)
                     &nbsp;per. 
                 </p>
-                <input type="number" name="cardsetcount" value="1" min="0" max="999" required/>
+                <input class={ components.INPUT_CLASS } type="number" name="cardsetcount" value="1" min="0" max="999" required/>
             </div>
 
             <br/>
 
             <div>
-                <h3 class="no-margin"> How would you like to pay? </h3>
-                <select name="paymethod" id="paymethod" class="db">
+                @components.H3(){
+                    How would you like to pay?
+                }
+                <select class={ components.INPUT_CLASS } name="paymethod" id="paymethod" class="db">
                     <option value="cash">  Cash  </option>
                     <option value="emt">   EMT   </option>
                     <option value="other"> Other </option>
@@ -85,15 +103,18 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
                         Please specify:
                     </label>
                     <br/>
-                    <textarea class="no-margin"  type="text" id="otherPay" name="otherpay"> </textarea>
+                    <textarea class={ components.INPUT_CLASS, "w-full" } type="text" id="otherPay" name="otherpay"> </textarea>
                 </div>
             </div>
 
             <br/>
 
             <div>
-                <h3 class="no-margin"> How would you like to get your package? </h3>
-                <select name="deliverymethod" id="deliverymethod">
+                
+                @components.H3(){
+                    How would you like to get your package?  
+                }
+                    <select class={ components.INPUT_CLASS } name="deliverymethod" id="deliverymethod">
                     <option value="delivery"> Delivery                               </option>
                     <option value="pickup">   Pick Up                                </option>
                     <option value="ship">     Ship to me (may incur additional costs)</option>
@@ -102,20 +123,20 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
 
                 <br/>
 
-                <table style=" margin: 0.3rem;">
-                    <tr id="address_row">
+                <table class="ml-1 mt-1">
+                    <tr id="address_row" class="pb-2">
                         <td><label for="address">Address:</label></td>
-                        <td><input type="text" id="address" name="address"/></td>
+                        <td><input class={ components.INPUT_CLASS } type="text" id="address" name="address" placeholder="23 Some st"/></td>
                     </tr>
 
-                    <tr id="city_row">
+                    <tr id="city_row" class="mb-2">
                         <td><label for="city">City:</label></td>
-                        <td><input type="text" id="city" name="city"/></td>
+                        <td><input class={ components.INPUT_CLASS } type="text" id="city" name="city" placeholder="Toronto"/></td>
                     </tr>
 
-                    <tr id="zipcode_row">
+                    <tr id="zipcode_row" class="mb-2">
                         <td><label for="zipcode">Zip Code:</label></td>
-                        <td><input type="text" id="zipcode" name="zipcode"/></td>
+                        <td><input class={ components.INPUT_CLASS } type="text" id="zipcode" name="zipcode" placeholder="K2T2H9"/></td>
                     </tr>
                 </table>
 
@@ -125,14 +146,16 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
                         Please specify:
                         </label>
                     <br/>
-                    <textarea  type="text" id="otherdelivery" name="otherdelivery"> </textarea>
+                    <textarea class={ components.INPUT_CLASS, "w-full" } type="text" id="otherdelivery" name="otherdelivery"> </textarea>
                 </div>
 
             </div>
 
 
             <div style="justify-content: end; display: flex;">
-                <input style="width:33%;" type="submit" value="Submit Order" required/>
+                @components.SubmitButton(){
+                    Submit Order
+                }
             </div>
 
 	    </form>

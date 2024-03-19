@@ -38,7 +38,7 @@ func Page(title string) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <body><main><div class=\"wrapper\"><div class=\"content container container-center\"><div class=\"container-content-left container-transition dynamic-margin\" style=\"padding: 0;\"><div class=\"card\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <body><main><div class=\"wrapper\"><div class=\"content container container-center\"><div class=\"container-content-left container-transition dynamic-margin\" style=\"padding: 0;\"><div class=\"card dark:bg-dark-500\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

@@ -3,12 +3,38 @@ package components
 
 import	"github.com/minnowo/astoryofand/internal/util"
 
+templ H1(){
+
+    <h1 class="text-3xl font-medium">
+        { children... }
+    </h1>
+}
+
+templ H2(){
+
+    <h2 class="text-2xl font-medium">
+        { children... }
+    </h2>
+}
+
+templ H3(){
+
+    <h3 class="text-lg font-medium">
+        { children... }
+    </h3>
+}
+
+templ SubmitButton(){
+    <button type="submit" class="bg-gray-600 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded">
+        { children... }
+    </button>
+}
+
 templ CodeHighlightFloat(value float32) {
     <code>
         { util.F32TS(value) }
     </code>
 }
-
 
 templ SubmitButtonRight30() {
 

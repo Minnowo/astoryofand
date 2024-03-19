@@ -23,7 +23,7 @@ func Base(title string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><meta name=\"robots\" content=\"index, follow\"><meta name=\"keywords\" content=\"a story of and, astoryofand, book, east asian, first nations, race, racism, model minority, racial literacy, ants, land, doctrine of discovery, forever foreigner, everything is connected\"><meta name=\"description\" content=\"A Story of And is a book which asks you to consider replacing the word &#39;but&#39; with the word &#39;and&#39; as a way to connect, reflect and have meaningful conversations.\"><title>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\" class=\"dark\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><meta name=\"robots\" content=\"index, follow\"><meta name=\"keywords\" content=\"a story of and, astoryofand, book, east asian, first nations, race, racism, model minority, racial literacy, ants, land, doctrine of discovery, forever foreigner, everything is connected\"><meta name=\"description\" content=\"A Story of And is a book which asks you to consider replacing the word &#39;but&#39; with the word &#39;and&#39; as a way to connect, reflect and have meaningful conversations.\"><title>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -36,7 +36,7 @@ func Base(title string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title><link rel=\"icon\" type=\"image/png\" href=\"/static/favicon.png\"><link rel=\"stylesheet\" href=\"/static/css/main.css\"><link rel=\"stylesheet\" href=\"/static/css/code.css\"></head>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title><link rel=\"icon\" type=\"image/png\" href=\"/static/favicon.png\"><link rel=\"stylesheet\" href=\"/static/css/main.css\"><link rel=\"stylesheet\" href=\"/static/css/code.css\"><link rel=\"stylesheet\" href=\"/static/css/tailwind.css\"></head>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
