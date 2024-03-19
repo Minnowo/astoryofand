@@ -1,4 +1,4 @@
-package model
+package models
 
 type AdminView struct {
 	BoxSetPrice float32 `form:"boxpricevalue"`

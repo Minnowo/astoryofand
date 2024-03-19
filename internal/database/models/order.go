@@ -1,13 +1,20 @@
-package model
+package models
 
 import (
 	"fmt"
+	"time"
 
-	"github.com/minnowo/astoryofand/internal/database"
+	"github.com/google/uuid"
 	"github.com/minnowo/astoryofand/internal/util"
+	"gorm.io/gorm"
 )
 
 type Order struct {
+	CreatedAt time.Time
+	UpdatedAt time.Time      `json:"-"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
+	UUID      string         `gorm:"primarykey" json:"uuid"`
+	UserData
 	Email          string  `json:"email" form:"email"`
 	PayMethod      string  `json:"paymethod" form:"paymethod"`
 	BoxSetValue    float32 `json:"boxpricetimeofbuy" form:"boxpricevalue"`
@@ -24,7 +31,30 @@ type Order struct {
 	OtherPay       string  `json:"otherpay" form:"otherpay"`
 }
 
-func (o *Order) CheckValid() error {
+func NewOrder() *Order {
+	return &Order{
+		UserData: UserData{OrderType},
+	}
+}
+
+func (o *Order) DelayedInit() *Order {
+	if err := uuid.Validate(o.UUID); err != nil {
+
+		o.UUID = util.GetOrderID()
+	}
+
+    o.CreatedAt = time.Now()
+    o.UpdatedAt = o.CreatedAt
+
+	return o
+}
+
+func (o *Order) EnsureType() *Order {
+	o.Type = OrderType
+	return o
+}
+
+func (o *Order) CheckValidDataFromUser() error {
 
 	if util.IsEmptyOrWhitespace(o.Email) ||
 		util.IsEmptyOrWhitespace(o.PayMethod) ||
@@ -35,14 +65,6 @@ func (o *Order) CheckValid() error {
 
 	if o.BoxSetCount < 0 || o.StickerCount < 0 {
 		return fmt.Errorf("Box set or sticker count must be > 0!")
-	}
-
-	if !util.AlmostEqual32(o.BoxSetValue, database.GetBoxPrice()) {
-		return fmt.Errorf("The value of the box set has changed!")
-	}
-
-	if !util.AlmostEqual32(o.StickerValue, database.GetStickerPrice()) {
-		return fmt.Errorf("The value of the sticker has changed!")
 	}
 
 	return nil

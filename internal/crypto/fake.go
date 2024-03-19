@@ -23,7 +23,7 @@ func (p *FakeEncryptionWriter) EnsureCanWriteDiskOrExit() {
 	}
 }
 
-func (p *FakeEncryptionWriter) SaveAndEncryptData(json []byte) (string, error) {
+func (p *FakeEncryptionWriter) SaveAndEncryptData(uuid string, json []byte) (string, error) {
 
 	log.Warn("Using FakeEncryptionWriter! Nothing is actually about to happen.")
 	log.Info("Encrypting some raw byte data")
@@ -33,11 +33,9 @@ func (p *FakeEncryptionWriter) SaveAndEncryptData(json []byte) (string, error) {
 		return "", fmt.Errorf("Could not encrypt data. %s", FAIL_MSG)
 	}
 
-	orderId := util.GetOrderID()
+	outfile := filepath.Join(p.OutputDirectory, util.GetNewOrderName(uuid))
 
-	outfile := filepath.Join(p.OutputDirectory, util.GetNewOrderName(orderId))
-
-	log.Info("Order number: ", orderId)
+	log.Info("Order number: ", uuid)
 
 	if p.AlwaysFailWrite {
 		return "", fmt.Errorf("Could not write encrypted data to a file. %s", FAIL_MSG)
@@ -45,5 +43,5 @@ func (p *FakeEncryptionWriter) SaveAndEncryptData(json []byte) (string, error) {
 
 	log.Info("Order saved:", outfile)
 
-	return orderId, nil
+	return uuid, nil
 }

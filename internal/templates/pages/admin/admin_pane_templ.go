@@ -11,14 +11,14 @@ import "io"
 import "bytes"
 
 import (
-	"github.com/minnowo/astoryofand/internal/model"
+	"github.com/minnowo/astoryofand/internal/database/models"
 	"github.com/minnowo/astoryofand/internal/templates"
 	"github.com/minnowo/astoryofand/internal/templates/components"
 	"github.com/minnowo/astoryofand/internal/templates/layout"
 	"github.com/minnowo/astoryofand/internal/util"
 )
 
-func ShowAdminPane(adminView *model.AdminView) templ.Component {
+func ShowAdminPane(adminView *models.AdminView) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {

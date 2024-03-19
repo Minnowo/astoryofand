@@ -8,7 +8,7 @@ import (
 )
 
 type EncryptionWriter interface {
-	SaveAndEncryptData([]byte) (string, error)
+	SaveAndEncryptData(string, []byte) (string, error)
 	EnsureCanWriteDiskOrExit()
 }
 

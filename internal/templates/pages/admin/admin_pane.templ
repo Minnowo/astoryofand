@@ -5,12 +5,12 @@ import (
 	"github.com/minnowo/astoryofand/internal/templates"
     "github.com/minnowo/astoryofand/internal/templates/layout"
     "github.com/minnowo/astoryofand/internal/templates/components"
-    "github.com/minnowo/astoryofand/internal/model"
+    "github.com/minnowo/astoryofand/internal/database/models"
 	"github.com/minnowo/astoryofand/internal/util"
 )
 
 
-templ ShowAdminPane(adminView *model.AdminView) {
+templ ShowAdminPane(adminView *models.AdminView) {
 
     @layout.Page(templates.PAGE_TITLE) {
 

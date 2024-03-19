@@ -22,6 +22,10 @@ func sanityCheck() {
 	if len(assets.PrivateKeyBytes) != 0 {
 		panic("assets.PrivateKeyBytes has non-zero length! The Private Key may be embeded!")
 	}
+
+	if len(assets.PrivateKeyPassword) != 0 {
+		panic("assets.PrivateKeyBytes has non-zero length! The Private Key may be embeded!")
+	}
 }
 
 func initDB() {

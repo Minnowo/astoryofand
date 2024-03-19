@@ -6,7 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
-	"github.com/minnowo/astoryofand/internal/model"
+	"github.com/minnowo/astoryofand/internal/database/models"
 	"github.com/minnowo/astoryofand/internal/templates/pages/uses"
 	"github.com/minnowo/astoryofand/internal/util"
 )
@@ -22,26 +22,28 @@ func (u *UsesHandler) HandleUsesThankYouGET(c echo.Context) error {
 
 func (u *UsesHandler) HandleUsesPOST(c echo.Context) error {
 
-	var o model.UseCase
+	var o models.UseCase
 
 	if err := c.Bind(&o); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "This is an invalid use!")
 	}
 
-	if !o.CheckValid() {
+	if !o.CheckValidDataFromUser() {
 		return echo.NewHTTPError(http.StatusBadRequest, "This is an invalid use!")
 	}
 
-	log.Debug("Got Use: ", o)
+	o.DelayedInit()
 
-	jsonData, err := json.MarshalIndent(&o, "", "  ")
+	log.Debug("Got Use: ", o.EnsureType())
+
+	jsonData, err := json.MarshalIndent(o.EnsureType(), "", "  ")
 
 	if err != nil {
 		log.Error(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, "Server Error!")
 	}
 
-	if _, err := u.EncryptionWriter.SaveAndEncryptData(jsonData); err != nil {
+	if _, err := u.EncryptionWriter.SaveAndEncryptData(o.UUID, jsonData); err != nil {
 
 		log.Debug(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, "Server Error!")

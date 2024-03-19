@@ -8,7 +8,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 	"github.com/minnowo/astoryofand/internal/database"
-	"github.com/minnowo/astoryofand/internal/model"
+	"github.com/minnowo/astoryofand/internal/database/models"
 	"github.com/minnowo/astoryofand/internal/templates/pages/order"
 	"github.com/minnowo/astoryofand/internal/util"
 )
@@ -23,15 +23,21 @@ func (h *OrderHandler) HandleOrderThankYou(c echo.Context) error {
 
 func (h *OrderHandler) HandleOrderPlaced(c echo.Context) error {
 
-	var o model.Order
+	var o models.Order
 
 	if err := c.Bind(&o); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "This is an invalid order!")
 	}
 
-	if err := o.CheckValid(); err != nil {
+	if err := o.CheckValidDataFromUser(); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
+
+	if !database.OrderHasValidPrice(&o) {
+		return echo.NewHTTPError(http.StatusBadRequest, "Order has bad prices!")
+	}
+
+	o.DelayedInit()
 
 	// we are safe to use the o.StickerValue and o.BoxSetValue here because the above
 	// valid check ensures they are equal to the value stored in the database
@@ -39,14 +45,14 @@ func (h *OrderHandler) HandleOrderPlaced(c echo.Context) error {
 
 	log.Debug("Got order: ", o)
 
-	jsonData, err := json.MarshalIndent(&o, "", "  ")
+	jsonData, err := json.MarshalIndent(o.EnsureType(), "", "  ")
 
 	if err != nil {
 		log.Error(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, "Server Error!")
 	}
 
-	if oid, err := h.EncryptionWriter.SaveAndEncryptData(jsonData); err != nil {
+	if oid, err := h.EncryptionWriter.SaveAndEncryptData(o.UUID, jsonData); err != nil {
 
 		log.Debug(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, "Server Error!")

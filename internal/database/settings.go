@@ -9,6 +9,7 @@ import (
 	"github.com/minnowo/astoryofand/internal/assets"
 	"github.com/minnowo/astoryofand/internal/crypto"
 	"github.com/minnowo/astoryofand/internal/database/models"
+	"github.com/minnowo/astoryofand/internal/util"
 	"gorm.io/gorm"
 )
 
@@ -165,4 +166,20 @@ func SetPublicKey(nv string) error {
 	log.Infof("Public Key has changed dto %s", nv)
 
 	return nil
+}
+
+func OrderHasValidPrice(o *models.Order) bool {
+
+	settingsLock.RLock()
+	defer settingsLock.RUnlock()
+
+	if !util.AlmostEqual32(o.BoxSetValue, settingsInstance.BoxSetPrice) {
+		return false
+	}
+
+	if !util.AlmostEqual32(o.StickerValue, settingsInstance.StickerCost) {
+		return false
+	}
+
+	return true
 }

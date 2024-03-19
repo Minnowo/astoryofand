@@ -45,7 +45,7 @@ func (p *PGPEncryptionWriter) EnsureCanWriteDiskOrExit() {
 	}
 }
 
-func (p *PGPEncryptionWriter) SaveAndEncryptData(json []byte) (string, error) {
+func (p *PGPEncryptionWriter) SaveAndEncryptData(uuid string, json []byte) (string, error) {
 
 	armor, err := helper.EncryptBinaryMessageArmored(p.PublicKey, json)
 
@@ -53,9 +53,7 @@ func (p *PGPEncryptionWriter) SaveAndEncryptData(json []byte) (string, error) {
 		return "", err
 	}
 
-	orderId := util.GetOrderID()
-
-	outfile := filepath.Join(p.OutputDirectory, util.GetNewOrderName(orderId))
+	outfile := filepath.Join(p.OutputDirectory, util.GetNewOrderName(uuid))
 
 	err = os.WriteFile(outfile, []byte(armor), 0644)
 
@@ -63,5 +61,5 @@ func (p *PGPEncryptionWriter) SaveAndEncryptData(json []byte) (string, error) {
 		return "", err
 	}
 
-	return orderId, nil
+	return uuid, nil
 }

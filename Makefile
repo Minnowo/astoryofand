@@ -4,6 +4,11 @@ VERSION := ${shell cat ./internal/assets/version.txt}
 BIN_DIR  := bin
 CONF_DIR := conf
 
+GO_FILES := $(shell find . -name "*.go")
+
+HOME_SRC := cmd/home/main.go
+HOME_DST := $(BIN_DIR)/home
+
 SITE_SRC := cmd/site/main.go
 SITE_DST := $(BIN_DIR)/main
 
@@ -14,7 +19,7 @@ LDFLAGS ?=
 
 @PHONY: run debug build build_template build_save_docker bin_dir clean build_apline_static_for_docker setup_tailwind
 
-all: debug
+all: build
 
 clean:
 	rm -f $(SITE_DST) $(DECRYPT_DST)
@@ -33,13 +38,16 @@ setup_tailwind: | bin_dir
 	mv tailwindcss-linux-x64  $(BIN_DIR)
 	chmod +x $(BIN_DIR)/tailwindcss-linux-x64
 
-$(SITE_DST): $(SITE_SRC) | build_template bin_dir
+$(SITE_DST): $(SITE_SRC) $(GO_FILES) | build_template bin_dir
 	go build -ldflags "$(LDFLAGS)" -o $(SITE_DST) $(SITE_SRC) 
 
-$(DECRYPT_DST): $(DECRYPT_SRC) | build_template bin_dir
+$(DECRYPT_DST): $(DECRYPT_SRC) $(GO_FILES) | build_template bin_dir
 	go build -ldflags "$(LDFLAGS)" -tags=include_private_key -o $(DECRYPT_DST) $(DECRYPT_SRC)
 
-build: | $(SITE_DST) $(DECRYPT_DST) build_template bin_dir
+$(HOME_DST): $(HOME_SRC) $(GO_FILES) | build_template bin_dir
+	go build -ldflags "$(LDFLAGS)" -tags=include_private_key -o $(HOME_DST) $(HOME_SRC)
+
+build: | $(HOME_DST) $(SITE_DST) $(DECRYPT_DST) build_template bin_dir
 	echo "Done"
 
 build_apline_static_for_docker:

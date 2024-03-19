@@ -27,6 +27,8 @@ func DBInit(conf *DBConfig) {
 	log.Info("Running automigrate")
 	db.AutoMigrate(&models.KeyValueStore{})
 	db.AutoMigrate(&models.Settings{})
+	db.AutoMigrate(&models.Order{})
+	db.AutoMigrate(&models.UseCase{})
 
 }
 
