@@ -3,11 +3,9 @@ package main
 import (
 	"net/http"
 	"os"
-	"strconv"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/labstack/gommon/log"
 	"github.com/minnowo/astoryofand/internal/assets"
 	"github.com/minnowo/astoryofand/internal/crypto"
 	"github.com/minnowo/astoryofand/internal/database"
@@ -26,63 +24,9 @@ func sanityCheck() {
 	}
 }
 
-func initLogging(app *echo.Echo) {
-
-	IS_DEBUG := os.Getenv("DEBUG")
-	LOG_LEVEL := os.Getenv("LOG_LEVEL")
-
-	log.SetHeader("${time_rfc3339} ${level}")
-	log.SetLevel(log.INFO)
-
-	app.Logger.SetHeader("${time_rfc3339} ${level}")
-
-	if level, err := strconv.ParseUint(LOG_LEVEL, 10, 8); err == nil {
-		app.Logger.SetLevel(log.Lvl(level))
-		log.Info("Read LOG_LEVEL from env: ", level)
-	} else {
-		log.Warn("Could not read LOG_LEVEL from env. Log level is: ", app.Logger.Level())
-	}
-
-	if debug_, err := strconv.ParseBool(IS_DEBUG); err == nil {
-
-		app.Debug = debug_
-
-		if debug_ {
-			app.Logger.SetLevel(log.DEBUG)
-		}
-
-		log.Info("Read DEBUG from Env: ", debug_)
-	} else {
-		app.Debug = false
-		log.Warn("Could not read DEBUG from env. Running in release mode.")
-	}
-
-	log.SetLevel(app.Logger.Level())
-}
-
 func initDB() {
 	database.DBInit(&database.DBConfig{
 		DatabasePath: assets.SQLitePath})
-}
-
-func initEncryption(orderEncryption, usesEncryption *crypto.EncryptionWriter) {
-
-	oenc := crypto.PGPEncryptionWriter{
-		PublicKey:       assets.PublicKeyBytes,
-		OutputDirectory: assets.PGPOutputDir,
-	}
-
-	uenc := crypto.PGPEncryptionWriter{
-		PublicKey:       assets.PublicKeyBytes,
-		OutputDirectory: assets.UsesOutputDir,
-	}
-
-	oenc.EnsureCanWriteDiskOrExit()
-	uenc.EnsureCanWriteDiskOrExit()
-
-	*orderEncryption = &oenc
-	*usesEncryption = &oenc
-
 }
 
 func main() {
@@ -95,7 +39,7 @@ func main() {
 
 	app = echo.New()
 
-	initLogging(app)
+	util.InitLogging(app)
 
 	initDB()
 

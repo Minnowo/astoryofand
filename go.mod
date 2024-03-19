@@ -5,13 +5,13 @@ go 1.21.5
 require (
 	github.com/ProtonMail/go-crypto v1.0.0
 	github.com/ProtonMail/gopenpgp/v2 v2.7.5
-	github.com/a-h/templ v0.2.598
+	github.com/a-h/templ v0.2.639
 	github.com/google/uuid v1.6.0
 	github.com/gtuk/discordwebhook v1.2.0
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/labstack/gommon v0.4.2
 	gorm.io/driver/sqlite v1.5.5
-	gorm.io/gorm v1.25.7
+	gorm.io/gorm v1.25.8
 )
 
 require (

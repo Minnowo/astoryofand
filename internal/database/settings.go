@@ -68,7 +68,7 @@ func SaveSettings() error {
 
 	settingsLock.RLock()
 
-    err = saveSettingsNoLock()
+	err = saveSettingsNoLock()
 
 	settingsLock.RUnlock()
 
