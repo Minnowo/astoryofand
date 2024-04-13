@@ -58,7 +58,7 @@ build_home_alpine_static_for_docker:
 
 build_docker: $(SITE_SRC) | build_template bin_dir
 	docker build -t "astoryofand:${VERSION}" -f site.Dockerfile .
-	docker build -t "astoryofand-home:${VERSION}" -f home.Dockerfile .
+	# docker build -t "astoryofand-home:${VERSION}" -f home.Dockerfile .
 
 build_save_docker: $(SITE_SRC) | build_docker
 	docker save -o bin/astoryofand.tar "astoryofand:${VERSION}"

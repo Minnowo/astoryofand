@@ -2,6 +2,7 @@ package order
 
 import (
 	"github.com/minnowo/astoryofand/internal/templates"
+	"github.com/minnowo/astoryofand/internal/templates/components"
     "github.com/minnowo/astoryofand/internal/templates/layout"
     "github.com/minnowo/astoryofand/internal/util"
 	"github.com/google/uuid"
@@ -15,7 +16,9 @@ templ ShowOrderThanks(orderId string) {
         <form class="auto-margin hpad30p">
 
             <center>
-                <h2>Thank you for your order!</h2>
+                @components.H2(){
+                    Thank you for your order!
+                    }
             </center>
 
             <br/>
@@ -35,7 +38,7 @@ templ ShowOrderThanks(orderId string) {
 
             <p>
                 If you have any questions regarding your order please email 
-                <a href={ "mailto:" + templates.ORDER_EMAIL }>{ string(templates.ORDER_EMAIL) }</a>
+                <a class="text-[#f7ce6e]" href={ "mailto:" + templates.ORDER_EMAIL }>{ string(templates.ORDER_EMAIL) }</a>
                 and include your order ID. We will be sure to get back to you as soon as possible.
             </p>
 

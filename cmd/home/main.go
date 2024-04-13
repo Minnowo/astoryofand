@@ -329,9 +329,9 @@ func main() {
 	app.GET("/favicon.ico", echo.WrapHandler(staticAssetHandler))
 	app.GET("/favicon.png", echo.WrapHandler(staticAssetHandler))
 
-    app.GET("", func(c echo.Context) error {
-    	return util.EchoRenderTempl(c, pages.ShowInvoice(models.NewOrder()))
-    })
+	app.GET("", func(c echo.Context) error {
+		return util.EchoRenderTempl(c, pages.ShowInvoice(models.NewOrder()))
+	})
 
 	watcher, err := fsnotify.NewWatcher()
 
