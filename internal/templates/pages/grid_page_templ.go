@@ -5,27 +5,26 @@ package pages
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
-import (
-	"bytes"
-	"context"
-	"io"
-	"strconv"
+import "github.com/a-h/templ"
+import "context"
+import "io"
+import "bytes"
 
-	"github.com/a-h/templ"
+import (
 	"github.com/minnowo/astoryofand/internal/templates"
 	"github.com/minnowo/astoryofand/internal/templates/layout"
 )
 
-func onClickHandler(msg string) templ.ComponentScript {
+func onClickHandler() templ.ComponentScript {
 	return templ.ComponentScript{
 		Name: `__templ_onClickHandler_a72f`,
-		Function: `function __templ_onClickHandler_a72f(msg){var audio = document.getElementsByTagName("audio")[0];
+		Function: `function __templ_onClickHandler_a72f(){var audio = document.getElementsByTagName("audio")[0];
     audio.currentTime = 0;
     audio.volume = 0.5;
     audio.play();
 }`,
-		Call:       templ.SafeScript(`__templ_onClickHandler_a72f`, msg),
-		CallInline: templ.SafeScriptInline(`__templ_onClickHandler_a72f`, msg),
+		Call:       templ.SafeScript(`__templ_onClickHandler_a72f`),
+		CallInline: templ.SafeScriptInline(`__templ_onClickHandler_a72f`),
 	}
 }
 
@@ -48,14 +47,14 @@ func ShowGridPage() templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n            \n            .grow-on-hover:hover {\n                transform: scale(1.1); \n                transition: transform 0.3s ease;\n                border: none;\n            }\n        </style> <audio preload=\"auto\"><source src=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<audio preload=\"auto\"><source src=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs("/static/" + templates.AUDIO)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 28, Col: 54}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 20, Col: 54}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -65,47 +64,47 @@ func ShowGridPage() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			for i, item := range templates.IMAGES {
-				templ_7745c5c3_Err = templ.RenderScriptItems(ctx, templ_7745c5c3_Buffer, onClickHandler("alskdjasld"))
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<a id=\"")
+			for _, item := range templates.IMAGES {
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex border p-4 w-[256px] h-[256px] perspective flip-hover\"><div class=\"relative w-full h-full transition-3d flip-hover-inner\"><img class=\"absolute w-full h-full backface-hidden\" src=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var4 string
-				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("img-" + strconv.Itoa(i))
+				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("/static/images/grid/" + item)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 36, Col: 49}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 32, Col: 64}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"flex w-[256px] h-[256px] border p-4 grow-on-hover\" onClick=\"")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" loading=\"lazy\"><div class=\"absolute w-full h-full backface-hidden rotate-y-180 break-words bg-gray-800\"><center><a href=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var5 templ.ComponentScript = onClickHandler("alskdjasld")
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5.Call)
+				var templ_7745c5c3_Var5 templ.SafeURL = templ.SafeURL("/static/images/grid/" + item)
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var5)))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><img src=\"")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" target=\"_blank\" rel=\"noopener noreferrer\">image </a> ")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				var templ_7745c5c3_Var6 string
-				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs("/static/images/grid/" + item)
-				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 41, Col: 60}
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+				templ_7745c5c3_Err = templ.RenderScriptItems(ctx, templ_7745c5c3_Buffer, onClickHandler())
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" loading=\"lazy\"></a>")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<button class=\"bg-gray-600 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded\" onClick=\"")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var6 templ.ComponentScript = onClickHandler()
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6.Call)
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">Click me</button></center></div></div></div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

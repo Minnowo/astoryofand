@@ -5,13 +5,10 @@ package components
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
-import (
-	"bytes"
-	"context"
-	"io"
-
-	"github.com/a-h/templ"
-)
+import "github.com/a-h/templ"
+import "context"
+import "io"
+import "bytes"
 
 const INPUT_CLASS string = "dark:bg-dark-800 dark:text-white rounded-sm border-black border px-0.5 py-1 "
 

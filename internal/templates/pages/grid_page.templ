@@ -5,7 +5,7 @@ import (
     "github.com/minnowo/astoryofand/internal/templates/layout"
 )
 
-script onClickHandler(msg string) {
+script onClickHandler() {
     var audio = document.getElementsByTagName("audio")[0];
     audio.currentTime = 0;
     audio.volume = 0.5;
@@ -15,14 +15,6 @@ script onClickHandler(msg string) {
 templ ShowGridPage() {
 
     @layout.Page2("Grid | " + templates.PAGE_TITLE) {
-        <style>
-            
-            .grow-on-hover:hover {
-                transform: scale(1.1); 
-                transition: transform 0.3s ease;
-                border: none;
-            }
-        </style>
 
         <audio preload="auto">
             <source src={ "/static/" + templates.AUDIO }></source>
@@ -30,17 +22,35 @@ templ ShowGridPage() {
 
         <div class="flex flex-wrap justify-center h-full">
 
-            for i, item := range templates.IMAGES {
+            for _, item := range templates.IMAGES {
 
-                <a 
-                    id={ "img-" + strconv.Itoa(i) } 
-                    class="flex w-[256px] h-[256px] border p-4 grow-on-hover" 
-                    onClick={ onClickHandler("alskdjasld") }
-                    >
+                <div class="flex border p-4 w-[256px] h-[256px] perspective flip-hover">
 
-                    <img src={ "/static/images/grid/" + item } loading="lazy" />
-                </a>
+                    <div class="relative w-full h-full transition-3d flip-hover-inner">
 
+                        <img class="absolute w-full h-full backface-hidden" 
+                             src={ "/static/images/grid/" + item } 
+                             loading="lazy" 
+                            />
+
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 break-words bg-gray-800">
+
+                            <center>
+
+                                <a href={ templ.SafeURL("/static/images/grid/" + item) } target="_blank" rel="noopener noreferrer" > 
+                                    image 
+                                </a>
+
+                                <button 
+                                    class="bg-gray-600 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded"
+                                    onClick={ onClickHandler() }>
+                                        Click me
+                                    </button>
+                            </center>
+                        </div>
+                    </div>
+
+               </div>
             }
 
         </div>
