@@ -17,3 +17,7 @@ func (h *HomeHandler) HandleAboutShow(c echo.Context) error {
 func (h *HomeHandler) HandleHome(c echo.Context) error {
 	return util.EchoRenderTempl(c, pages.ShowHomePage())
 }
+
+func (h *HomeHandler) HandleGride(c echo.Context) error {
+	return util.EchoRenderTempl(c, pages.ShowGridPage())
+}

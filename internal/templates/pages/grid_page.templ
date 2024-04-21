@@ -1,0 +1,50 @@
+package pages
+
+import (
+	"github.com/minnowo/astoryofand/internal/templates"
+    "github.com/minnowo/astoryofand/internal/templates/layout"
+)
+
+script onClickHandler(msg string) {
+    var audio = document.getElementsByTagName("audio")[0];
+    audio.currentTime = 0;
+    audio.volume = 0.5;
+    audio.play();
+}
+
+templ ShowGridPage() {
+
+    @layout.Page2("Grid | " + templates.PAGE_TITLE) {
+        <style>
+            
+            .grow-on-hover:hover {
+                transform: scale(1.1); 
+                transition: transform 0.3s ease;
+                border: none;
+            }
+        </style>
+
+        <audio preload="auto">
+            <source src={ "/static/" + templates.AUDIO }></source>
+        </audio>
+
+        <div class="flex flex-wrap justify-center h-full">
+
+            for i, item := range templates.IMAGES {
+
+                <a 
+                    id={ "img-" + strconv.Itoa(i) } 
+                    class="flex w-[256px] h-[256px] border p-4 grow-on-hover" 
+                    onClick={ onClickHandler("alskdjasld") }
+                    >
+
+                    <img src={ "/static/images/grid/" + item } loading="lazy" />
+                </a>
+
+            }
+
+        </div>
+
+    }
+}
+
