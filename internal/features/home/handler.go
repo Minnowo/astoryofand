@@ -19,5 +19,8 @@ func (h *HomeHandler) HandleHome(c echo.Context) error {
 }
 
 func (h *HomeHandler) HandleGride(c echo.Context) error {
-	return util.EchoRenderTempl(c, pages.ShowGridPage())
+
+	as_cards := c.QueryParam("as_cards")
+
+	return util.EchoRenderTempl(c, pages.ShowGridPage(as_cards == "1"))
 }

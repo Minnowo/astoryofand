@@ -12,7 +12,23 @@ script onClickHandler() {
     audio.play();
 }
 
-templ ShowGridPage() {
+
+templ flipCard() {
+
+    <div class="flex border p-4 w-[256px] h-[192px] perspective flip-hover">
+
+        <div class="relative w-full h-full transition-3d flip-hover-inner">
+
+            { children... }
+
+        </div>
+
+    </div>
+}
+
+
+
+templ ShowGridPage(show_as_cards bool) {
 
     @layout.Page2("Grid | " + templates.PAGE_TITLE) {
 
@@ -20,37 +36,66 @@ templ ShowGridPage() {
             <source src={ "/static/" + templates.AUDIO }></source>
         </audio>
 
+        <center>
+            <a class="mx-2" href="/grid_test_with_audio?as_cards=1">
+                Show as Card
+            </a>
+
+            <a class="mx-2" href="/grid_test_with_audio">
+                Show all
+            </a>
+        </center>
+        
+
         <div class="flex flex-wrap justify-center h-full">
 
-            for _, item := range templates.IMAGES {
+            for i, item := range templates.IMAGES {
 
-                <div class="flex border p-4 w-[256px] h-[256px] perspective flip-hover">
+                // length check so we don't go out of bounds with i+1
+                if show_as_cards && len(templates.IMAGES) % 2 == 0 {
 
-                    <div class="relative w-full h-full transition-3d flip-hover-inner">
+                    if i % 2 == 0  {
 
-                        <img class="absolute w-full h-full backface-hidden" 
-                             src={ "/static/images/grid/" + item } 
-                             loading="lazy" 
-                            />
+                        @flipCard() {
 
-                        <div class="absolute w-full h-full backface-hidden rotate-y-180 break-words bg-gray-800">
+                            <img class="absolute w-full h-full backface-hidden" 
+                                 src={ "/static/images/grid/" + templates.IMAGES[i + 1] } 
+                                 loading="lazy" 
+                                />
 
-                            <center>
+                            <img class="absolute w-full h-full backface-hidden rotate-y-180" 
+                                 src={ "/static/images/grid/" + item } 
+                                 loading="lazy" 
+                                />
+                        }
+                    }
+                }
+                else {
 
-                                <a href={ templ.SafeURL("/static/images/grid/" + item) } target="_blank" rel="noopener noreferrer" > 
-                                    image 
-                                </a>
+                    @flipCard() {
 
-                                <button 
-                                    class="bg-gray-600 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded"
-                                    onClick={ onClickHandler() }>
-                                        Click me
-                                    </button>
-                            </center>
-                        </div>
-                    </div>
+                            <img class="absolute w-full h-full backface-hidden" 
+                                 src={ "/static/images/grid/" + item } 
+                                 loading="lazy" 
+                                />
 
-               </div>
+                            <div class="absolute w-full h-full backface-hidden rotate-y-180 break-words bg-gray-800">
+
+                                <center>
+
+                                    <a href={ templ.SafeURL("/static/images/grid/" + item) } target="_blank" rel="noopener noreferrer" > 
+                                        image 
+                                    </a>
+
+                                    <button 
+                                        class="bg-gray-600 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded"
+                                        onClick={ onClickHandler() }>
+                                            Click me
+                                        </button>
+                                </center>
+                            </div>
+                    }
+                }
             }
 
         </div>
