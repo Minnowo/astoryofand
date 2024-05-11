@@ -28,8 +28,8 @@ func (u *UsesHandler) HandleUsesPOST(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "This is an invalid use!")
 	}
 
-	if !o.CheckValidDataFromUser() {
-		return echo.NewHTTPError(http.StatusBadRequest, "This is an invalid use!")
+    if err := o.CheckValidDataFromUser(); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
 	o.DelayedInit()

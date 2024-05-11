@@ -17,7 +17,7 @@ DECRYPT_DST := $(BIN_DIR)/decrypt
 
 LDFLAGS ?= 
 
-@PHONY: run debug build build_template build_save_docker bin_dir clean build_site_alpine_static_for_docker build_home_alpine_static_for_docker setup_tailwind create_postgres
+@PHONY: run debug build test build_template build_save_docker bin_dir clean build_site_alpine_static_for_docker build_home_alpine_static_for_docker setup_tailwind create_postgres
 
 all: build
 
@@ -62,6 +62,9 @@ build_docker: $(SITE_SRC) | build_template bin_dir
 
 build_save_docker: $(SITE_SRC) | build_docker
 	docker save -o bin/astoryofand.tar "astoryofand:${VERSION}"
+
+test:
+	go test ./...
 
 run:  | build_template
 	@DEBUG=false LOG_LEVEL=2 go run $(SITE_SRC)

@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -42,13 +43,19 @@ func (o *UseCase) EnsureType() *UseCase {
 	return o
 }
 
-func (o *UseCase) CheckValidDataFromUser() bool {
+func (o *UseCase) CheckValidDataFromUser() error {
 
-	if util.IsEmptyOrWhitespace(o.Email) ||
-		util.IsEmptyOrWhitespace(o.FullName) ||
-		util.IsEmptyOrWhitespace(o.Comment) {
-		return false
+	if util.IsEmptyOrWhitespace(o.Email) {
+		return fmt.Errorf("Email is empty!")
 	}
 
-	return true
+    if util.IsEmptyOrWhitespace(o.FullName) {
+		return fmt.Errorf("FullName is empty!")
+    }
+
+    if util.IsEmptyOrWhitespace(o.Comment) {
+		return fmt.Errorf("Comment is empty!")
+    }
+
+	return nil
 }
