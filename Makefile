@@ -47,16 +47,16 @@ $(DECRYPT_DST): $(DECRYPT_SRC) $(GO_FILES) | build_template bin_dir
 $(HOME_DST): $(HOME_SRC) $(GO_FILES) | build_template bin_dir
 	go build -ldflags "$(LDFLAGS)" -tags=include_private_key -o $(HOME_DST) $(HOME_SRC)
 
-build: | $(HOME_DST) $(SITE_DST) $(DECRYPT_DST) build_template bin_dir
+build: | $(HOME_DST) $(SITE_DST) $(DECRYPT_DST) build_template bin_dir test
 	echo "Done"
 
-build_site_alpine_static_for_docker:
+build_site_alpine_static_for_docker: | test
 	CGO_ENABLED=1 GOOS=linux go build -ldflags "$(LDFLAGS)" -o main -ldflags "-s" $(SITE_SRC)
 
-build_home_alpine_static_for_docker:
+build_home_alpine_static_for_docker: | test
 	CGO_ENABLED=1 GOOS=linux go build -ldflags "$(LDFLAGS)" -o main -ldflags "-s" $(HOME_SRC)
 
-build_docker: $(SITE_SRC) | build_template bin_dir
+build_docker: $(SITE_SRC) | build_template bin_dir test
 	docker build -t "astoryofand:${VERSION}" -f site.Dockerfile .
 	# docker build -t "astoryofand-home:${VERSION}" -f home.Dockerfile .
 
