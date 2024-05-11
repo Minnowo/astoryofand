@@ -166,7 +166,7 @@ func (pgp *PGPDecryptor) processFile(path string) DecrypFailRead {
 
 		log.Info("Got Order from file")
 
-		var o models.Order
+		var o models.TableOrder
 
 		if err := json.Unmarshal(data, &o); err != nil {
 
@@ -185,7 +185,7 @@ func (pgp *PGPDecryptor) processFile(path string) DecrypFailRead {
 
 		log.Info("Got Usecase from file")
 
-		var o models.UseCase
+		var o models.TableUseCase
 
 		if err := json.Unmarshal(data, &o); err != nil {
 

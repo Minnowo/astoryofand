@@ -47,7 +47,7 @@ $(DECRYPT_DST): $(DECRYPT_SRC) $(GO_FILES) | build_template bin_dir
 $(HOME_DST): $(HOME_SRC) $(GO_FILES) | build_template bin_dir
 	go build -ldflags "$(LDFLAGS)" -tags=include_private_key -o $(HOME_DST) $(HOME_SRC)
 
-build: | $(HOME_DST) $(SITE_DST) $(DECRYPT_DST) build_template bin_dir test
+build: | test $(HOME_DST) $(SITE_DST) $(DECRYPT_DST)
 	echo "Done"
 
 build_site_alpine_static_for_docker: | test
