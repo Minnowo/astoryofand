@@ -22,13 +22,13 @@ func (u *UsesHandler) HandleUsesThankYouGET(c echo.Context) error {
 
 func (u *UsesHandler) HandleUsesPOST(c echo.Context) error {
 
-	var o models.UseCase
+	var o models.TableUseCase
 
 	if err := c.Bind(&o); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "This is an invalid use!")
 	}
 
-    if err := o.CheckValidDataFromUser(); err != nil {
+	if err := o.CheckValidDataFromUser(); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 

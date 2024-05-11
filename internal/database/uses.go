@@ -5,7 +5,7 @@ import (
 	"github.com/minnowo/astoryofand/internal/database/models"
 )
 
-func InsertUseCase(o *models.UseCase) bool {
+func InsertUseCase(o *models.TableUseCase) bool {
 
 	if len(o.UUID) == 0 {
 

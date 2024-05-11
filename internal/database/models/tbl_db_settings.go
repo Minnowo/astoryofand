@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type Settings struct {
+type TableSettings struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`

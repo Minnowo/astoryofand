@@ -10,6 +10,7 @@ import (
 	"github.com/minnowo/astoryofand/internal/assets"
 	"github.com/minnowo/astoryofand/internal/crypto"
 	"github.com/minnowo/astoryofand/internal/database"
+	"github.com/minnowo/astoryofand/internal/database/models"
 	"github.com/minnowo/astoryofand/internal/features/admin"
 	"github.com/minnowo/astoryofand/internal/features/home"
 	"github.com/minnowo/astoryofand/internal/features/order"
@@ -58,6 +59,21 @@ func main() {
 
 	database.LoadSettings("main")
 
+	if username, ok := os.LookupEnv(assets.ENV_ADMIN_USERNAME_KEY); ok {
+
+		if password, ok := os.LookupEnv(assets.ENV_ADMIN_PASSWORD_KEY); ok {
+
+			log.Info("Creating user from env vars")
+
+			if !database.InsertRawUser(&models.User{
+				Username: username,
+				Password: password,
+			}) {
+				log.Fatalf("Could not create user %s", username)
+			}
+		}
+	}
+
 	orderEncryption = &crypto.PGPEncryptionWriter{
 		PublicKey:       assets.PublicKeyBytes,
 		OutputDirectory: assets.PGPOutputDir,
@@ -102,10 +118,7 @@ func main() {
 	// admin routes
 	//
 
-	adminHandler := admin.AdminHandler{
-		Username: []byte(os.Getenv(assets.ENV_ADMIN_USERNAME_KEY)),
-		Password: []byte(os.Getenv(assets.ENV_ADMIN_PASSWORD_KEY)),
-	}
+	adminHandler := admin.AdminHandler{}
 	adminHandler.Mount(app)
 
 	//

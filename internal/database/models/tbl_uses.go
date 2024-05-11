@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type UseCase struct {
+type TableUseCase struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time      `json:"-"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
@@ -20,13 +20,13 @@ type UseCase struct {
 	Comment  string `json:"comment" form:"comment"`
 }
 
-func NewUseCase() *UseCase {
-	return &UseCase{
+func NewUseCase() *TableUseCase {
+	return &TableUseCase{
 		UserData: UserData{UsecaseType},
 	}
 }
 
-func (o *UseCase) DelayedInit() *UseCase {
+func (o *TableUseCase) DelayedInit() *TableUseCase {
 	if err := uuid.Validate(o.UUID); err != nil {
 
 		o.UUID = util.GetOrderID()
@@ -38,24 +38,24 @@ func (o *UseCase) DelayedInit() *UseCase {
 	return o
 }
 
-func (o *UseCase) EnsureType() *UseCase {
+func (o *TableUseCase) EnsureType() *TableUseCase {
 	o.Type = UsecaseType
 	return o
 }
 
-func (o *UseCase) CheckValidDataFromUser() error {
+func (o *TableUseCase) CheckValidDataFromUser() error {
 
 	if util.IsEmptyOrWhitespace(o.Email) {
 		return fmt.Errorf("Email is empty!")
 	}
 
-    if util.IsEmptyOrWhitespace(o.FullName) {
+	if util.IsEmptyOrWhitespace(o.FullName) {
 		return fmt.Errorf("FullName is empty!")
-    }
+	}
 
-    if util.IsEmptyOrWhitespace(o.Comment) {
+	if util.IsEmptyOrWhitespace(o.Comment) {
 		return fmt.Errorf("Comment is empty!")
-    }
+	}
 
 	return nil
 }

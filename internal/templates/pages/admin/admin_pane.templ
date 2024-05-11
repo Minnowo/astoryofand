@@ -14,27 +14,50 @@ templ ShowAdminPane(adminView *models.AdminView) {
 
     @layout.Page(templates.PAGE_TITLE) {
 
+        <a href="/admin">Refresh</a>
+
 	    <form action="/admin/update/boxprice" method="POST">
 
-            <div>
-                <h3 class="no-margin"> Change Box Set price:  </h3>
-                <input type="number" name="boxpricevalue" value={ util.F32TS(adminView.BoxSetPrice) } min="0" max="999" required/>
-            </div>
+            @components.H2() { Change Box Set price: }
 
-            @components.SubmitButtonRight30()
+            <div class="flex flex-row justify-between">
+
+                <input class={ components.INPUT_CLASS } type="number" name="boxpricevalue" value={ util.F32TS(adminView.BoxSetPrice) } min="0" max="999" required/>
+
+                @components.SubmitButton() { Apply }
+            </div>
 
         </form>
 
-	    <form action="/admin/update/stickerprice" method="POST">
+	    <form class="my-5" action="/admin/update/stickerprice" method="POST">
 
-            <div>
-                <h3 class="no-margin"> Change Sticker price:  </h3>
-                <input type="number" name="stickerpricevalue" value={ util.F32TS(adminView.StickerCost) } min="0" max="999" required/>
+            @components.H2() { Change Sticker price: }
+
+            <div class="flex flex-row justify-between">
+
+                <input class={ components.INPUT_CLASS } type="number" name="stickerpricevalue" value={ util.F32TS(adminView.StickerCost) } min="0" max="999" required/>
+
+                @components.SubmitButton() { Apply }
             </div>
-
-            @components.SubmitButtonRight30()
 
         </form>
 
+
+	    <form action="/admin/create/user" method="POST">
+
+            @components.H2() { Create A User: }
+
+            <div class="flex flex-col justify-between">
+
+                <input class={ components.INPUT_CLASS, "m-1"} type="text" name="username" placeholder="username" required/>
+                <input class={ components.INPUT_CLASS, "m-1" } type="password" name="password" placeholder="password" required/>
+
+            </div>
+
+            <div class="flex justify-end">
+                @components.SubmitButton() { Apply }
+            </div>
+
+        </form>
     }
 }

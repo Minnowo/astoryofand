@@ -5,7 +5,7 @@ import (
 	"github.com/minnowo/astoryofand/internal/database/models"
 )
 
-func InsertOrder(o *models.Order) bool {
+func InsertOrder(o *models.TableOrder) bool {
 
 	if len(o.UUID) == 0 {
 

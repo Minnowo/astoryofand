@@ -20,4 +20,6 @@ func (h *AdminHandler) Mount(e *echo.Echo) {
 	g.POST("/update/boxprice", h.UpdateBoxPrice)
 
 	g.POST("/update/stickerprice", h.UpdateStickerPrice)
+
+	g.POST("/create/user", h.POSTCreateUser)
 }

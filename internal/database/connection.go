@@ -42,10 +42,11 @@ func DBInit(dialector gorm.Dialector, gconf *gorm.Config) {
 	db = ldb
 
 	log.Info("Running automigrate")
-	db.AutoMigrate(&models.KeyValueStore{})
-	db.AutoMigrate(&models.Settings{})
-	db.AutoMigrate(&models.Order{})
-	db.AutoMigrate(&models.UseCase{})
+	db.AutoMigrate(&models.TableSettings{})
+	db.AutoMigrate(&models.TableOrder{})
+	db.AutoMigrate(&models.TableUseCase{})
+	db.AutoMigrate(&models.TablePGPKey{})
+	db.AutoMigrate(&models.TableUser{})
 
 }
 

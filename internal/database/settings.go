@@ -16,7 +16,7 @@ import (
 var (
 	settingsLock = sync.RWMutex{}
 
-	settingsInstance = models.Settings{
+	settingsInstance = models.TableSettings{
 		Profile:     "default",
 		BoxSetPrice: assets.BoxSetPrice,
 		StickerCost: assets.StickerCost,
@@ -31,7 +31,7 @@ func LoadSettings(profile string) {
 	settingsInstance.Profile = profile
 
 	err := GetDB().
-		Where(&models.Settings{Profile: profile}).
+		Where(&models.TableSettings{Profile: profile}).
 		First(&settingsInstance).Error
 
 	settingsLock.Unlock()
@@ -168,7 +168,7 @@ func SetPublicKey(nv string) error {
 	return nil
 }
 
-func OrderHasValidPrice(o *models.Order) bool {
+func OrderHasValidPrice(o *models.TableOrder) bool {
 
 	settingsLock.RLock()
 	defer settingsLock.RUnlock()

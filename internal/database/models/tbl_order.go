@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type Order struct {
+type TableOrder struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time      `json:"-"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
@@ -31,13 +31,13 @@ type Order struct {
 	OtherPay       string  `json:"otherpay" form:"otherpay"`
 }
 
-func NewOrder() *Order {
-	return &Order{
+func NewOrder() *TableOrder {
+	return &TableOrder{
 		UserData: UserData{OrderType},
 	}
 }
 
-func (o *Order) DelayedInit() *Order {
+func (o *TableOrder) DelayedInit() *TableOrder {
 	if err := uuid.Validate(o.UUID); err != nil {
 
 		o.UUID = util.GetOrderID()
@@ -49,12 +49,12 @@ func (o *Order) DelayedInit() *Order {
 	return o
 }
 
-func (o *Order) EnsureType() *Order {
+func (o *TableOrder) EnsureType() *TableOrder {
 	o.Type = OrderType
 	return o
 }
 
-func (o *Order) CheckValidDataFromUser() error {
+func (o *TableOrder) CheckValidDataFromUser() error {
 
 	if util.IsEmptyOrWhitespace(o.Email) ||
 		util.IsEmptyOrWhitespace(o.PayMethod) ||

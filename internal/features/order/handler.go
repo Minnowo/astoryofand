@@ -23,7 +23,7 @@ func (h *OrderHandler) HandleOrderThankYou(c echo.Context) error {
 
 func (h *OrderHandler) HandleOrderPlaced(c echo.Context) error {
 
-	var o models.Order
+	var o models.TableOrder
 
 	if err := c.Bind(&o); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "This is an invalid order!")

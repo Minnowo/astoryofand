@@ -13,8 +13,8 @@ import (
 )
 
 var (
-    passingUsesJSON = []string{
-        `{
+	passingUsesJSON = []string{
+		`{
         "email": "test@gmail.com",
         "fullname": "test",
         "comment": "test"
@@ -23,19 +23,19 @@ var (
 
 	failingUsesJSON = []string{
 		// email is empty
-        `{
+		`{
         "email": "",
         "fullname": "test",
         "comment": "test"
         }`,
 		// name is empty
-        `{
+		`{
         "email": "test@test.test",
         "fullname": "",
         "comment": "test"
         }`,
 		// comment is empty
-        `{
+		`{
         "email": "test@test.test",
         "fullname": "test",
         "comment": ""

@@ -1,7 +1,6 @@
 package admin
 
 import (
-	"crypto/subtle"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -12,18 +11,16 @@ import (
 )
 
 type AdminHandler struct {
-	Username []byte
-	Password []byte
 }
 
 func (a *AdminHandler) HandleUserPasswordAdminAuth(username, password string, c echo.Context) (bool, error) {
 
-	if subtle.ConstantTimeCompare([]byte(username), a.Username) == 1 &&
-		subtle.ConstantTimeCompare([]byte(password), a.Password) == 1 {
-		return true, nil
-	}
+	var usr models.User
 
-	return false, nil
+	usr.Username = username
+	usr.Password = password
+
+	return database.AuthUser(&usr)
 }
 
 func (a *AdminHandler) GetAdminPanel(c echo.Context) error {
@@ -43,7 +40,7 @@ func (a *AdminHandler) UpdateBoxPrice(c echo.Context) error {
 
 	database.SetBoxPrice(o.BoxSetPrice)
 
-	return c.Redirect(http.StatusPermanentRedirect, "/admin")
+	return a.GetAdminPanel(c)
 }
 
 func (a *AdminHandler) UpdateStickerPrice(c echo.Context) error {
@@ -56,5 +53,22 @@ func (a *AdminHandler) UpdateStickerPrice(c echo.Context) error {
 
 	database.SetStickerPrice(o.StickerCost)
 
-	return c.Redirect(http.StatusPermanentRedirect, "/admin")
+	return a.GetAdminPanel(c)
+}
+
+func (a *AdminHandler) POSTCreateUser(c echo.Context) error {
+
+	var o models.User
+
+	if err := c.Bind(&o); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "This is an invalid request!")
+	}
+
+	if !o.CheckValid() {
+		return echo.NewHTTPError(http.StatusBadRequest, "Invalid user details")
+	}
+
+	database.InsertRawUser(&o)
+
+	return a.GetAdminPanel(c)
 }

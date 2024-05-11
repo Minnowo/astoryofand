@@ -1,6 +1,7 @@
 package util
 
 import (
+	"bytes"
 	"fmt"
 	"strings"
 	"time"
@@ -9,7 +10,11 @@ import (
 )
 
 func IsEmptyOrWhitespace(s string) bool {
-	return strings.TrimSpace(s) == ""
+	return len(strings.TrimSpace(s)) == 0
+}
+
+func BytesIsEmptyOrWhitespace(b []byte) bool {
+	return len(bytes.TrimSpace(b)) == 0
 }
 
 func GetOrderID() string {
