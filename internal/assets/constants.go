@@ -15,6 +15,8 @@ const DBKEY_BOX_PRICE string = "BoxSetPrice"
 const DBKEY_STICKER_PRICE string = "StickerPrice"
 const DBKEY_PUBLIC_KEY string = "PublicKey"
 
+const LOG_OUTPUT_DIR string = "./logs"
+
 const BoxSetPrice float32 = 35.0
 const StickerCost float32 = 2.0
 

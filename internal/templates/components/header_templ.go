@@ -98,7 +98,7 @@ func Navbar(title, brandName string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></nav>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></nav><center class=\"text-xs\" title=\"This site is still being made. Some stuff might not work correctly. If something doesn&#39;t work like you expect, or you think you&#39;ve found a bug, send us an email, or submit a use case.\">this site is under construction!</center>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

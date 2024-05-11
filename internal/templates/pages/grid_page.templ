@@ -15,7 +15,7 @@ script onClickHandler() {
 
 templ flipCard() {
 
-    <div class="flex border p-4 w-[256px] h-[192px] perspective flip-hover">
+    <div class="flex m-1 w-[256px] h-[192px] perspective flip-hover">
 
         <div class="relative w-full h-full transition-3d flip-hover-inner">
 
@@ -31,6 +31,12 @@ templ flipCard() {
 templ ShowGridPage(show_as_cards bool) {
 
     @layout.Page2("Grid | " + templates.PAGE_TITLE) {
+
+        <style>
+            main {
+                background: rgba(255,255,255,0.5);
+            }
+        </style>
 
         <audio preload="auto">
             <source src={ "/static/" + templates.AUDIO }></source>

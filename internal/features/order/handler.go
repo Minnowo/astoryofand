@@ -48,13 +48,20 @@ func (h *OrderHandler) HandleOrderPlaced(c echo.Context) error {
 	jsonData, err := json.MarshalIndent(o.EnsureType(), "", "  ")
 
 	if err != nil {
+
 		log.Error(err)
+
+		go util.SendDiscordOrderWebhook("ERROR Marshaling order")
+
 		return echo.NewHTTPError(http.StatusInternalServerError, "Server Error!")
 	}
 
 	if oid, err := h.EncryptionWriter.SaveAndEncryptData(o.UUID, jsonData); err != nil {
 
-		log.Debug(err)
+		log.Error(err)
+
+		go util.SendDiscordOrderWebhook("ERROR Encrypting order")
+
 		return echo.NewHTTPError(http.StatusInternalServerError, "Server Error!")
 	} else {
 

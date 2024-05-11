@@ -17,6 +17,8 @@ import (
 	"github.com/minnowo/astoryofand/internal/database/models"
 	"github.com/minnowo/astoryofand/internal/templates/pages"
 	"github.com/minnowo/astoryofand/internal/util"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type DecrypFailRead int32
@@ -76,17 +78,7 @@ func (pgp *PGPDecryptor) run() {
 
 			log.Info("Decryptor Tick")
 
-			keys := make([]string, len(pgp.Files))
-
-			i := 0
-			for k := range pgp.Files {
-				keys[i] = k
-				i++
-			}
-
-			for _, path := range keys {
-
-				file := pgp.Files[path]
+			for path, file := range pgp.Files {
 
 				switch pgp.processFile(path) {
 
@@ -284,8 +276,23 @@ func inject() {
 }
 
 func initDB() {
-	database.DBInit(&database.DBConfig{
-		DatabasePath: assets.SQLitePath})
+
+	conf := &database.PostgresDBConf{
+		DatabaseHost:     "localhost",
+		DatabaseUser:     "test",
+		DatabasePassword: "test",
+		DatabaseName:     "astoryofand",
+		DatabasePort:     5432,
+		Others: map[string]interface{}{
+			"sslmode":  "disable",
+			"TimeZone": "UTC",
+		},
+	}
+
+	database.DBInit(
+		postgres.Open(conf.GetDSN()),
+		&gorm.Config{},
+	)
 }
 
 func main() {

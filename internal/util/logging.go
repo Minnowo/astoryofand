@@ -5,18 +5,27 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
 )
+
+const LOG_FMT = "${time_rfc3339_nano} ${remote_ip} ${level}"
+const LOG_FMT_MIDDLEWARE = "${time_rfc3339} ${remote_ip} ${method} ${status} ${uri} \n"
 
 func InitLogging(app *echo.Echo) {
 
 	IS_DEBUG := os.Getenv("DEBUG")
 	LOG_LEVEL := os.Getenv("LOG_LEVEL")
 
-	log.SetHeader("${time_rfc3339} ${level}")
+	// log.SetHeader(LOG_FMT)
 	log.SetLevel(log.INFO)
 
-	app.Logger.SetHeader("${time_rfc3339} ${level}")
+	app.Logger.SetHeader(LOG_FMT)
+
+	app.Use(middleware.Logger())
+	// app.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+	// 	Format: LOG_FMT_MIDDLEWARE,
+	// }))
 
 	if level, err := strconv.ParseUint(LOG_LEVEL, 10, 8); err == nil {
 		app.Logger.SetLevel(log.Lvl(level))

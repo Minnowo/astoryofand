@@ -6,6 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/gommon/log"
 	"github.com/minnowo/astoryofand/internal/assets"
 	"github.com/minnowo/astoryofand/internal/crypto"
 	"github.com/minnowo/astoryofand/internal/database"
@@ -14,6 +15,9 @@ import (
 	"github.com/minnowo/astoryofand/internal/features/order"
 	"github.com/minnowo/astoryofand/internal/features/uses"
 	"github.com/minnowo/astoryofand/internal/util"
+
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 func sanityCheck() {
@@ -29,8 +33,11 @@ func sanityCheck() {
 }
 
 func initDB() {
-	database.DBInit(&database.DBConfig{
-		DatabasePath: assets.SQLitePath})
+
+	conf := &database.SqliteDBConf{
+		DatabasePath: assets.SQLitePath,
+	}
+	database.DBInit(sqlite.Open(conf.GetDSN()), &gorm.Config{})
 }
 
 func main() {
@@ -42,6 +49,8 @@ func main() {
 	var usesEncryption crypto.EncryptionWriter
 
 	app = echo.New()
+	app.HideBanner = true
+	app.HidePort = true
 
 	util.InitLogging(app)
 
@@ -126,5 +135,8 @@ func main() {
 
 	// main loop
 
-	app.Logger.Fatal(app.Start(":3000"))
+	port := ":3000"
+	log.Info("Running server on port", port)
+
+	app.Logger.Fatal(app.Start(port))
 }
