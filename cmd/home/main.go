@@ -248,6 +248,8 @@ func addWatchDirs(watcher *fsnotify.Watcher) {
 
 	for _, d := range dirs {
 
+		util.MakeDirectory(d)
+
 		log.Infof("Watching: %s", d)
 
 		if err := watcher.Add(d); err != nil {

@@ -76,11 +76,18 @@ debug: | build_template
 	@DEBUG=true go run $(SITE_SRC)
 
 create_postgres:
-	docker run --rm -d \
+	docker run -d \
 		--name "astoryofand-postgres" \
 		-p 5432:5432 \
 		-e POSTGRES_USER="test" \
 		-e POSTGRES_PASSWORD="test" \
 		-e POSTGRES_DB="astoryofand" \
 		postgres:16.3-alpine
+	# docker run --rm -it \
+	# 	--name "test-astoryofand-postgres" \
+	# 	-p 5432:5432 \
+	# 	-e POSTGRES_USER="test" \
+	# 	-e POSTGRES_PASSWORD="test" \
+	# 	-e POSTGRES_DB="astoryofand" \
+	# 	pg_test:latest
 
