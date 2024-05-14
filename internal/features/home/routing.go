@@ -14,4 +14,7 @@ func (h *HomeHandler) Mount(e *echo.Echo) {
 	e.GET("/about", h.HandleAboutShow)
 
 	e.GET("/grid_test_with_audio", h.HandleGride)
+
+	e.GET("/preview", h.HandleGride)
+
 }

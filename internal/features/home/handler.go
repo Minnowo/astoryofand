@@ -20,7 +20,7 @@ func (h *HomeHandler) HandleHome(c echo.Context) error {
 
 func (h *HomeHandler) HandleGride(c echo.Context) error {
 
-	as_cards := c.QueryParam("as_cards")
+	flat_view := c.QueryParam("flat")
 
-	return util.EchoRenderTempl(c, pages.ShowGridPage(as_cards == "1"))
+	return util.EchoRenderTempl(c, pages.ShowGridPage(flat_view == "1"))
 }

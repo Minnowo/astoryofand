@@ -54,14 +54,15 @@ build_site_alpine_static_for_docker: | test
 	CGO_ENABLED=1 GOOS=linux go build -ldflags "$(LDFLAGS)" -o main -ldflags "-s" $(SITE_SRC)
 
 build_home_alpine_static_for_docker: | test
-	CGO_ENABLED=1 GOOS=linux go build -ldflags "$(LDFLAGS)" -o main -ldflags "-s" $(HOME_SRC)
+	CGO_ENABLED=1 GOOS=linux go build -ldflags "$(LDFLAGS)" -tags=include_private_key -o main -ldflags "-s" $(HOME_SRC)
 
-build_docker: $(SITE_SRC) | build_template bin_dir test
-	docker build -t "astoryofand:${VERSION}" -f site.Dockerfile .
-	# docker build -t "astoryofand-home:${VERSION}" -f home.Dockerfile .
+build_docker: $(SITE_SRC) $(HOME_SRC) | build_template bin_dir test
+	docker build -t "astoryofand:${VERSION}" -f ./site.Dockerfile .
+	docker build -t "astoryofand-home:${VERSION}" -f ./home_with_pg.Dockerfile .
 
-build_save_docker: $(SITE_SRC) | build_docker
+build_save_docker: $(SITE_SRC) $(HOME_SRC) | build_docker
 	docker save -o bin/astoryofand.tar "astoryofand:${VERSION}"
+	docker save -o bin/astoryofand-home.tar "astoryofand-home:${VERSION}"
 
 test:
 	go test ./...

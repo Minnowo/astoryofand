@@ -60,7 +60,7 @@ func flipCard() templ.Component {
 	})
 }
 
-func ShowGridPage(show_as_cards bool) templ.Component {
+func ShowGridPage(show_flat bool) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -92,7 +92,7 @@ func ShowGridPage(show_as_cards bool) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></audio> <center><a class=\"mx-2\" href=\"/grid_test_with_audio?as_cards=1\">Show as Card</a> <a class=\"mx-2\" href=\"/grid_test_with_audio\">Show all</a></center><div class=\"flex flex-wrap justify-center h-full\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></audio> <center><a class=\"mx-2\" href=\"/preview\">Show as Card</a> <a class=\"mx-2\" href=\"/preview?flat=1\">Show flat</a></center><div class=\"flex flex-wrap justify-center h-full\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -101,7 +101,7 @@ func ShowGridPage(show_as_cards bool) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				if show_as_cards && len(templates.IMAGES)%2 == 0 {
+				if !show_flat && len(templates.IMAGES)%2 == 0 {
 					if i%2 == 0 {
 						templ_7745c5c3_Var5 := templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 							templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)

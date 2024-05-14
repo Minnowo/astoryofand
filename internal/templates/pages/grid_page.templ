@@ -28,7 +28,7 @@ templ flipCard() {
 
 
 
-templ ShowGridPage(show_as_cards bool) {
+templ ShowGridPage(show_flat bool) {
 
     @layout.Page2("Grid | " + templates.PAGE_TITLE) {
 
@@ -43,12 +43,12 @@ templ ShowGridPage(show_as_cards bool) {
         </audio>
 
         <center>
-            <a class="mx-2" href="/grid_test_with_audio?as_cards=1">
+            <a class="mx-2" href="/preview">
                 Show as Card
             </a>
 
-            <a class="mx-2" href="/grid_test_with_audio">
-                Show all
+            <a class="mx-2" href="/preview?flat=1">
+                Show flat
             </a>
         </center>
         
@@ -58,7 +58,7 @@ templ ShowGridPage(show_as_cards bool) {
             for i, item := range templates.IMAGES {
 
                 // length check so we don't go out of bounds with i+1
-                if show_as_cards && len(templates.IMAGES) % 2 == 0 {
+                if !show_flat && len(templates.IMAGES) % 2 == 0 {
 
                     if i % 2 == 0  {
 
