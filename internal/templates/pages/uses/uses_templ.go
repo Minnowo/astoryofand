@@ -35,7 +35,7 @@ func ShowUsesPage() templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n\n            #place_order_form > div ,\n            #place_order_form select,\n            #place_order_form input, \n            #place_order_form textarea{\n                width: 100%;\n            }\n\n        </style> <form id=\"place_order_form\" class=\"auto-margin hpad30p\" action=\"/uses/place\" method=\"post\"><center>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n\n            .bg {\n                background-color: var(--footer-link-color-light);\n            }\n        </style> <main class=\"flex md:flex-nowrap flex-wrap max-w-7xl content-center mx-auto\"><form class=\"card dark:bg-dark-500 w-full mx-2 mb-4 md:w-[45%] md:h-fit-content md:mx-4 lg:w-[40%]\" action=\"/uses/place\" method=\"post\"><center>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -52,7 +52,7 @@ func ShowUsesPage() templ.Component {
 				var templ_7745c5c3_Var4 string
 				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(templates.TITLE)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/uses/uses.templ`, Line: 29, Col: 55}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/uses/uses.templ`, Line: 28, Col: 59}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {
@@ -84,7 +84,7 @@ func ShowUsesPage() templ.Component {
 				var templ_7745c5c3_Var6 string
 				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(templates.TITLE)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/uses/uses.templ`, Line: 36, Col: 73}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/uses/uses.templ`, Line: 35, Col: 77}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 				if templ_7745c5c3_Err != nil {
@@ -126,7 +126,7 @@ func ShowUsesPage() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var8 = []any{components.INPUT_CLASS}
+			var templ_7745c5c3_Var8 = []any{components.INPUT_CLASS, "w-full"}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var8...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -167,7 +167,7 @@ func ShowUsesPage() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var11 = []any{components.INPUT_CLASS}
+			var templ_7745c5c3_Var11 = []any{components.INPUT_CLASS, "w-full"}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var11...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -249,7 +249,20 @@ func ShowUsesPage() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></form>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></form><div class=\"card lg:max-w-[60%] md:max-w-[55%] w-full mx-2 md:mr-4 md:ml-0 mb-4 text-black text-2xl bg\"><center class=\"w-full text-3xl font-bold border-yellow-50\">How others are using ")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var17 string
+			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(templates.TITLE)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/uses/uses.templ`, Line: 86, Col: 58}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</center><hr class=\"my-4\"><div class=\"w-full italic\">I’ve used it within my team to introduce the topic and plan to use it in my monthly Equity in Action professional learning I co-lead with Student Services.  I’m planning to use A Story of And within my consulting business as well when I can have face to face sessions. <div class=\"text-right\">- Rashmee Karnad-Jani</div></div></div></main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -258,7 +271,7 @@ func ShowUsesPage() templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = layout.Page("Uses | "+templates.PAGE_TITLE).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layout.Page2("Uses | "+templates.PAGE_TITLE).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

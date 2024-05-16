@@ -34,7 +34,7 @@ func ShowHomePage() templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n\n            main {\n                background: rgba(255,255,255,0.5);\n            }\n\n            main_im {\n                background-size: cover;\n                background-repeat: no-repeat;\n                margin: auto;\n            }\n\n        </style> <center><img class=\"center main_im nobg noborder\" src=\"/static/images/nest.png\"></center>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n\n            main {\n                background: rgba(255,255,255,0.5);\n            }\n\n            main_im {\n                background-size: cover;\n                background-repeat: no-repeat;\n                margin: auto;\n            }\n\n        </style> <main><center><img class=\"center main_im nobg noborder\" src=\"/static/images/nest.png\"></center></main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

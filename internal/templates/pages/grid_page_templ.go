@@ -79,14 +79,14 @@ func ShowGridPage(show_flat bool) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n            main {\n                background: rgba(255,255,255,0.5);\n            }\n        </style> <audio preload=\"auto\"><source src=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n            main {\n                background: rgba(255,255,255,0.5);\n            }\n        </style> <main><audio preload=\"auto\"><source src=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs("/static/" + templates.AUDIO)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 42, Col: 54}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 44, Col: 54}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -116,7 +116,7 @@ func ShowGridPage(show_flat bool) templ.Component {
 							var templ_7745c5c3_Var6 string
 							templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs("/static/images/grid/" + templates.IMAGES[i+1])
 							if templ_7745c5c3_Err != nil {
-								return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 68, Col: 87}
+								return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 70, Col: 87}
 							}
 							_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 							if templ_7745c5c3_Err != nil {
@@ -129,7 +129,7 @@ func ShowGridPage(show_flat bool) templ.Component {
 							var templ_7745c5c3_Var7 string
 							templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("/static/images/grid/" + item)
 							if templ_7745c5c3_Err != nil {
-								return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 73, Col: 68}
+								return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 75, Col: 68}
 							}
 							_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 							if templ_7745c5c3_Err != nil {
@@ -163,7 +163,7 @@ func ShowGridPage(show_flat bool) templ.Component {
 						var templ_7745c5c3_Var9 string
 						templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs("/static/images/grid/" + item)
 						if templ_7745c5c3_Err != nil {
-							return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 84, Col: 68}
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/grid_page.templ`, Line: 86, Col: 68}
 						}
 						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 						if templ_7745c5c3_Err != nil {
@@ -210,7 +210,7 @@ func ShowGridPage(show_flat bool) templ.Component {
 					}
 				}
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

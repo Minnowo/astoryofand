@@ -12,17 +12,7 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
 
     @layout.Page("Order | " + templates.PAGE_TITLE) {
 
-        <style>
-
-            #place_order_form > div ,
-            #place_order_form select,
-            #place_order_form input {
-                width: 100%;
-            }
-
-        </style>
-
-	    <form id="place_order_form" class="hpad30p" action="/order/place" method="POST">
+	    <form class="hpad30p" action="/order/place" method="POST">
 
             <input type="hidden" name="boxpricevalue" value={ util.F32TS(boxPrice) }/>
             <input type="hidden" name="stickerpricevalue" value={ util.F32TS(stickerPrice) }/>
@@ -41,7 +31,7 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
                 @components.H3(){
                     What is your Email? 
                 }
-                <input class={ components.INPUT_CLASS } type="email" name="email" placeholder="Sample@Email.com" required/>
+                <input class={ components.INPUT_CLASS, "w-full" } type="email" name="email" placeholder="Sample@Email.com" required/>
             </div>
 
             <br/>
@@ -51,7 +41,7 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
                 @components.H3(){
                     What is your Name? 
                 }
-                <input class={ components.INPUT_CLASS } type="text" name="fullname" placeholder="FirstName LastName" required/>
+                <input class={ components.INPUT_CLASS, "w-full" } type="text" name="fullname" placeholder="FirstName LastName" required/>
             </div>
 
             <br/>
@@ -67,7 +57,7 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
                     @components.CodeHighlightFloat(boxPrice)
                     &nbsp;per. 
                 </p>
-                <input class={ components.INPUT_CLASS } type="number" name="boxsetcount" value="1" min="0" max="999" required/>
+                <input class={ components.INPUT_CLASS, "w-full" } type="number" name="boxsetcount" value="1" min="0" max="999" required/>
             </div>
 
             <br/>
@@ -82,7 +72,7 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
                     @components.CodeHighlightFloat(stickerPrice)
                     &nbsp;per. 
                 </p>
-                <input class={ components.INPUT_CLASS } type="number" name="cardsetcount" value="1" min="0" max="999" required/>
+                <input class={ components.INPUT_CLASS, "w-full" } type="number" name="cardsetcount" value="1" min="0" max="999" required/>
             </div>
 
             <br/>
@@ -91,7 +81,7 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
                 @components.H3(){
                     How would you like to pay?
                 }
-                <select class={ components.INPUT_CLASS } name="paymethod" id="paymethod" class="db">
+                <select class={ components.INPUT_CLASS, "w-full" } name="paymethod" id="paymethod" class="db">
                     <option value="cash">  Cash  </option>
                     <option value="emt">   EMT   </option>
                     <option value="other"> Other </option>
@@ -114,7 +104,7 @@ templ ShowOrderPage(boxPrice, stickerPrice float32) {
                 @components.H3(){
                     How would you like to get your package?  
                 }
-                    <select class={ components.INPUT_CLASS } name="deliverymethod" id="deliverymethod">
+                    <select class={ components.INPUT_CLASS, "w-full" } name="deliverymethod" id="deliverymethod">
                     <option value="delivery"> Delivery                               </option>
                     <option value="pickup">   Pick Up                                </option>
                     <option value="ship">     Ship to me (may incur additional costs)</option>

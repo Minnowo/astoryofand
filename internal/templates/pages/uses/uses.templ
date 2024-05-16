@@ -9,77 +9,98 @@ import (
 
 templ ShowUsesPage() {
 
-    @layout.Page("Uses | " + templates.PAGE_TITLE) {
+    @layout.Page2("Uses | " + templates.PAGE_TITLE) {
+
 
         <style>
 
-            #place_order_form > div ,
-            #place_order_form select,
-            #place_order_form input, 
-            #place_order_form textarea{
-                width: 100%;
+            .bg {
+                background-color: var(--footer-link-color-light);
             }
-
         </style>
 
-        <form id="place_order_form"  class="auto-margin hpad30p" action="/uses/place" method="post">
+        <main class="flex md:flex-nowrap flex-wrap max-w-7xl content-center mx-auto">
 
-            <center>
-                @components.H1() {
-                    How might you use { templates.TITLE } 
+            <form class="card dark:bg-dark-500 w-full mx-2 mb-4 md:w-[45%] md:h-fit-content md:mx-4 lg:w-[40%]" action="/uses/place" method="post">
+
+                <center>
+                    @components.H1() {
+                        How might you use { templates.TITLE } 
+                    }
+                </center>
+
+                <br/>
+
+                @components.H2() {
+                    We would love to hear how you are using { templates.TITLE } in your life.
+
+                    Please let us know!
                 }
-            </center>
 
-            <br/>
+                <br/>
 
-            @components.H2() {
-                We would love to hear how you are using { templates.TITLE } in your life.
+                <div>
+                    
+                    @components.H3() {
+                        What is your Email?
+                    }
+                    <input class={ components.INPUT_CLASS, "w-full" } type="email" name="email" placeholder="Sample@Email.com" required/>
+                </div>
 
-                Please let us know!
-            }
+                <br/>
 
-            <br/>
+                <div>
 
-            <div>
-                
-                @components.H3() {
-                    What is your Email?
-                }
-                <input class={ components.INPUT_CLASS } type="email" name="email" placeholder="Sample@Email.com" required/>
+                    @components.H3() {
+                        What is your Name?
+                    }
+                    <input class={ components.INPUT_CLASS, "w-full" } type="text" name="fullname" placeholder="FirstName LastName" required/>
+                </div>
+
+                <br/>
+
+                <div>
+
+                    @components.H3() {
+                        Enter your comment here
+                    }
+                    <textarea class={ components.INPUT_CLASS, "w-full" } type="text" name="comment" required> </textarea>
+                </div>
+
+                <br/>
+
+
+                <div style="justify-content: end; display: flex;">
+                    @components.SubmitButton() {
+                        Submit
+                    }
+                </div>
+
+            </form>
+
+
+            <div class="card lg:max-w-[60%] md:max-w-[55%] w-full mx-2 md:mr-4 md:ml-0 mb-4 text-black text-2xl bg">
+
+                <center class="w-full text-3xl font-bold border-yellow-50">
+
+                    How others are using { templates.TITLE }
+
+                </center>
+
+                <hr class="my-4"/>
+
+                <div class="w-full italic">
+
+                    I’ve used it within my team to introduce the topic and plan to use it in my monthly Equity in Action professional learning I co-lead with Student Services.  I’m planning to use A Story of And within my consulting business as well when I can have face to face sessions. 
+
+                    <div class="text-right">
+                        - Rashmee Karnad-Jani
+                    </div>
+                </div>
+
             </div>
 
-            <br/>
-
-            <div>
-
-                @components.H3() {
-                    What is your Name?
-                }
-                <input class={ components.INPUT_CLASS } type="text" name="fullname" placeholder="FirstName LastName" required/>
-            </div>
-
-            <br/>
-
-            <div>
-
-                @components.H3() {
-                    Enter your comment here
-                }
-                <textarea class={ components.INPUT_CLASS, "w-full" } type="text" name="comment" required> </textarea>
-            </div>
-
-            <br/>
-
-
-            <div style="justify-content: end; display: flex;">
-                @components.SubmitButton() {
-                    Submit
-                }
-            </div>
-
-
-
-        </form>
+        </main>
 
 
 

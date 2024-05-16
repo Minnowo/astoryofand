@@ -57,14 +57,10 @@ templ ShowAboutPage() {
                 display: flex;
             }
 
-            .bubble_bg {
-                background: url(/static/images/bubble.png);
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-            }
-
 
         </style>
+
+        <main>
 
 	    <form class="special_form">
 
@@ -75,7 +71,7 @@ templ ShowAboutPage() {
                 />
             </div>
 
-            <div class="quote_container bubble_bg">
+            <div class="quote_container bg-bubble">
                 <center>
                     <h1 class="body title nobg noborder text-3xl">
                         A Story of And asks you to consider replacing the word 'But' with the word 'And' as a way to connect, reflect and have meaningful conversations. 
@@ -106,6 +102,8 @@ templ ShowAboutPage() {
             </div>
 
         </form>
+
+        </main>
 
     }
 }

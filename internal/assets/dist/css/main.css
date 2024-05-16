@@ -330,10 +330,10 @@ a:hover {
 } */
 
 .card {
-  background-color: var(--post-panel-color-dark);
+  /* background-color: var(--post-panel-color-dark); */
   box-shadow: 0 0 0 0, 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
-  padding: 20px;
+  padding: 0.5rem;
   font-size: 16px;
 }
 

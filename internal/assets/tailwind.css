@@ -2,27 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
 
-.transition-3d {
-    transition: transform 1.5s;
-    transform-style: preserve-3d;
-}
+    .transition-3d {
+        transition: transform 1.5s;
+        transform-style: preserve-3d;
+    }
 
-.perspective {
-    perspective: 1000px; 
-}
+    .perspective {
+        perspective: 1000px; 
+    }
 
-.rotate-y-180 {
-    transform: rotateY(180deg);
-}
+    .rotate-y-180 {
+        transform: rotateY(180deg);
+    }
 
-.flip-hover:hover .flip-hover-inner {
-    transform: rotateY(180deg);
-}
+    .flip-hover:hover .flip-hover-inner {
+        transform: rotateY(180deg);
+    }
 
-.backface-hidden {
-    backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
+    .backface-hidden {
+        backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+    }
+
+    .h-fit-content {
+        height: fit-content;
+    }
+
+    .bg-bubble {
+        background: url(/static/images/bubble.png);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+
+
+    .quote-box {
+        font-style: italic;
+        z-index: 1;
+
+        /* background: linear-gradient(32deg, var(--color-body) 0%, #666 100%); */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow effect */
+    }
+
+    .quote-box::before {
+        position: absolute;
+        content: ";";     
+        font-size: 36px;
+        vertical-align: middle; 
+    }
+
 }

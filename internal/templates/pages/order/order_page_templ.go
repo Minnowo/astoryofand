@@ -36,14 +36,14 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<style>\n\n            #place_order_form > div ,\n            #place_order_form select,\n            #place_order_form input {\n                width: 100%;\n            }\n\n        </style> <form id=\"place_order_form\" class=\"hpad30p\" action=\"/order/place\" method=\"POST\"><input type=\"hidden\" name=\"boxpricevalue\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form class=\"hpad30p\" action=\"/order/place\" method=\"POST\"><input type=\"hidden\" name=\"boxpricevalue\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(util.F32TS(boxPrice))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/order/order_page.templ`, Line: 27, Col: 82}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/order/order_page.templ`, Line: 17, Col: 82}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -56,7 +56,7 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(util.F32TS(stickerPrice))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/order/order_page.templ`, Line: 28, Col: 90}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/order/order_page.templ`, Line: 18, Col: 90}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -79,7 +79,7 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 				var templ_7745c5c3_Var6 string
 				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(templates.TITLE)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/order/order_page.templ`, Line: 33, Col: 39}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/pages/order/order_page.templ`, Line: 23, Col: 39}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 				if templ_7745c5c3_Err != nil {
@@ -117,7 +117,7 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var8 = []any{components.INPUT_CLASS}
+			var templ_7745c5c3_Var8 = []any{components.INPUT_CLASS, "w-full"}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var8...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -158,7 +158,7 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var11 = []any{components.INPUT_CLASS}
+			var templ_7745c5c3_Var11 = []any{components.INPUT_CLASS, "w-full"}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var11...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -211,7 +211,7 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var14 = []any{components.INPUT_CLASS}
+			var templ_7745c5c3_Var14 = []any{components.INPUT_CLASS, "w-full"}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var14...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -264,7 +264,7 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var17 = []any{components.INPUT_CLASS}
+			var templ_7745c5c3_Var17 = []any{components.INPUT_CLASS, "w-full"}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var17...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -305,7 +305,7 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var20 = []any{components.INPUT_CLASS}
+			var templ_7745c5c3_Var20 = []any{components.INPUT_CLASS, "w-full"}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var20...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -368,7 +368,7 @@ func ShowOrderPage(boxPrice, stickerPrice float32) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var25 = []any{components.INPUT_CLASS}
+			var templ_7745c5c3_Var25 = []any{components.INPUT_CLASS, "w-full"}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var25...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
