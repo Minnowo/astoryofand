@@ -22,7 +22,7 @@ templ ShowAdminPane(adminView *models.AdminView) {
 
             <div class="flex flex-row justify-between">
 
-                <input class={ components.INPUT_CLASS } type="number" name="boxpricevalue" value={ util.F32TS(adminView.BoxSetPrice) } min="0" max="999" required/>
+                <input class={ components.INPUT_CLASS } type="number" name="boxpricevalue" value={ util.F32TS(adminView.BoxSetPrice) } min="0" max="999" step="any" required/>
 
                 @components.SubmitButton() { Apply }
             </div>
@@ -35,7 +35,7 @@ templ ShowAdminPane(adminView *models.AdminView) {
 
             <div class="flex flex-row justify-between">
 
-                <input class={ components.INPUT_CLASS } type="number" name="stickerpricevalue" value={ util.F32TS(adminView.StickerCost) } min="0" max="999" required/>
+                <input class={ components.INPUT_CLASS } type="number" name="stickerpricevalue" value={ util.F32TS(adminView.StickerCost) } min="0" max="999" step="any"  required/>
 
                 @components.SubmitButton() { Apply }
             </div>

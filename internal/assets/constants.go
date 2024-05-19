@@ -17,7 +17,7 @@ const DBKEY_PUBLIC_KEY string = "PublicKey"
 
 const LOG_OUTPUT_DIR string = "./logs"
 
-const BoxSetPrice float32 = 35.0
+const BoxSetPrice float32 = 43.75
 const StickerCost float32 = 2.0
 
 const USERNAME_MAX_LEN int = 16
