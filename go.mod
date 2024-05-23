@@ -5,7 +5,7 @@ go 1.21.5
 require (
 	github.com/ProtonMail/go-crypto v1.0.0
 	github.com/ProtonMail/gopenpgp/v2 v2.7.5
-	github.com/a-h/templ v0.2.680
+	github.com/a-h/templ v0.2.697
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/google/uuid v1.6.0
 	github.com/gtuk/discordwebhook v1.2.0
@@ -72,7 +72,7 @@ require (
 	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/sys v0.20.0 // indirect
-	golang.org/x/telemetry v0.0.0-20240515213752-9ff3ad9b3e68 // indirect
+	golang.org/x/telemetry v0.0.0-20240522233618-39ace7a40ae7 // indirect
 	golang.org/x/term v0.20.0 // indirect
 	golang.org/x/text v0.15.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
