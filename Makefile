@@ -34,7 +34,7 @@ build_css:
 	./bin/tailwindcss-linux-x64 -i ./internal/assets/tailwind.css -o ./internal/assets/dist/css/tailwind.css --watch
 
 setup_tailwind: | bin_dir
-	curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v3.4.1/tailwindcss-linux-x64
+	curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v3.4.3/tailwindcss-linux-x64
 	mv tailwindcss-linux-x64  $(BIN_DIR)
 	chmod +x $(BIN_DIR)/tailwindcss-linux-x64
 
