@@ -9,7 +9,7 @@ const SOURCE_CODE_LINK templ.SafeURL = "https://github.com/Minnowo/astoryofand"
 const LICENSE_PAGE_LINK templ.SafeURL = "/license"
 const FACEBOOK_LINK templ.SafeURL = "https://www.facebook.com/profile.php?id=61551674085735&mibextid=ZbWKwL"
 const INSTAGRAM_LINK templ.SafeURL = "https://www.instagram.com/astoryofand"
-const BATENER_BOOKS_LINK templ.SafeURL = "https://www.batnerbookstore.com/catalogsearch/advanced/result/?name=A+story+of+and+&isbn=&author_book=&books_keywords="
+const BATENER_BOOKS_LINK templ.SafeURL = "https://www.batnerbookstore.com/a-story-of-and-new-ed.html"
 const EMAIL_LINK templ.SafeURL = "mailto:astoryofand@gmail.com"
 
 // other links

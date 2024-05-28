@@ -896,11 +896,6 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.text-highlight-900 {
-  --tw-text-opacity: 1;
-  color: rgb(225 129 3 / var(--tw-text-opacity));
-}
-
 .no-underline {
   text-decoration-line: none;
 }
