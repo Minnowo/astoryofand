@@ -262,7 +262,10 @@ func watch(watcher *fsnotify.Watcher) {
 
 func addWatchDirs(watcher *fsnotify.Watcher) {
 
-	dirs := []string{assets.PGPOutputDir, assets.UsesOutputDir}
+    dirs := []string{
+        assets.PGPOutputDir, 
+        assets.UsesOutputDir,
+        assets.ContactOutputDir}
 
 	for _, d := range dirs {
 
