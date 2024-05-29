@@ -198,6 +198,24 @@ func (pgp *PGPDecryptor) processFile(path string) DecrypFailRead {
 		database.InsertUseCase(&o)
 
 		break
+
+	case models.ContactUsType:
+
+		log.Info("Got Contact from file")
+
+		var o models.TableContact
+
+		if err := json.Unmarshal(data, &o); err != nil {
+
+			log.Error(err)
+
+			return JSON_MARSHAL
+		}
+
+		log.Debug(o)
+		database.InsertContact(&o)
+
+		break
 	}
 
 	return SUCESS

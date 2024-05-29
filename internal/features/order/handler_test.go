@@ -102,7 +102,7 @@ func TestOrderPlaced(t *testing.T) {
 		c := e.NewContext(req, rec)
 
 		if assert.NoError(t, h.HandleOrderPlaced(c)) {
-			assert.Equal(t, http.StatusPermanentRedirect, rec.Code)
+			assert.Equal(t, http.StatusSeeOther, rec.Code)
 		}
 	}
 

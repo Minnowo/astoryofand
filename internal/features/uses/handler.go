@@ -51,7 +51,7 @@ func (u *UsesHandler) HandleUsesPOST(c echo.Context) error {
 
 		go util.SendDiscordOrderWebhook("Someone has given a Use Case!")
 
-		return c.Redirect(http.StatusPermanentRedirect, "/uses/thanks")
+		return c.Redirect(http.StatusSeeOther, "/uses/thanks")
 	}
 
 }

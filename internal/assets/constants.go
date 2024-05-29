@@ -8,6 +8,7 @@ const ENV_ADMIN_PASSWORD_KEY string = "ADMIN_PASSWORD"
 
 const PGPOutputDir string = "./enc/pgp_out"
 const UsesOutputDir string = "./enc/uses"
+const ContactOutputDir string = "./enc/contact"
 
 const SQLitePath string = "./conf/main.sqlite"
 

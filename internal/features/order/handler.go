@@ -71,7 +71,7 @@ func (h *OrderHandler) HandleOrderPlaced(c echo.Context) error {
 
 		params.Add("oid", oid)
 
-		return c.Redirect(http.StatusPermanentRedirect, "/order/thanks?"+params.Encode())
+		return c.Redirect(http.StatusSeeOther, "/order/thanks?"+params.Encode())
 	}
 
 }

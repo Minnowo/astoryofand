@@ -9,7 +9,7 @@ func (h *OrderHandler) Mount(e *echo.Echo) {
 	o.GET("", h.HandleOrderShow)
 	o.GET("/", h.HandleOrderShow)
 
-	o.Match([]string{"GET", "POST"}, "/thanks", h.HandleOrderThankYou)
+	o.GET("/thanks", h.HandleOrderThankYou)
 
-	o.POST("/place", h.HandleOrderPlaced)
+	// o.POST("/place", h.HandleOrderPlaced)
 }

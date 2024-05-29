@@ -1,4 +1,4 @@
-package uses
+package contact
 
 import (
 	"net/http"
@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	passingUsesJSON = []string{
+	passingJSON = []string{
 		`{
         "email": "test@gmail.com",
         "fullname": "test",
@@ -21,7 +21,7 @@ var (
         }`,
 	}
 
-	failingUsesJSON = []string{
+	failingJSON = []string{
 		// email is empty
 		`{
         "email": "",
@@ -43,11 +43,11 @@ var (
 	}
 )
 
-func TestUsesPlaced(t *testing.T) {
+func TestOrderPlaced(t *testing.T) {
 
 	e := echo.New()
 
-	h := &UsesHandler{
+	h := &ContactUsHandler{
 		EncryptionWriter: &crypto.PGPEncryptionWriter{
 			PublicKey:       assets.PublicKeyBytes,
 			OutputDirectory: t.TempDir(),
@@ -55,7 +55,7 @@ func TestUsesPlaced(t *testing.T) {
 	}
 
 	// check valid orders
-	for _, order := range passingUsesJSON {
+	for _, order := range passingJSON {
 
 		req := httptest.NewRequest(http.MethodPost, "/", strings.NewReader(order))
 
@@ -65,13 +65,13 @@ func TestUsesPlaced(t *testing.T) {
 
 		c := e.NewContext(req, rec)
 
-		if assert.NoError(t, h.HandleUsesPOST(c)) {
+		if assert.NoError(t, h.POSTContactUsPlaced(c)) {
 			assert.Equal(t, http.StatusSeeOther, rec.Code)
 		}
 	}
 
 	// check for bad requests to make sure they don't work
-	for _, order := range failingUsesJSON {
+	for _, order := range failingJSON {
 
 		req := httptest.NewRequest(http.MethodPost, "/", strings.NewReader(order))
 
@@ -81,6 +81,6 @@ func TestUsesPlaced(t *testing.T) {
 
 		c := e.NewContext(req, rec)
 
-		assert.Error(t, h.HandleUsesPOST(c))
+		assert.Error(t, h.POSTContactUsPlaced(c))
 	}
 }

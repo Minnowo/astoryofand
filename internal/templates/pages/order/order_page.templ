@@ -7,229 +7,310 @@ import (
 	"github.com/minnowo/astoryofand/internal/util"
 )
 
+templ OrderForm(boxPrice, stickerPrice float32){
+
+    <form class="hpad30p" action="/order/place" method="POST">
+
+        <input type="hidden" name="boxpricevalue" value={ util.F32TS(boxPrice) }/>
+        <input type="hidden" name="stickerpricevalue" value={ util.F32TS(stickerPrice) }/>
+
+        <center>
+
+        @components.H1() {
+            Order { templates.TITLE }
+        }
+
+        <br/>
+
+        @components.H2() {
+
+            Order on <a class="text-highlight-500" href={ templates.BATENER_BOOKS_LINK }>The Batner Book Store </a>
+        }
+        </center>
+
+        <br/>
+
+        <div>
+            @components.H3(){
+                What is your Email? 
+            }
+            <input class={ components.INPUT_CLASS, "w-full" } type="email" name="email" placeholder="Sample@Email.com" required/>
+        </div>
+
+        <br/>
+
+        <div>
+            
+            @components.H3(){
+                What is your Name? 
+            }
+            <input class={ components.INPUT_CLASS, "w-full" } type="text" name="fullname" placeholder="FirstName LastName" required/>
+        </div>
+
+        <br/>
+
+        <div>
+            
+            @components.H3(){
+                How many A Story Of And Box Sets do you want? 
+            }
+
+            <p class="no-margin"> 
+                The price is 
+                @components.CodeHighlightFloat(boxPrice)
+                &nbsp;per. 
+            </p>
+            <input class={ components.INPUT_CLASS, "w-full" } type="number" name="boxsetcount" value="1" min="0" max="999" required/>
+        </div>
+
+        <br/>
+
+        <div>
+            
+            @components.H3(){
+                 How many #VeryAsian Waterproof Vinyl Stickers do you want? 
+            }
+            <p class="no-margin"> 
+                The price is 
+                @components.CodeHighlightFloat(stickerPrice)
+                &nbsp;per. 
+            </p>
+            <input class={ components.INPUT_CLASS, "w-full" } type="number" name="cardsetcount" value="1" min="0" max="999" required/>
+        </div>
+
+        <br/>
+
+        <div>
+            @components.H3(){
+                How would you like to pay?
+            }
+            <select class={ components.INPUT_CLASS, "w-full" } name="paymethod" id="paymethod" class="db">
+                <option value="cash">  Cash  </option>
+                <option value="emt">   EMT   </option>
+                <option value="other"> Other </option>
+            </select>
+
+            <div id="other_pay_row" style="margin: 0.3rem;">
+                <label for="other">
+                    <noscript> (If other) </noscript>
+                    Please specify:
+                </label>
+                <br/>
+                <textarea class={ components.INPUT_CLASS, "w-full" } type="text" id="otherPay" name="otherpay"> </textarea>
+            </div>
+        </div>
+
+        <br/>
+
+        <div>
+            
+            @components.H3(){
+                How would you like to get your package?  
+            }
+                <select class={ components.INPUT_CLASS, "w-full" } name="deliverymethod" id="deliverymethod">
+                <option value="delivery"> Delivery                               </option>
+                <option value="pickup">   Pick Up                                </option>
+                <option value="ship">     Ship to me (may incur additional costs)</option>
+                <option value="other">    Other                                  </option>
+            </select>
+
+            <br/>
+
+            <table class="ml-1 mt-1">
+                <tr id="address_row" class="pb-2">
+                    <td><label for="address">Address:</label></td>
+                    <td><input class={ components.INPUT_CLASS } type="text" id="address" name="address" placeholder="23 Some st"/></td>
+                </tr>
+
+                <tr id="city_row" class="mb-2">
+                    <td><label for="city">City:</label></td>
+                    <td><input class={ components.INPUT_CLASS } type="text" id="city" name="city" placeholder="Toronto"/></td>
+                </tr>
+
+                <tr id="zipcode_row" class="mb-2">
+                    <td><label for="zipcode">Zip Code:</label></td>
+                    <td><input class={ components.INPUT_CLASS } type="text" id="zipcode" name="zipcode" placeholder="K2T2H9"/></td>
+                </tr>
+            </table>
+
+            <div id="other_row" style="margin: 0.3rem;">
+                <label for="otherdelivery">
+                    <noscript> (If other) </noscript>
+                    Please specify:
+                    </label>
+                <br/>
+                <textarea class={ components.INPUT_CLASS, "w-full" } type="text" id="otherdelivery" name="otherdelivery"> </textarea>
+            </div>
+
+        </div>
+
+
+        <div style="justify-content: end; display: flex;">
+            @components.SubmitButton(){
+                Submit Order
+            }
+        </div>
+
+    </form>
+
+    <script>
+
+        function handleDeliveryMethodChange() {
+            const selectedValue = document.getElementById("deliverymethod").value;
+
+            const addressInput = document.getElementById("address_row");
+            const cityInput    = document.getElementById("city_row");
+            const zipcodeInput = document.getElementById("zipcode_row");
+            const otherInput   = document.getElementById("other_row");
+
+            for (var j of addressInput.querySelectorAll("input")) {
+                j.required = selectedValue !== "other";
+            }
+            for (var j of cityInput.querySelectorAll("input")) {
+                j.required = selectedValue !== "other";
+            }
+            for (var j of zipcodeInput.querySelectorAll("input")) {
+                j.required = selectedValue === "ship";
+            }
+            for (var j of otherInput.querySelectorAll("textarea")) {
+                j.required = selectedValue === "other";
+            }
+
+            if (selectedValue === "delivery") {
+                addressInput.style.display = "inherit";
+                cityInput.style.display = "inherit";
+                zipcodeInput.style.display = "none";
+                otherInput.style.display = "none";
+            } 
+            else if (selectedValue === "ship"){
+                addressInput.style.display = "inherit";
+                cityInput.style.display = "inherit";
+                zipcodeInput.style.display = "inherit";
+                otherInput.style.display = "none";
+            }
+            else if (selectedValue === "pickup"){
+                addressInput.style.display = "inherit";
+                cityInput.style.display = "inherit";
+                zipcodeInput.style.display = "none";
+                otherInput.style.display = "none";
+            }
+            else if (selectedValue === "other"){
+                addressInput.style.display = "none";
+                cityInput.style.display = "none";
+                zipcodeInput.style.display = "none";
+                otherInput.style.display = "inherit";
+            }
+        }
+
+        function handlePayMethodChange() {
+
+            const selectedValue = document.getElementById("paymethod").value;
+
+            const otherPay = document.getElementById("other_pay_row");
+
+            for (var j of otherPay.querySelectorAll("textarea")) {
+                j.required = selectedValue === "other";
+            }
+
+            if (selectedValue === "other") {
+                otherPay.style.display = "inherit";
+            } else {
+                otherPay.style.display = "none";
+            }
+        }
+
+        document.getElementById("deliverymethod").addEventListener("change", handleDeliveryMethodChange);
+        document.getElementById("paymethod").addEventListener("change", handlePayMethodChange);
+        handleDeliveryMethodChange();
+        handlePayMethodChange();
+
+
+    </script>
+
+}
+
+
+templ ContactUsForm(){
+
+    <form action="/contact/place" method="POST">
+
+        <center>
+
+        @components.H1() {
+            Contact Us
+        }
+
+        </center>
+
+        <br/>
+
+        <div>
+            @components.H3(){
+                What is your Email? 
+            }
+            <input class={ components.INPUT_CLASS, "w-full" } type="email" name="email" placeholder="Sample@Email.com" required/>
+        </div>
+
+        <br/>
+
+        <div>
+            
+            @components.H3(){
+                What is your Name? 
+            }
+            <input class={ components.INPUT_CLASS, "w-full" } type="text" name="fullname" placeholder="FirstName LastName" required/>
+        </div>
+
+        <br/>
+
+
+        <div id="other_row" style="margin: 0.3rem;">
+            <textarea class={ components.INPUT_CLASS, "w-full" } 
+                type="text" 
+                name="comment"
+                placeholder="Your message here"
+                > </textarea>
+        </div>
+
+
+        <div style="justify-content: end; display: flex;">
+            @components.SubmitButton(){
+                Submit
+            }
+        </div>
+
+    </form>
+
+    }
 
 templ ShowOrderPage(boxPrice, stickerPrice float32) {
 
     @layout.Page("Order | " + templates.PAGE_TITLE) {
 
-	    <form class="hpad30p" action="/order/place" method="POST">
 
-            <input type="hidden" name="boxpricevalue" value={ util.F32TS(boxPrice) }/>
-            <input type="hidden" name="stickerpricevalue" value={ util.F32TS(stickerPrice) }/>
+    <div class="hpad30p">
 
-            <center>
 
+        <br/>
+
+        <br/>
+
+        <center>
             @components.H1() {
-                Order { templates.TITLE }
+
+                Order now from 
+                <a class="text-highlight-500" href={ templates.BATENER_BOOKS_LINK } target="_blank" rel="noopener noreferrer">
+                    The Batner Book Store 
+                    </a>
             }
+        </center>
 
-            <br/>
+        <hr class="mb-8"/>
+        <br/>
 
-            @components.H2() {
+        @ContactUsForm()
 
-                Order on <a class="text-highlight-500" href={ templates.BATENER_BOOKS_LINK }>The Batner Book Store </a>
-            }
-            </center>
-
-            <br/>
-
-            <div>
-                @components.H3(){
-                    What is your Email? 
-                }
-                <input class={ components.INPUT_CLASS, "w-full" } type="email" name="email" placeholder="Sample@Email.com" required/>
-            </div>
-
-            <br/>
-
-            <div>
-                
-                @components.H3(){
-                    What is your Name? 
-                }
-                <input class={ components.INPUT_CLASS, "w-full" } type="text" name="fullname" placeholder="FirstName LastName" required/>
-            </div>
-
-            <br/>
-
-            <div>
-                
-                @components.H3(){
-                    How many A Story Of And Box Sets do you want? 
-                }
-
-                <p class="no-margin"> 
-                    The price is 
-                    @components.CodeHighlightFloat(boxPrice)
-                    &nbsp;per. 
-                </p>
-                <input class={ components.INPUT_CLASS, "w-full" } type="number" name="boxsetcount" value="1" min="0" max="999" required/>
-            </div>
-
-            <br/>
-
-            <div>
-                
-                @components.H3(){
-                     How many #VeryAsian Waterproof Vinyl Stickers do you want? 
-                }
-                <p class="no-margin"> 
-                    The price is 
-                    @components.CodeHighlightFloat(stickerPrice)
-                    &nbsp;per. 
-                </p>
-                <input class={ components.INPUT_CLASS, "w-full" } type="number" name="cardsetcount" value="1" min="0" max="999" required/>
-            </div>
-
-            <br/>
-
-            <div>
-                @components.H3(){
-                    How would you like to pay?
-                }
-                <select class={ components.INPUT_CLASS, "w-full" } name="paymethod" id="paymethod" class="db">
-                    <option value="cash">  Cash  </option>
-                    <option value="emt">   EMT   </option>
-                    <option value="other"> Other </option>
-                </select>
-
-                <div id="other_pay_row" style="margin: 0.3rem;">
-                    <label for="other">
-                        <noscript> (If other) </noscript>
-                        Please specify:
-                    </label>
-                    <br/>
-                    <textarea class={ components.INPUT_CLASS, "w-full" } type="text" id="otherPay" name="otherpay"> </textarea>
-                </div>
-            </div>
-
-            <br/>
-
-            <div>
-                
-                @components.H3(){
-                    How would you like to get your package?  
-                }
-                    <select class={ components.INPUT_CLASS, "w-full" } name="deliverymethod" id="deliverymethod">
-                    <option value="delivery"> Delivery                               </option>
-                    <option value="pickup">   Pick Up                                </option>
-                    <option value="ship">     Ship to me (may incur additional costs)</option>
-                    <option value="other">    Other                                  </option>
-                </select>
-
-                <br/>
-
-                <table class="ml-1 mt-1">
-                    <tr id="address_row" class="pb-2">
-                        <td><label for="address">Address:</label></td>
-                        <td><input class={ components.INPUT_CLASS } type="text" id="address" name="address" placeholder="23 Some st"/></td>
-                    </tr>
-
-                    <tr id="city_row" class="mb-2">
-                        <td><label for="city">City:</label></td>
-                        <td><input class={ components.INPUT_CLASS } type="text" id="city" name="city" placeholder="Toronto"/></td>
-                    </tr>
-
-                    <tr id="zipcode_row" class="mb-2">
-                        <td><label for="zipcode">Zip Code:</label></td>
-                        <td><input class={ components.INPUT_CLASS } type="text" id="zipcode" name="zipcode" placeholder="K2T2H9"/></td>
-                    </tr>
-                </table>
-
-                <div id="other_row" style="margin: 0.3rem;">
-                    <label for="otherdelivery">
-                        <noscript> (If other) </noscript>
-                        Please specify:
-                        </label>
-                    <br/>
-                    <textarea class={ components.INPUT_CLASS, "w-full" } type="text" id="otherdelivery" name="otherdelivery"> </textarea>
-                </div>
-
-            </div>
-
-
-            <div style="justify-content: end; display: flex;">
-                @components.SubmitButton(){
-                    Submit Order
-                }
-            </div>
-
-	    </form>
-
-        <script>
-
-            function handleDeliveryMethodChange() {
-                const selectedValue = document.getElementById("deliverymethod").value;
-
-                const addressInput = document.getElementById("address_row");
-                const cityInput    = document.getElementById("city_row");
-                const zipcodeInput = document.getElementById("zipcode_row");
-                const otherInput   = document.getElementById("other_row");
-
-                for (var j of addressInput.querySelectorAll("input")) {
-                    j.required = selectedValue !== "other";
-                }
-                for (var j of cityInput.querySelectorAll("input")) {
-                    j.required = selectedValue !== "other";
-                }
-                for (var j of zipcodeInput.querySelectorAll("input")) {
-                    j.required = selectedValue === "ship";
-                }
-                for (var j of otherInput.querySelectorAll("textarea")) {
-                    j.required = selectedValue === "other";
-                }
-
-                if (selectedValue === "delivery") {
-                    addressInput.style.display = "inherit";
-                    cityInput.style.display = "inherit";
-                    zipcodeInput.style.display = "none";
-                    otherInput.style.display = "none";
-                } 
-                else if (selectedValue === "ship"){
-                    addressInput.style.display = "inherit";
-                    cityInput.style.display = "inherit";
-                    zipcodeInput.style.display = "inherit";
-                    otherInput.style.display = "none";
-                }
-                else if (selectedValue === "pickup"){
-                    addressInput.style.display = "inherit";
-                    cityInput.style.display = "inherit";
-                    zipcodeInput.style.display = "none";
-                    otherInput.style.display = "none";
-                }
-                else if (selectedValue === "other"){
-                    addressInput.style.display = "none";
-                    cityInput.style.display = "none";
-                    zipcodeInput.style.display = "none";
-                    otherInput.style.display = "inherit";
-                }
-            }
-
-            function handlePayMethodChange() {
-
-                const selectedValue = document.getElementById("paymethod").value;
-
-                const otherPay = document.getElementById("other_pay_row");
-
-                for (var j of otherPay.querySelectorAll("textarea")) {
-                    j.required = selectedValue === "other";
-                }
-
-                if (selectedValue === "other") {
-                    otherPay.style.display = "inherit";
-                } else {
-                    otherPay.style.display = "none";
-                }
-            }
-
-            document.getElementById("deliverymethod").addEventListener("change", handleDeliveryMethodChange);
-            document.getElementById("paymethod").addEventListener("change", handlePayMethodChange);
-            handleDeliveryMethodChange();
-            handlePayMethodChange();
-
-
-        </script>
-
+    </div>
 
     }
 }

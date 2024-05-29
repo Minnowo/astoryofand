@@ -12,6 +12,7 @@ import (
 	"github.com/minnowo/astoryofand/internal/database"
 	"github.com/minnowo/astoryofand/internal/database/models"
 	"github.com/minnowo/astoryofand/internal/features/admin"
+	"github.com/minnowo/astoryofand/internal/features/contact"
 	"github.com/minnowo/astoryofand/internal/features/home"
 	"github.com/minnowo/astoryofand/internal/features/order"
 	"github.com/minnowo/astoryofand/internal/features/uses"
@@ -47,6 +48,7 @@ func main() {
 
 	var app *echo.Echo
 	var orderEncryption crypto.EncryptionWriter
+	var contactEncryption crypto.EncryptionWriter
 	var usesEncryption crypto.EncryptionWriter
 
 	app = echo.New()
@@ -79,12 +81,18 @@ func main() {
 		OutputDirectory: assets.PGPOutputDir,
 	}
 
+	contactEncryption = &crypto.PGPEncryptionWriter{
+		PublicKey:       assets.PublicKeyBytes,
+		OutputDirectory: assets.ContactOutputDir,
+	}
+
 	usesEncryption = &crypto.PGPEncryptionWriter{
 		PublicKey:       assets.PublicKeyBytes,
 		OutputDirectory: assets.UsesOutputDir,
 	}
 
 	orderEncryption.EnsureCanWriteDiskOrExit()
+	contactEncryption.EnsureCanWriteDiskOrExit()
 	usesEncryption.EnsureCanWriteDiskOrExit()
 
 	//
@@ -129,6 +137,14 @@ func main() {
 		EncryptionWriter: orderEncryption,
 	}
 	orderHandler.Mount(app)
+
+	//
+	// contact us routes
+	//
+	contactusHandler := contact.ContactUsHandler{
+		EncryptionWriter: contactEncryption,
+	}
+	contactusHandler.Mount(app)
 
 	//
 	// usecases routes

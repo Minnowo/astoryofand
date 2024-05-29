@@ -11,7 +11,7 @@ func (h *UsesHandler) Mount(e *echo.Echo) {
 	u.GET("", h.HandleUsesGET)
 	u.GET("/", h.HandleUsesGET)
 
-	u.Match([]string{"GET", "POST"}, "/thanks", h.HandleUsesThankYouGET)
+	u.GET("/thanks", h.HandleUsesThankYouGET)
 
 	u.POST("/place", h.HandleUsesPOST)
 }
